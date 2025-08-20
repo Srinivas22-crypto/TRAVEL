@@ -1,0 +1,124 @@
+{
+  "nav": {
+    "explore": "Explorer",
+    "book": "Réserver",
+    "community": "Communauté",
+    "search": "Rechercher",
+    "payment": "Paiement"
+  },
+  "home": {
+    "title": "Découvrez Votre Prochaine Aventure",
+    "subtitle": "Explorez des destinations incroyables, réservez des expériences uniques et connectez-vous avec des voyageurs du monde entier.",
+    "cta": "Commencez Votre Voyage",
+    "quickActions": "Actions Rapides",
+    "featured": "Destinations Vedettes",
+    "stats": {
+      "destinations": "Destinations",
+      "travelers": "Voyageurs Heureux",
+      "reviews": "Avis 5 Étoiles"
+    }
+  },
+  "explore": {
+    "title": "Explorer les Destinations",
+    "subtitle": "Découvrez des lieux incroyables à travers le monde",
+    "searchPlaceholder": "Rechercher des destinations...",
+    "filters": "Filtres",
+    "sortBy": "Trier par"
+  },
+  "book": {
+    "title": "Réservez Votre Voyage",
+    "subtitle": "Trouvez et réservez des vols, hôtels et expériences",
+    "flights": "Vols",
+    "hotels": "Hôtels",
+    "experiences": "Expériences"
+  },
+  "community": {
+    "title": "Communauté de Voyage",
+    "subtitle": "Connectez-vous avec d'autres voyageurs et partagez vos expériences",
+    "shareStory": "Partagez Votre Histoire",
+    "recentPosts": "Publications Récentes"
+  },
+  "auth": {
+    "signIn": "Se Connecter",
+    "signUp": "Créer un Compte",
+    "email": "Email",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "backToHome": "← Retour à l'accueil",
+    "alreadyHaveAccount": "Vous avez déjà un compte ?",
+    "signInHere": "Connectez-vous ici",
+    "dontHaveAccount": "Vous n'avez pas de compte ?",
+    "registerHere": "Inscrivez-vous ici",
+    "forgotPassword": "Mot de passe oublié ?",
+    "rememberMe": "Se souvenir de moi",
+    "welcomeBack": "Bienvenue sur TravelHub",
+    "createAccountSubtitle": "Rejoignez TravelHub et commencez votre voyage",
+    "acceptTerms": "J'accepte les",
+    "termsAndConditions": "conditions générales",
+    "signingIn": "Connexion...",
+    "creatingAccount": "Création du compte...",
+    "signInSuccess": "Bon retour !",
+    "accountCreated": "Compte créé !",
+    "accountCreatedDesc": "Bienvenue sur TravelHub. Vous pouvez maintenant vous connecter.",
+    "passwordsNoMatch": "Les mots de passe ne correspondent pas.",
+    "acceptTermsError": "Veuillez accepter les conditions générales."
+  },
+  "profile": {
+    "settings": "Paramètres du Profil",
+    "personalInfo": "Informations Personnelles",
+    "notifications": "Notifications",
+    "privacy": "Confidentialité",
+    "billing": "Facturation",
+    "manageAccount": "Gérez les paramètres et préférences de votre compte",
+    "verified": "Vérifié"
+  },
+  "payment": {
+    "title": "Paiement",
+    "subtitle": "Traitement sécurisé des paiements pour vos réservations de voyage",
+    "selectPaymentMethod": "Sélectionner le mode de paiement",
+    "creditCard": "Carte de crédit",
+    "paypal": "PayPal",
+    "bankTransfer": "Virement bancaire",
+    "cardNumber": "Numéro de carte",
+    "expiryDate": "Date d'expiration",
+    "cvv": "CVV",
+    "nameOnCard": "Nom sur la carte",
+    "billingAddress": "Adresse de facturation",
+    "address": "Adresse",
+    "city": "Ville",
+    "state": "État",
+    "zipCode": "Code postal",
+    "country": "Pays",
+    "orderSummary": "Résumé de la commande",
+    "subtotal": "Sous-total",
+    "taxes": "Taxes",
+    "total": "Total",
+    "processPayment": "Traiter le paiement",
+    "processing": "Traitement...",
+    "paymentSuccess": "Paiement réussi !",
+    "paymentFailed": "Échec du paiement",
+    "securePayment": "Paiement sécurisé",
+    "encryptedConnection": "Vos informations de paiement sont cryptées et sécurisées"
+  },
+  "notFound": {
+    "title": "404",
+    "subtitle": "Oops ! Page non trouvée",
+    "message": "La page que vous recherchez n'existe pas.",
+    "backToHome": "Retour à l'accueil"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "close": "Fermer",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "submit": "Soumettre",
+    "confirm": "Confirmer"
+  }
+}

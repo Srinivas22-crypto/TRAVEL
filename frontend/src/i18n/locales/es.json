@@ -1,0 +1,124 @@
+{
+  "nav": {
+    "explore": "Explorar",
+    "book": "Reservar",
+    "community": "Comunidad",
+    "search": "Buscar",
+    "payment": "Pago"
+  },
+  "home": {
+    "title": "Descubre Tu Próxima Aventura",
+    "subtitle": "Explora destinos increíbles, reserva experiencias únicas y conecta con viajeros de todo el mundo.",
+    "cta": "Comienza Tu Viaje",
+    "quickActions": "Acciones Rápidas",
+    "featured": "Destinos Destacados",
+    "stats": {
+      "destinations": "Destinos",
+      "travelers": "Viajeros Felices",
+      "reviews": "Reseñas 5 Estrellas"
+    }
+  },
+  "explore": {
+    "title": "Explorar Destinos",
+    "subtitle": "Descubre lugares increíbles alrededor del mundo",
+    "searchPlaceholder": "Buscar destinos...",
+    "filters": "Filtros",
+    "sortBy": "Ordenar por"
+  },
+  "book": {
+    "title": "Reserva Tu Viaje",
+    "subtitle": "Encuentra y reserva vuelos, hoteles y experiencias",
+    "flights": "Vuelos",
+    "hotels": "Hoteles",
+    "experiences": "Experiencias"
+  },
+  "community": {
+    "title": "Comunidad de Viajeros",
+    "subtitle": "Conecta con otros viajeros y comparte tus experiencias",
+    "shareStory": "Comparte Tu Historia",
+    "recentPosts": "Publicaciones Recientes"
+  },
+  "auth": {
+    "signIn": "Iniciar Sesión",
+    "signUp": "Crear Cuenta",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "backToHome": "← Volver al inicio",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "signInHere": "Inicia sesión aquí",
+    "dontHaveAccount": "¿No tienes una cuenta?",
+    "registerHere": "Regístrate aquí",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "rememberMe": "Recordarme",
+    "welcomeBack": "Bienvenido de nuevo a TravelHub",
+    "createAccountSubtitle": "Únete a TravelHub y comienza tu viaje",
+    "acceptTerms": "Acepto los",
+    "termsAndConditions": "términos y condiciones",
+    "signingIn": "Iniciando sesión...",
+    "creatingAccount": "Creando cuenta...",
+    "signInSuccess": "¡Bienvenido de nuevo!",
+    "accountCreated": "¡Cuenta creada!",
+    "accountCreatedDesc": "Bienvenido a TravelHub. Ahora puedes iniciar sesión.",
+    "passwordsNoMatch": "Las contraseñas no coinciden.",
+    "acceptTermsError": "Por favor acepta los términos y condiciones."
+  },
+  "profile": {
+    "settings": "Configuración del Perfil",
+    "personalInfo": "Información Personal",
+    "notifications": "Notificaciones",
+    "privacy": "Privacidad",
+    "billing": "Facturación",
+    "manageAccount": "Gestiona la configuración y preferencias de tu cuenta",
+    "verified": "Verificado"
+  },
+  "payment": {
+    "title": "Pago",
+    "subtitle": "Procesamiento seguro de pagos para tus reservas de viaje",
+    "selectPaymentMethod": "Seleccionar Método de Pago",
+    "creditCard": "Tarjeta de Crédito",
+    "paypal": "PayPal",
+    "bankTransfer": "Transferencia Bancaria",
+    "cardNumber": "Número de Tarjeta",
+    "expiryDate": "Fecha de Vencimiento",
+    "cvv": "CVV",
+    "nameOnCard": "Nombre en la Tarjeta",
+    "billingAddress": "Dirección de Facturación",
+    "address": "Dirección",
+    "city": "Ciudad",
+    "state": "Estado",
+    "zipCode": "Código Postal",
+    "country": "País",
+    "orderSummary": "Resumen del Pedido",
+    "subtotal": "Subtotal",
+    "taxes": "Impuestos",
+    "total": "Total",
+    "processPayment": "Procesar Pago",
+    "processing": "Procesando...",
+    "paymentSuccess": "¡Pago Exitoso!",
+    "paymentFailed": "Pago Fallido",
+    "securePayment": "Pago Seguro",
+    "encryptedConnection": "Tu información de pago está cifrada y segura"
+  },
+  "notFound": {
+    "title": "404",
+    "subtitle": "¡Oops! Página no encontrada",
+    "message": "La página que buscas no existe.",
+    "backToHome": "Volver al Inicio"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "close": "Cerrar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "submit": "Enviar",
+    "confirm": "Confirmar"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "nav": {
+    "explore": "Entdecken",
+    "book": "Buchen",
+    "community": "Gemeinschaft",
+    "search": "Suchen",
+    "payment": "Zahlung"
+  },
+  "home": {
+    "title": "Entdecke Dein Nächstes Abenteuer",
+    "subtitle": "Erkunde fantastische Reiseziele, buche unglaubliche Erfahrungen und vernetze dich mit Reisenden aus aller Welt.",
+    "cta": "Starte Deine Reise",
+    "quickActions": "Schnelle Aktionen",
+    "featured": "Beliebte Reiseziele",
+    "stats": {
+      "destinations": "Reiseziele",
+      "travelers": "Glückliche Reisende",
+      "reviews": "5-Sterne Bewertungen"
+    }
+  },
+  "explore": {
+    "title": "Reiseziele Entdecken",
+    "subtitle": "Entdecke fantastische Orte rund um die Welt",
+    "searchPlaceholder": "Reiseziele suchen...",
+    "filters": "Filter",
+    "sortBy": "Sortieren nach"
+  },
+  "book": {
+    "title": "Buche Deine Reise",
+    "subtitle": "Finde und buche Flüge, Hotels und Erlebnisse",
+    "flights": "Flüge",
+    "hotels": "Hotels",
+    "experiences": "Erlebnisse"
+  },
+  "community": {
+    "title": "Reise-Community",
+    "subtitle": "Vernetze dich mit anderen Reisenden und teile deine Erfahrungen",
+    "shareStory": "Teile Deine Geschichte",
+    "recentPosts": "Aktuelle Beiträge"
+  },
+  "profile": {
+    "settings": "Profil-Einstellungen",
+    "personalInfo": "Persönliche Informationen",
+    "notifications": "Benachrichtigungen",
+    "privacy": "Datenschutz",
+    "billing": "Abrechnung"
+  },
+  "common": {
+    "loading": "Laden...",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "close": "Schließen"
+  }
+}
