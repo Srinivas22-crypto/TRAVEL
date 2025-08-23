@@ -1,0 +1,189 @@
+import api, { 
+  ApiResponse, 
+  User, 
+  LoginCredentials, 
+  RegisterData 
+} from '../lib/api';
+
+export interface AuthResponse {
+  success: boolean;
+  token: string;
+  data: User;
+}
+
+class AuthService {
+  // Register new user
+  async register(userData: RegisterData): Promise<AuthResponse> {
+    try {
+      const response = await api.post<AuthResponse>('/auth/register', userData);
+      
+      if (response.data.success) {
+        // Store token and user data
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.data));
+      }
+      
+      return response.data;
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || 'Registration failed');
+    }
+  }
+
+  // Login user
+  async login(credentials: LoginCredentials): Promise<AuthResponse> {
+    try {
+      const response = await api.post<AuthResponse>('/auth/login', credentials);
+      
+      if (response.data.success) {
+        // Store token and user data
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.data));
+      }
+      
+      return response.data;
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || 'Login failed');
+    }
+  }
+
+  // Logout user
+  async logout(): Promise<void> {
+    try {
+      await api.post('/auth/logout');
+    } catch (error) {
+      // Continue with logout even if API call fails
+      console.error('Logout API call failed:', error);
+    } finally {
+      // Always clear local storage
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+    }
+  }
+
+  // Get current user profile
+  async getCurrentUser(): Promise<User> {
+    try {
+      const response = await api.get<ApiResponse<User>>('/auth/me');
+      return response.data.data;
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || 'Failed to get user profile');
+    }
+  }
+
+  // Update user details
+  async updateProfile(userData: Partial<User>): Promise<User> {
+    try {
+      const response = await api.put<ApiResponse<User>>('/auth/updatedetails', userData);
+      
+      if (response.data.success) {
+        // Update stored user data
+        localStorage.setItem('user', JSON.stringify(response.data.data));
+      }
+      
+      return response.data.data;
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || 'Failed to update profile');
+    }
+  }
+
+  // Update password
+  async updatePassword(passwordData: {
+    currentPassword: string;
+    newPassword: string;
+  }): Promise<AuthResponse> {
+    try {
+      const response = await api.put<AuthResponse>('/auth/updatepassword', passwordData);
+      
+      if (response.data.success) {
+        // Update token
+        localStorage.setItem('token', response.data.token);
+      }
+      
+      return response.data;
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || 'Failed to update password');
+    }
+  }
+
+  // Forgot password
+  async forgotPassword(email: string): Promise<{ success: boolean; message: string }> {
+    try {
+      const response = await api.post('/auth/forgotpassword', { email });
+      return response.data;
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || 'Failed to send reset email');
+    }
+  }
+
+  // Reset password
+  async resetPassword(token: string, password: string): Promise<AuthResponse> {
+    try {
+      const response = await api.put<AuthResponse>(`/auth/resetpassword/${token}`, { password });
+      
+      if (response.data.success) {
+        // Store new token and user data
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.data));
+      }
+      
+      return response.data;
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || 'Failed to reset password');
+    }
+  }
+
+  // Check if user is authenticated
+  isAuthenticated(): boolean {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+    return !!(token && user);
+  }
+
+  // Get stored user data
+  getStoredUser(): User | null {
+    try {
+      const userData = localStorage.getItem('user');
+      return userData ? JSON.parse(userData) : null;
+    } catch (error) {
+      console.error('Error parsing stored user data:', error);
+      return null;
+    }
+  }
+
+  // Get stored token
+  getStoredToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  // Check if user has admin role
+  isAdmin(): boolean {
+    const user = this.getStoredUser();
+    return user?.role === 'admin';
+  }
+
+  // Upload profile image
+  async uploadProfileImage(imageFile: File): Promise<{ imageUrl: string }> {
+    try {
+      const formData = new FormData();
+      formData.append('image', imageFile);
+
+      const response = await api.post<ApiResponse<{ imageUrl: string }>>(
+        '/users/upload-profile-image',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+
+      return response.data.data;
+    } catch (error: any) {
+      throw new Error(error.response?.data?.message || 'Failed to upload image');
+    }
+  }
+}
+
+// Create and export a singleton instance
+const authService = new AuthService();
+export default authService;
