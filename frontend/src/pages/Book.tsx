@@ -9,19 +9,240 @@ import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useTranslation } from 'react-i18next';
+import { useToast } from '@/hooks/use-toast';
 import { Plane, Hotel, Car, Calendar as CalendarIcon, MapPin, Users, Star, Wifi, Car as CarIcon, Utensils } from 'lucide-react';
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { useNavigate } from 'react-router-dom';
+import bookingService from '@/services/bookingService';
 
 const Book = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [departureDate, setDepartureDate] = useState<Date>();
-  const [returnDate, setReturnDate] = useState<Date>();
-  const [checkInDate, setCheckInDate] = useState<Date>();
-  const [checkOutDate, setCheckOutDate] = useState<Date>();
+  const { toast } = useToast();
+
+  // Flight search state
+  const [flightSearch, setFlightSearch] = useState({
+    from: '',
+    to: '',
+    departureDate: undefined as Date | undefined,
+    returnDate: undefined as Date | undefined,
+    passengers: '1',
+    class: 'economy'
+  });
+
+  // Hotel search state
+  const [hotelSearch, setHotelSearch] = useState({
+    destination: '',
+    checkInDate: undefined as Date | undefined,
+    checkOutDate: undefined as Date | undefined,
+    guests: '2',
+    rooms: '1'
+  });
+
+  // Car search state
+  const [carSearch, setCarSearch] = useState({
+    location: '',
+    pickupDate: undefined as Date | undefined,
+    returnDate: undefined as Date | undefined,
+    carType: 'economy'
+  });
+
+  // Search results state
+  const [searchResults, setSearchResults] = useState<{
+    flights?: any[];
+    hotels?: any[];
+    cars?: any[];
+  }>({});
+
+  const [isSearching, setIsSearching] = useState(false);
+  const [errors, setErrors] = useState<{[key: string]: string}>({});
+
+  // Validation functions
+  const validateFlightSearch = () => {
+    const newErrors: {[key: string]: string} = {};
+
+    if (!flightSearch.from.trim()) {
+      newErrors.from = 'Departure city is required';
+    }
+
+    if (!flightSearch.to.trim()) {
+      newErrors.to = 'Destination city is required';
+    }
+
+    if (flightSearch.from.trim() === flightSearch.to.trim()) {
+      newErrors.to = 'Destination must be different from departure city';
+    }
+
+    if (!flightSearch.departureDate) {
+      newErrors.departureDate = 'Departure date is required';
+    } else if (flightSearch.departureDate < new Date()) {
+      newErrors.departureDate = 'Departure date cannot be in the past';
+    }
+
+    if (flightSearch.returnDate && flightSearch.departureDate && flightSearch.returnDate <= flightSearch.departureDate) {
+      newErrors.returnDate = 'Return date must be after departure date';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validateHotelSearch = () => {
+    const newErrors: {[key: string]: string} = {};
+
+    if (!hotelSearch.destination.trim()) {
+      newErrors.destination = 'Destination is required';
+    }
+
+    if (!hotelSearch.checkInDate) {
+      newErrors.checkInDate = 'Check-in date is required';
+    } else if (hotelSearch.checkInDate < new Date()) {
+      newErrors.checkInDate = 'Check-in date cannot be in the past';
+    }
+
+    if (!hotelSearch.checkOutDate) {
+      newErrors.checkOutDate = 'Check-out date is required';
+    } else if (hotelSearch.checkInDate && hotelSearch.checkOutDate <= hotelSearch.checkInDate) {
+      newErrors.checkOutDate = 'Check-out date must be after check-in date';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validateCarSearch = () => {
+    const newErrors: {[key: string]: string} = {};
+
+    if (!carSearch.location.trim()) {
+      newErrors.location = 'Pickup location is required';
+    }
+
+    if (!carSearch.pickupDate) {
+      newErrors.pickupDate = 'Pickup date is required';
+    } else if (carSearch.pickupDate < new Date()) {
+      newErrors.pickupDate = 'Pickup date cannot be in the past';
+    }
+
+    if (!carSearch.returnDate) {
+      newErrors.returnDate = 'Return date is required';
+    } else if (carSearch.pickupDate && carSearch.returnDate <= carSearch.pickupDate) {
+      newErrors.returnDate = 'Return date must be after pickup date';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  // Search functions
+  const handleFlightSearch = async () => {
+    if (!validateFlightSearch()) {
+      return;
+    }
+
+    setIsSearching(true);
+    try {
+      console.log('🔍 Searching flights:', flightSearch);
+
+      const searchParams = {
+        from: flightSearch.from,
+        to: flightSearch.to,
+        departureDate: flightSearch.departureDate!.toISOString().split('T')[0],
+        returnDate: flightSearch.returnDate?.toISOString().split('T')[0],
+        passengers: parseInt(flightSearch.passengers),
+        class: flightSearch.class as 'economy' | 'business' | 'first'
+      };
+
+      const results = await bookingService.searchFlights(searchParams);
+      setSearchResults(prev => ({ ...prev, flights: results.outboundFlights }));
+
+      toast({
+        title: "Search Complete",
+        description: `Found ${results.outboundFlights.length} flights`,
+      });
+    } catch (error: any) {
+      console.error('Flight search failed:', error);
+      toast({
+        title: "Search Failed",
+        description: error.message || "Failed to search flights. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  const handleHotelSearch = async () => {
+    if (!validateHotelSearch()) {
+      return;
+    }
+
+    setIsSearching(true);
+    try {
+      console.log('🔍 Searching hotels:', hotelSearch);
+
+      const searchParams = {
+        destination: hotelSearch.destination,
+        checkIn: hotelSearch.checkInDate!.toISOString().split('T')[0],
+        checkOut: hotelSearch.checkOutDate!.toISOString().split('T')[0],
+        guests: parseInt(hotelSearch.guests),
+        rooms: parseInt(hotelSearch.rooms)
+      };
+
+      const results = await bookingService.searchHotels(searchParams);
+      setSearchResults(prev => ({ ...prev, hotels: results.hotels }));
+
+      toast({
+        title: "Search Complete",
+        description: `Found ${results.hotels.length} hotels`,
+      });
+    } catch (error: any) {
+      console.error('Hotel search failed:', error);
+      toast({
+        title: "Search Failed",
+        description: error.message || "Failed to search hotels. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  const handleCarSearch = async () => {
+    if (!validateCarSearch()) {
+      return;
+    }
+
+    setIsSearching(true);
+    try {
+      console.log('🔍 Searching cars:', carSearch);
+
+      const searchParams = {
+        location: carSearch.location,
+        pickupDate: carSearch.pickupDate!.toISOString().split('T')[0],
+        returnDate: carSearch.returnDate!.toISOString().split('T')[0],
+        carType: carSearch.carType
+      };
+
+      const results = await bookingService.searchCars(searchParams);
+      setSearchResults(prev => ({ ...prev, cars: results.cars }));
+
+      toast({
+        title: "Search Complete",
+        description: `Found ${results.cars.length} cars`,
+      });
+    } catch (error: any) {
+      console.error('Car search failed:', error);
+      toast({
+        title: "Search Failed",
+        description: error.message || "Failed to search cars. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSearching(false);
+    }
+  };
 
   const flightDeals = [
     {
@@ -131,15 +352,29 @@ const Book = () => {
                     <Label htmlFor="from">From</Label>
                     <div className="relative">
                       <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                      <Input id="from" placeholder="Departure city" className="pl-10" />
+                      <Input
+                        id="from"
+                        placeholder="Departure city"
+                        className={`pl-10 ${errors.from ? "border-red-500" : ""}`}
+                        value={flightSearch.from}
+                        onChange={(e) => setFlightSearch(prev => ({ ...prev, from: e.target.value }))}
+                      />
                     </div>
+                    {errors.from && <p className="text-sm text-red-500">{errors.from}</p>}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="to">To</Label>
                     <div className="relative">
                       <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                      <Input id="to" placeholder="Destination city" className="pl-10" />
+                      <Input
+                        id="to"
+                        placeholder="Destination city"
+                        className={`pl-10 ${errors.to ? "border-red-500" : ""}`}
+                        value={flightSearch.to}
+                        onChange={(e) => setFlightSearch(prev => ({ ...prev, to: e.target.value }))}
+                      />
                     </div>
+                    {errors.to && <p className="text-sm text-red-500">{errors.to}</p>}
                   </div>
                 </div>
                 
@@ -148,35 +383,47 @@ const Book = () => {
                     <Label>Departure Date</Label>
                     <Popover>
                       <PopoverTrigger asChild>
-                        <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !departureDate && "text-muted-foreground")}>
+                        <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !flightSearch.departureDate && "text-muted-foreground", errors.departureDate && "border-red-500")}>
                           <CalendarIcon className="mr-2 h-4 w-4" />
-                          {departureDate ? format(departureDate, "PPP") : "Pick a date"}
+                          {flightSearch.departureDate ? format(flightSearch.departureDate, "PPP") : "Pick a date"}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0">
-                        <Calendar mode="single" selected={departureDate} onSelect={setDepartureDate} initialFocus />
+                        <Calendar
+                          mode="single"
+                          selected={flightSearch.departureDate}
+                          onSelect={(date) => setFlightSearch(prev => ({ ...prev, departureDate: date }))}
+                          initialFocus
+                        />
                       </PopoverContent>
                     </Popover>
+                    {errors.departureDate && <p className="text-sm text-red-500">{errors.departureDate}</p>}
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label>Return Date</Label>
                     <Popover>
                       <PopoverTrigger asChild>
-                        <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !returnDate && "text-muted-foreground")}>
+                        <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !flightSearch.returnDate && "text-muted-foreground", errors.returnDate && "border-red-500")}>
                           <CalendarIcon className="mr-2 h-4 w-4" />
-                          {returnDate ? format(returnDate, "PPP") : "Pick a date"}
+                          {flightSearch.returnDate ? format(flightSearch.returnDate, "PPP") : "Pick a date"}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0">
-                        <Calendar mode="single" selected={returnDate} onSelect={setReturnDate} initialFocus />
+                        <Calendar
+                          mode="single"
+                          selected={flightSearch.returnDate}
+                          onSelect={(date) => setFlightSearch(prev => ({ ...prev, returnDate: date }))}
+                          initialFocus
+                        />
                       </PopoverContent>
                     </Popover>
+                    {errors.returnDate && <p className="text-sm text-red-500">{errors.returnDate}</p>}
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label>Passengers</Label>
-                    <Select>
+                    <Select value={flightSearch.passengers} onValueChange={(value) => setFlightSearch(prev => ({ ...prev, passengers: value }))}>
                       <SelectTrigger>
                         <SelectValue placeholder="1 Adult" />
                       </SelectTrigger>
@@ -190,10 +437,64 @@ const Book = () => {
                   </div>
                 </div>
                 
-                <Button className="w-full bg-gradient-hero hover:opacity-90">
+                <Button
+                  className="w-full bg-gradient-hero hover:opacity-90"
+                  onClick={handleFlightSearch}
+                  disabled={isSearching}
+                >
                   <Plane className="h-4 w-4 mr-2" />
-                  Search Flights
+                  {isSearching ? "Searching..." : "Search Flights"}
                 </Button>
+
+                {/* Flight Search Results */}
+                {searchResults.flights && searchResults.flights.length > 0 && (
+                  <div className="mt-6 space-y-4">
+                    <h3 className="text-lg font-semibold">Flight Results ({searchResults.flights.length})</h3>
+                    <div className="grid gap-4">
+                      {searchResults.flights.map((flight: any) => (
+                        <Card key={flight.id} className="hover:shadow-md transition-shadow">
+                          <CardContent className="p-4">
+                            <div className="flex justify-between items-start">
+                              <div className="flex-1">
+                                <div className="flex items-center gap-4 mb-2">
+                                  <h4 className="font-semibold">{flight.airline}</h4>
+                                  {flight.rating && (
+                                    <div className="flex items-center gap-1">
+                                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                                      <span className="text-sm">{flight.rating}</span>
+                                    </div>
+                                  )}
+                                  <Badge variant="outline">{flight.class || 'Economy'}</Badge>
+                                </div>
+                                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                                  <div className="flex items-center gap-1">
+                                    <MapPin className="h-4 w-4" />
+                                    {flight.from} → {flight.to}
+                                  </div>
+                                  <div className="flex items-center gap-1">
+                                    <CalendarIcon className="h-4 w-4" />
+                                    {flight.duration}
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <div className="text-2xl font-bold text-primary">
+                                  ${flight.price}
+                                </div>
+                                <Button
+                                  className="mt-2"
+                                  onClick={() => navigate('/payment')}
+                                >
+                                  Book Flight
+                                </Button>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
@@ -213,39 +514,58 @@ const Book = () => {
                   <Label htmlFor="destination">Destination</Label>
                   <div className="relative">
                     <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input id="destination" placeholder="Where are you going?" className="pl-10" />
+                    <Input
+                      id="destination"
+                      placeholder="Where are you going?"
+                      className={`pl-10 ${errors.destination ? "border-red-500" : ""}`}
+                      value={hotelSearch.destination}
+                      onChange={(e) => setHotelSearch(prev => ({ ...prev, destination: e.target.value }))}
+                    />
                   </div>
+                  {errors.destination && <p className="text-sm text-red-500">{errors.destination}</p>}
                 </div>
-                
+
                 <div className="grid md:grid-cols-3 gap-4">
                   <div className="space-y-2">
                     <Label>Check-in Date</Label>
                     <Popover>
                       <PopoverTrigger asChild>
-                        <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !checkInDate && "text-muted-foreground")}>
+                        <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !hotelSearch.checkInDate && "text-muted-foreground", errors.checkInDate && "border-red-500")}>
                           <CalendarIcon className="mr-2 h-4 w-4" />
-                          {checkInDate ? format(checkInDate, "PPP") : "Pick a date"}
+                          {hotelSearch.checkInDate ? format(hotelSearch.checkInDate, "PPP") : "Pick a date"}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0">
-                        <Calendar mode="single" selected={checkInDate} onSelect={setCheckInDate} initialFocus />
+                        <Calendar
+                          mode="single"
+                          selected={hotelSearch.checkInDate}
+                          onSelect={(date) => setHotelSearch(prev => ({ ...prev, checkInDate: date }))}
+                          initialFocus
+                        />
                       </PopoverContent>
                     </Popover>
+                    {errors.checkInDate && <p className="text-sm text-red-500">{errors.checkInDate}</p>}
                   </div>
-                  
+
                   <div className="space-y-2">
                     <Label>Check-out Date</Label>
                     <Popover>
                       <PopoverTrigger asChild>
-                        <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !checkOutDate && "text-muted-foreground")}>
+                        <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !hotelSearch.checkOutDate && "text-muted-foreground", errors.checkOutDate && "border-red-500")}>
                           <CalendarIcon className="mr-2 h-4 w-4" />
-                          {checkOutDate ? format(checkOutDate, "PPP") : "Pick a date"}
+                          {hotelSearch.checkOutDate ? format(hotelSearch.checkOutDate, "PPP") : "Pick a date"}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0">
-                        <Calendar mode="single" selected={checkOutDate} onSelect={setCheckOutDate} initialFocus />
+                        <Calendar
+                          mode="single"
+                          selected={hotelSearch.checkOutDate}
+                          onSelect={(date) => setHotelSearch(prev => ({ ...prev, checkOutDate: date }))}
+                          initialFocus
+                        />
                       </PopoverContent>
                     </Popover>
+                    {errors.checkOutDate && <p className="text-sm text-red-500">{errors.checkOutDate}</p>}
                   </div>
                   
                   <div className="space-y-2">
@@ -291,7 +611,7 @@ const Book = () => {
                   </div>
                 </div>
                 
-                <div className="grid md:grid-cols-2 gap-4">
+                {/* <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label>Pick-up Date</Label>
                     <Popover>
@@ -321,7 +641,7 @@ const Book = () => {
                       </PopoverContent>
                     </Popover>
                   </div>
-                </div>
+                </div> */}
                 
                 <Button className="w-full bg-gradient-hero hover:opacity-90">
                   <Car className="h-4 w-4 mr-2" />

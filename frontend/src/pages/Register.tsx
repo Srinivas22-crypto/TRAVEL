@@ -8,6 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Plane, Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -21,49 +22,127 @@ export default function Register() {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<{
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
+    terms?: string;
+  }>({});
   const navigate = useNavigate();
   const { toast } = useToast();
   const { t } = useTranslation();
+  const { register } = useAuth();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [name]: value
     }));
+
+    // Clear error when user starts typing
+    if (errors[name as keyof typeof errors]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: undefined
+      }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors: typeof errors = {};
+
+    // First name validation
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'First name is required';
+    } else if (formData.firstName.trim().length < 2) {
+      newErrors.firstName = 'First name must be at least 2 characters';
+    }
+
+    // Last name validation
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Last name is required';
+    } else if (formData.lastName.trim().length < 2) {
+      newErrors.lastName = 'Last name must be at least 2 characters';
+    }
+
+    // Email validation
+    if (!formData.email) {
+      newErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    // Password validation
+    if (!formData.password) {
+      newErrors.password = 'Password is required';
+    } else if (formData.password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters';
+    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
+      newErrors.password = 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
+    }
+
+    // Confirm password validation
+    if (!formData.confirmPassword) {
+      newErrors.confirmPassword = 'Please confirm your password';
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = 'Passwords do not match';
+    }
+
+    // Terms validation
+    if (!acceptTerms) {
+      newErrors.terms = 'You must accept the terms and conditions';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (formData.password !== formData.confirmPassword) {
-      toast({
-        title: "Error",
-        description: t('auth.passwordsNoMatch'),
-        variant: "destructive"
-      });
-      return;
-    }
 
-    if (!acceptTerms) {
-      toast({
-        title: "Error",
-        description: t('auth.acceptTermsError'),
-        variant: "destructive"
-      });
+    if (!validateForm()) {
       return;
     }
 
     setIsLoading(true);
+    setErrors({});
 
-    // Simulate registration
-    setTimeout(() => {
+    try {
+      const fullName = `${formData.firstName.trim()} ${formData.lastName.trim()}`;
+
+      console.log('📝 Attempting to register user:', {
+        name: fullName,
+        email: formData.email,
+        passwordLength: formData.password.length
+      });
+
+      await register(fullName, formData.email, formData.password);
+
+      console.log('✅ User registered successfully:', {
+        name: fullName,
+        email: formData.email
+      });
+
       toast({
         title: t('auth.accountCreated'),
         description: t('auth.accountCreatedDesc'),
       });
+
+      navigate('/');
+    } catch (error: any) {
+      console.error('❌ Registration failed:', error.message);
+
+      toast({
+        title: "Registration Failed",
+        description: error.message || "Failed to create account. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
       setIsLoading(false);
-      navigate('/signin');
-    }, 1000);
+    }
   };
 
   return (
@@ -96,8 +175,12 @@ export default function Register() {
                     placeholder="John"
                     value={formData.firstName}
                     onChange={handleInputChange}
+                    className={errors.firstName ? "border-red-500" : ""}
                     required
                   />
+                  {errors.firstName && (
+                    <p className="text-sm text-red-500">{errors.firstName}</p>
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="lastName">{t('auth.lastName')}</Label>
@@ -107,8 +190,12 @@ export default function Register() {
                     placeholder="Doe"
                     value={formData.lastName}
                     onChange={handleInputChange}
+                    className={errors.lastName ? "border-red-500" : ""}
                     required
                   />
+                  {errors.lastName && (
+                    <p className="text-sm text-red-500">{errors.lastName}</p>
+                  )}
                 </div>
               </div>
               
@@ -121,10 +208,14 @@ export default function Register() {
                   placeholder="john@example.com"
                   value={formData.email}
                   onChange={handleInputChange}
+                  className={errors.email ? "border-red-500" : ""}
                   required
                 />
+                {errors.email && (
+                  <p className="text-sm text-red-500">{errors.email}</p>
+                )}
               </div>
-              
+
               <div className="space-y-2">
                 <Label htmlFor="password">{t('auth.password')}</Label>
                 <div className="relative">
@@ -134,6 +225,7 @@ export default function Register() {
                     type={showPassword ? "text" : "password"}
                     value={formData.password}
                     onChange={handleInputChange}
+                    className={errors.password ? "border-red-500" : ""}
                     required
                   />
                   <Button
@@ -150,6 +242,9 @@ export default function Register() {
                     )}
                   </Button>
                 </div>
+                {errors.password && (
+                  <p className="text-sm text-red-500">{errors.password}</p>
+                )}
               </div>
               
               <div className="space-y-2">
@@ -161,6 +256,7 @@ export default function Register() {
                     type={showConfirmPassword ? "text" : "password"}
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
+                    className={errors.confirmPassword ? "border-red-500" : ""}
                     required
                   />
                   <Button
@@ -177,11 +273,14 @@ export default function Register() {
                     )}
                   </Button>
                 </div>
+                {errors.confirmPassword && (
+                  <p className="text-sm text-red-500">{errors.confirmPassword}</p>
+                )}
               </div>
 
               <div className="flex items-center space-x-2">
-                <Checkbox 
-                  id="terms" 
+                <Checkbox
+                  id="terms"
                   checked={acceptTerms}
                   onCheckedChange={(checked) => setAcceptTerms(checked as boolean)}
                 />
@@ -192,6 +291,9 @@ export default function Register() {
                   </Link>
                 </Label>
               </div>
+              {errors.terms && (
+                <p className="text-sm text-red-500">{errors.terms}</p>
+              )}
 
               <Button type="submit" className="w-full" disabled={isLoading}>
                 {isLoading ? t('auth.creatingAccount') : t('auth.signUp')}

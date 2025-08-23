@@ -111,10 +111,11 @@ export const updateDetails = async (req, res, next) => {
       email: req.body.email,
       bio: req.body.bio,
       profileImage: req.body.profileImage,
+      preferences: req.body.preferences,
     };
 
     // Remove undefined fields
-    Object.keys(fieldsToUpdate).forEach(key => 
+    Object.keys(fieldsToUpdate).forEach(key =>
       fieldsToUpdate[key] === undefined && delete fieldsToUpdate[key]
     );
 

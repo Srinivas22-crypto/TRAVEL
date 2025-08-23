@@ -7,29 +7,74 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Plane, Eye, EyeOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<{email?: string; password?: string}>({});
   const navigate = useNavigate();
   const { toast } = useToast();
   const { t } = useTranslation();
+  const { login } = useAuth();
+
+  const validateForm = () => {
+    const newErrors: {email?: string; password?: string} = {};
+
+    // Email validation
+    if (!email) {
+      newErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    // Password validation
+    if (!password) {
+      newErrors.password = 'Password is required';
+    } else if (password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    // Simulate authentication
-    setTimeout(() => {
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsLoading(true);
+    setErrors({});
+
+    try {
+      console.log('🔐 Attempting to sign in user:', { email });
+
+      await login(email, password);
+
+      console.log('✅ User signed in successfully:', { email });
+
       toast({
         title: t('auth.signInSuccess'),
         description: "You have successfully signed in.",
       });
-      setIsLoading(false);
+
       navigate('/');
-    }, 1000);
+    } catch (error: any) {
+      console.error('❌ Sign in failed:', error.message);
+
+      toast({
+        title: "Sign In Failed",
+        description: error.message || "Invalid email or password. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -61,8 +106,12 @@ export default function SignIn() {
                   placeholder="john@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  className={errors.email ? "border-red-500" : ""}
                   required
                 />
+                {errors.email && (
+                  <p className="text-sm text-red-500">{errors.email}</p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">{t('auth.password')}</Label>
@@ -72,8 +121,12 @@ export default function SignIn() {
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    className={errors.password ? "border-red-500" : ""}
                     required
                   />
+                  {errors.password && (
+                    <p className="text-sm text-red-500 mt-1">{errors.password}</p>
+                  )}
                   <Button
                     type="button"
                     variant="ghost"

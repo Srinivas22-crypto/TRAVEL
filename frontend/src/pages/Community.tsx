@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Header } from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,13 +8,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { ShareStoryModal } from '@/components/ShareStoryModal';
 import { useTranslation } from 'react-i18next';
-import { 
-  Users, 
-  MessageCircle, 
-  Heart, 
-  Share2, 
-  MapPin, 
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
+import communityService from '@/services/communityService';
+import {
+  Users,
+  MessageCircle,
+  Heart,
+  Share2,
+  MapPin,
   Calendar,
   Camera,
   Plus,
@@ -24,7 +29,75 @@ import {
 
 const Community = () => {
   const { t } = useTranslation();
-  const posts = [
+  const { isAuthenticated } = useAuth();
+  const { toast } = useToast();
+  const [posts, setPosts] = useState<any[]>([]);
+  const [groups, setGroups] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Load posts and groups on component mount
+  useEffect(() => {
+    loadPosts();
+    loadGroups();
+  }, []);
+
+  const loadPosts = async () => {
+    try {
+      setIsLoading(true);
+      const response = await communityService.getPosts({ limit: 10 });
+      setPosts(response.posts);
+    } catch (error) {
+      console.error('Failed to load posts:', error);
+      // Fall back to mock data
+      setPosts(mockPosts);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const loadGroups = async () => {
+    try {
+      const response = await communityService.getGroups({ limit: 10 });
+      setGroups(response.groups);
+    } catch (error) {
+      console.error('Failed to load groups:', error);
+      // Fall back to mock data
+      setGroups(mockGroups);
+    }
+  };
+
+  const handlePostCreated = () => {
+    loadPosts(); // Refresh posts when a new one is created
+  };
+
+  const handleJoinGroup = async (groupId: string) => {
+    if (!isAuthenticated) {
+      toast({
+        title: "Authentication Required",
+        description: "Please sign in to join groups.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      await communityService.joinGroup(groupId);
+      toast({
+        title: "Joined Group!",
+        description: "You have successfully joined the group.",
+      });
+      loadGroups(); // Refresh groups
+    } catch (error: any) {
+      toast({
+        title: "Failed to Join Group",
+        description: error.message || "Something went wrong. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  // Mock data for fallback
+  const mockPosts = [
     {
       id: 1,
       author: {
@@ -75,7 +148,7 @@ const Community = () => {
     }
   ];
 
-  const travelGroups = [
+  const mockGroups = [
     {
       id: 1,
       name: "Solo Travelers Unite",
@@ -125,10 +198,12 @@ const Community = () => {
           </p>
           
           <div className="flex gap-4 justify-center">
-            <Button className="bg-gradient-hero hover:opacity-90">
-              <Plus className="h-4 w-4 mr-2" />
-              {t('community.shareStory')}
-            </Button>
+            <ShareStoryModal onPostCreated={handlePostCreated}>
+              <Button className="bg-gradient-hero hover:opacity-90">
+                <Plus className="h-4 w-4 mr-2" />
+                {t('community.shareStory')}
+              </Button>
+            </ShareStoryModal>
             <Button variant="outline">
               <Users className="h-4 w-4 mr-2" />
               Join Groups
@@ -230,11 +305,11 @@ const Community = () => {
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
-                  {travelGroups.map((group) => (
-                    <Card key={group.id} className="overflow-hidden hover:shadow-md transition-shadow">
+                  {(groups.length > 0 ? groups : mockGroups).map((group) => (
+                    <Card key={group.id || group._id} className="overflow-hidden hover:shadow-md transition-shadow">
                       <div className="aspect-video overflow-hidden">
-                        <img 
-                          src={group.image} 
+                        <img
+                          src={group.image}
                           alt={group.name}
                           className="w-full h-full object-cover"
                         />
@@ -248,9 +323,15 @@ const Community = () => {
                         <div className="flex justify-between items-center">
                           <div className="flex items-center gap-1 text-sm text-muted-foreground">
                             <Users className="h-4 w-4" />
-                            {group.members.toLocaleString()} members
+                            {(group.members?.length || group.members || 0).toLocaleString()} members
                           </div>
-                          <Button size="sm">Join Group</Button>
+                          <Button
+                            size="sm"
+                            onClick={() => handleJoinGroup(group.id || group._id)}
+                            disabled={!isAuthenticated}
+                          >
+                            Join Group
+                          </Button>
                         </div>
                       </CardContent>
                     </Card>
@@ -266,32 +347,16 @@ const Community = () => {
                     <CardDescription>Tell the community about your latest adventure</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="location">Location</Label>
-                      <div className="relative">
-                        <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <Input id="location" placeholder="Where did you go?" className="pl-10" />
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      <Label htmlFor="content">Your Story</Label>
-                      <Textarea 
-                        id="content" 
-                        placeholder="Share your experience, tips, and memorable moments..."
-                        rows={6}
-                      />
-                    </div>
-                    
-                    <div className="flex items-center gap-4">
-                      <Button variant="outline" className="flex items-center gap-2">
-                        <Camera className="h-4 w-4" />
-                        Add Photos
-                      </Button>
-                      <Button variant="outline" className="flex items-center gap-2">
-                        <MapPin className="h-4 w-4" />
-                        Add Location
-                      </Button>
+                    <div className="text-center py-8">
+                      <p className="text-muted-foreground mb-4">
+                        Use our enhanced story sharing feature for the best experience
+                      </p>
+                      <ShareStoryModal onPostCreated={handlePostCreated}>
+                        <Button className="bg-gradient-hero hover:opacity-90">
+                          <Plus className="h-4 w-4 mr-2" />
+                          Share Your Story
+                        </Button>
+                      </ShareStoryModal>
                     </div>
                     
                     <div className="space-y-2">

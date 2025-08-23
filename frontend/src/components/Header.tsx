@@ -33,7 +33,6 @@ import {
   MapPin,
   Calendar,
   Users,
-  MessageCircle,
   X
 } from 'lucide-react';
 
@@ -42,12 +41,12 @@ export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [user, setUser] = useState<any>(null); 
   const navigate = useNavigate();
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
       console.log('Searching for:', searchQuery);
-      // Here you could navigate to a search results page or trigger search logic
       // navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
     }
   };
@@ -180,30 +179,53 @@ export const Header = () => {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="relative">
                   <User className="h-5 w-5" />
-                  <Badge 
-                    variant="success" 
-                    className="absolute -top-1 -right-1 h-3 w-3 p-0 rounded-full"
-                  />
+                  {user && (
+                    <Badge 
+                      variant="success" 
+                      className="absolute -top-1 -right-1 h-3 w-3 p-0 rounded-full"
+                    />
+                  )}
                 </Button>
               </DropdownMenuTrigger>
+
               <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuItem onClick={() => navigate('/signin')}>
-                  <User className="mr-2 h-4 w-4" />
-                  Sign In
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate('/register')}>
-                  <User className="mr-2 h-4 w-4" />
-                  Register
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => navigate('/profile')}>
-                  <Settings className="mr-2 h-4 w-4" />
-                  Profile Settings
-                </DropdownMenuItem>
-                <DropdownMenuItem className="text-destructive">
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Logout
-                </DropdownMenuItem>
+                {user ? (
+                  <>
+                    <div className="px-3 py-2">
+                      <p className="font-medium">{user.name}</p>
+                      <p className="text-xs text-muted-foreground">{user.email}</p>
+                    </div>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={() => navigate('/profile')}>
+                      <Settings className="mr-2 h-4 w-4" />
+                      Profile Settings
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      className="text-destructive"
+                      onClick={() => {
+                        setUser(null); // replace with actual logout logic
+                        navigate('/signin');
+                      }}
+                    >
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Logout
+                    </DropdownMenuItem>
+                  </>
+                ) : (
+                  <>
+                    <DropdownMenuItem onClick={() => navigate('/signin')}>
+                      <User className="mr-2 h-4 w-4" />
+                      Sign In
+                    </DropdownMenuItem>
+                    <DropdownMenuItem 
+                      onClick={() => navigate('/register')} 
+                      disabled={!!user}  // 👈 disables Register if user is logged in
+                    >
+                      <User className="mr-2 h-4 w-4" />
+                      Register
+                    </DropdownMenuItem>
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
 

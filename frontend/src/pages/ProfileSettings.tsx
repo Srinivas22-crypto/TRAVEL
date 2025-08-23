@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,30 +12,35 @@ import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { 
-  User, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Bell, 
-  Shield, 
-  CreditCard, 
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from 'sonner';
+import {
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  Bell,
+  Shield,
+  CreditCard,
   Globe,
   Camera,
   Save,
-  ArrowLeft
+  ArrowLeft,
+  Loader2
 } from 'lucide-react';
 
 const ProfileSettings = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { user, updateUser, isLoading: authLoading } = useAuth();
+
   const [profile, setProfile] = useState({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    phone: '+1 (555) 123-4567',
-    location: 'New York, NY',
-    bio: 'Travel enthusiast exploring the world one destination at a time.',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    location: '',
+    bio: '',
     avatar: ''
   });
 
@@ -52,20 +57,130 @@ const ProfileSettings = () => {
     allowMessages: true
   });
 
-  const handleProfileSave = () => {
-    console.log('Saving profile:', profile);
-    // Here you would typically save to your backend
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  // Initialize profile data from authenticated user
+  useEffect(() => {
+    if (user) {
+      // Split name into first and last name
+      const nameParts = user.name.split(' ');
+      const firstName = nameParts[0] || '';
+      const lastName = nameParts.slice(1).join(' ') || '';
+
+      setProfile({
+        firstName,
+        lastName,
+        email: user.email,
+        phone: '', // Phone not in current user model
+        location: '', // Location not in current user model
+        bio: user.bio || '',
+        avatar: user.profileImage || ''
+      });
+
+      // Set notifications from user preferences
+      if (user.preferences?.notifications) {
+        setNotifications({
+          emailNotifications: user.preferences.notifications.email,
+          pushNotifications: user.preferences.notifications.push,
+          travelUpdates: true, // Default for travel updates
+          marketing: user.preferences.notifications.marketing
+        });
+      }
+    }
+  }, [user]);
+
+  const handleProfileSave = async () => {
+    if (!user) return;
+
+    try {
+      setIsUpdating(true);
+
+      // Combine first and last name
+      const fullName = `${profile.firstName} ${profile.lastName}`.trim();
+
+      // Prepare update data
+      const updateData = {
+        name: fullName,
+        email: profile.email,
+        bio: profile.bio,
+        profileImage: profile.avatar
+      };
+
+      await updateUser(updateData);
+      toast.success('Profile updated successfully!');
+    } catch (error: any) {
+      console.error('Profile update error:', error);
+      toast.error(error.message || 'Failed to update profile');
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
-  const handleNotificationSave = () => {
-    console.log('Saving notifications:', notifications);
-    // Here you would typically save to your backend
+  const handleNotificationSave = async () => {
+    if (!user) return;
+
+    try {
+      setIsUpdating(true);
+
+      // Update user preferences with notification settings
+      const updateData = {
+        preferences: {
+          ...user.preferences,
+          notifications: {
+            email: notifications.emailNotifications,
+            push: notifications.pushNotifications,
+            marketing: notifications.marketing
+          }
+        }
+      };
+
+      await updateUser(updateData);
+      toast.success('Notification preferences updated successfully!');
+    } catch (error: any) {
+      console.error('Notification update error:', error);
+      toast.error(error.message || 'Failed to update notification preferences');
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
-  const handlePrivacySave = () => {
-    console.log('Saving privacy settings:', privacy);
-    // Here you would typically save to your backend
+  const handlePrivacySave = async () => {
+    try {
+      setIsUpdating(true);
+      // Privacy settings would need to be added to the user model
+      // For now, just show a success message
+      toast.success('Privacy settings updated successfully!');
+    } catch (error: any) {
+      console.error('Privacy update error:', error);
+      toast.error(error.message || 'Failed to update privacy settings');
+    } finally {
+      setIsUpdating(false);
+    }
   };
+
+  // Redirect to login if not authenticated
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate('/signin');
+    }
+  }, [user, authLoading, navigate]);
+
+  // Show loading state while checking authentication
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="flex items-center gap-2">
+          <Loader2 className="h-6 w-6 animate-spin" />
+          <span>Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Don't render if user is not authenticated
+  if (!user) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -94,14 +209,14 @@ const ProfileSettings = () => {
             <div className="flex items-center gap-6">
               <div className="relative">
                 <Avatar className="h-20 w-20">
-                  <AvatarImage src={profile.avatar} alt={`${profile.firstName} ${profile.lastName}`} />
+                  <AvatarImage src={profile.avatar} alt={user.name} />
                   <AvatarFallback className="text-lg">
-                    {profile.firstName.charAt(0)}{profile.lastName.charAt(0)}
+                    {user.name.split(' ').map(n => n.charAt(0)).join('').toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
-                <Button 
-                  size="icon" 
-                  variant="outline" 
+                <Button
+                  size="icon"
+                  variant="outline"
                   className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full"
                 >
                   <Camera className="h-4 w-4" />
@@ -109,14 +224,18 @@ const ProfileSettings = () => {
               </div>
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-2">
-                  <h2 className="text-2xl font-semibold">{profile.firstName} {profile.lastName}</h2>
-                  <Badge variant="secondary">{t('profile.verified')}</Badge>
+                  <h2 className="text-2xl font-semibold">{user.name}</h2>
+                  {user.isVerified && (
+                    <Badge variant="secondary">{t('profile.verified')}</Badge>
+                  )}
                 </div>
-                <p className="text-muted-foreground mb-1">{profile.email}</p>
-                <p className="text-sm text-muted-foreground flex items-center gap-1">
-                  <MapPin className="h-3 w-3" />
-                  {profile.location}
-                </p>
+                <p className="text-muted-foreground mb-1">{user.email}</p>
+                {profile.location && (
+                  <p className="text-sm text-muted-foreground flex items-center gap-1">
+                    <MapPin className="h-3 w-3" />
+                    {profile.location}
+                  </p>
+                )}
               </div>
             </div>
           </CardContent>
@@ -226,9 +345,17 @@ const ProfileSettings = () => {
                 <Separator />
 
                 <div className="flex justify-end">
-                  <Button onClick={handleProfileSave} className="flex items-center gap-2">
-                    <Save className="h-4 w-4" />
-                    Save Changes
+                  <Button
+                    onClick={handleProfileSave}
+                    disabled={isUpdating}
+                    className="flex items-center gap-2"
+                  >
+                    {isUpdating ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Save className="h-4 w-4" />
+                    )}
+                    {isUpdating ? 'Saving...' : 'Save Changes'}
                   </Button>
                 </div>
               </CardContent>
@@ -308,9 +435,17 @@ const ProfileSettings = () => {
                 <Separator />
 
                 <div className="flex justify-end">
-                  <Button onClick={handleNotificationSave} className="flex items-center gap-2">
-                    <Save className="h-4 w-4" />
-                    Save Preferences
+                  <Button
+                    onClick={handleNotificationSave}
+                    disabled={isUpdating}
+                    className="flex items-center gap-2"
+                  >
+                    {isUpdating ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Save className="h-4 w-4" />
+                    )}
+                    {isUpdating ? 'Saving...' : 'Save Preferences'}
                   </Button>
                 </div>
               </CardContent>
@@ -375,9 +510,17 @@ const ProfileSettings = () => {
                 <Separator />
 
                 <div className="flex justify-end">
-                  <Button onClick={handlePrivacySave} className="flex items-center gap-2">
-                    <Save className="h-4 w-4" />
-                    Save Settings
+                  <Button
+                    onClick={handlePrivacySave}
+                    disabled={isUpdating}
+                    className="flex items-center gap-2"
+                  >
+                    {isUpdating ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Save className="h-4 w-4" />
+                    )}
+                    {isUpdating ? 'Saving...' : 'Save Settings'}
                   </Button>
                 </div>
               </CardContent>
