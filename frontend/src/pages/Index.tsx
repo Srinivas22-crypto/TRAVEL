@@ -47,7 +47,7 @@ const Index = () => {
   const featuredDestinations = [
     {
       name: "Paris, France",
-      image: "https://images.unsplash.com/photo-1502602898536-47ad22581b52",
+      image: "https://plus.unsplash.com/premium_photo-1661919210043-fd847a58522d?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       rating: 4.9,
       highlights: ["Eiffel Tower", "Louvre Museum", "Notre Dame"]
     },

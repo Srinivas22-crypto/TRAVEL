@@ -20,7 +20,7 @@ const Explore = () => {
     {
       id: 1,
       name: "Paris, France",
-      image: "https://images.unsplash.com/photo-1502602898536-47ad22581b52",
+      image: "https://media.istockphoto.com/id/2211711751/photo/eiffel-tower-and-streets-of-paris-in-spring-france.jpg?s=2048x2048&w=is&k=20&c=xFioDdyy4PX9Tmbn2nzEtDiOWAJl0V4lwSUfKxMRpS4=",
       rating: 4.8,
       reviews: 1250,
       description: "The City of Light awaits with its iconic landmarks and romantic atmosphere.",
