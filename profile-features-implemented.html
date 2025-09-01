@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✅ TravelHub Profile Features - Fully Implemented</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f8f9fa;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .feature-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .feature-list li:before {
+            content: "✅ ";
+            color: #28a745;
+        }
+        .status {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .component-card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+        .component-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .component-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .test-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 5px;
+            transition: background 0.3s ease;
+        }
+        .test-link:hover {
+            background: #0056b3;
+        }
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        .before-after {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .before, .after {
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .before {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+        }
+        .after {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>👤 TravelHub Profile Features</h1>
+        <p>Complete profile system with photo upload, user menu, and activity tracking</p>
+    </div>
+
+    <div class="status success">
+        ✅ <strong>All Profile Features Successfully Implemented!</strong> TravelHub now has a complete profile system with photo upload, enhanced user menu, dedicated profile page with tabbed sections, and proper authentication checks.
+    </div>
+
+    <div class="feature-section">
+        <h2>📸 1. Profile Photo Upload (Profile Settings Page)</h2>
+        <ul class="feature-list">
+            <li><strong>Clickable Camera Icon:</strong> Camera button on profile avatar triggers file upload</li>
+            <li><strong>File Upload Dialog:</strong> Accepts .jpg and .png image files</li>
+            <li><strong>File Validation:</strong> Checks file type and size (max 5MB)</li>
+            <li><strong>Backend Integration:</strong> Uploads to `/api/upload-profile-picture` endpoint</li>
+            <li><strong>Real-time Preview:</strong> Shows uploaded image immediately</li>
+            <li><strong>Loading States:</strong> Shows spinner during upload process</li>
+            <li><strong>Error Handling:</strong> Proper error messages for failed uploads</li>
+            <li><strong>Fallback Support:</strong> Shows initials if no photo uploaded</li>
+        </ul>
+
+        <div class="before-after">
+            <div class="before">
+                <h4>❌ Before</h4>
+                <p>Static camera icon, no upload functionality</p>
+                <div class="code-block">
+&lt;Button size="icon" variant="outline"&gt;
+  &lt;Camera className="h-4 w-4" /&gt;
+&lt;/Button&gt;
+                </div>
+            </div>
+            <div class="after">
+                <h4>✅ After</h4>
+                <p>Clickable camera with full upload functionality</p>
+                <div class="code-block">
+&lt;Button 
+  onClick={triggerPhotoUpload}
+  disabled={isUploadingPhoto}
+&gt;
+  {isUploadingPhoto ? 
+    &lt;Loader2 className="animate-spin" /&gt; : 
+    &lt;Camera className="h-4 w-4" /&gt;
+  }
+&lt;/Button&gt;
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="feature-section">
+        <h2>🔽 2. Enhanced User Dropdown Menu</h2>
+        <ul class="feature-list">
+            <li><strong>Profile Button Added:</strong> New "Profile" option navigates to `/profile`</li>
+            <li><strong>Profile Settings:</strong> Existing "Profile Settings" navigates to `/profile-settings`</li>
+            <li><strong>Conditional Rendering:</strong> Different options for authenticated/unauthenticated users</li>
+            <li><strong>Visual Indicators:</strong> Green badge shows authentication status</li>
+            <li><strong>Proper Navigation:</strong> All menu items navigate to correct pages</li>
+        </ul>
+
+        <div class="component-grid">
+            <div class="component-card">
+                <div class="component-name">🔓 Not Authenticated</div>
+                <ul class="feature-list">
+                    <li>Sign In → `/signin`</li>
+                    <li>Register → `/register`</li>
+                </ul>
+            </div>
+            <div class="component-card">
+                <div class="component-name">🔒 Authenticated</div>
+                <ul class="feature-list">
+                    <li>User Info Display (name, email)</li>
+                    <li>Profile → `/profile`</li>
+                    <li>Profile Settings → `/profile-settings`</li>
+                    <li>Logout → Clears auth & redirects</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="feature-section">
+        <h2>📄 3. Profile Page with Tabbed Sections</h2>
+        <p><strong>Location:</strong> <code>/profile</code></p>
+        
+        <h3>Profile Header Features:</h3>
+        <ul class="feature-list">
+            <li><strong>User Avatar:</strong> Profile picture with fallback to initials</li>
+            <li><strong>User Information:</strong> Name, email, bio, join date</li>
+            <li><strong>Verification Badge:</strong> Shows if user is verified</li>
+            <li><strong>Action Buttons:</strong> Settings and Edit Profile buttons</li>
+            <li><strong>Activity Stats:</strong> Posts, Likes, Saves, Comments counts</li>
+        </ul>
+
+        <h3>Tabbed Sections:</h3>
+        <div class="component-grid">
+            <div class="component-card">
+                <div class="component-name">📝 My Posts</div>
+                <ul class="feature-list">
+                    <li>Shows posts created by the user</li>
+                    <li>Fetches from `/api/user/posts` endpoint</li>
+                    <li>Interactive post cards with like/comment</li>
+                    <li>Empty state with call-to-action</li>
+                </ul>
+            </div>
+
+            <div class="component-card">
+                <div class="component-name">❤️ Liked Posts</div>
+                <ul class="feature-list">
+                    <li>Shows posts the user has liked</li>
+                    <li>Fetches from `/api/user/likes` endpoint</li>
+                    <li>Full post display with interaction</li>
+                    <li>Empty state encourages exploration</li>
+                </ul>
+            </div>
+
+            <div class="component-card">
+                <div class="component-name">🔖 Saved Posts</div>
+                <ul class="feature-list">
+                    <li>Shows posts user has bookmarked</li>
+                    <li>Fetches from `/api/user/saved` endpoint</li>
+                    <li>Easy access to saved content</li>
+                    <li>Empty state with discovery prompt</li>
+                </ul>
+            </div>
+
+            <div class="component-card">
+                <div class="component-name">💬 Comments</div>
+                <ul class="feature-list">
+                    <li>Shows comments made by the user</li>
+                    <li>Fetches from `/api/user/comments` endpoint</li>
+                    <li>Links to original posts</li>
+                    <li>Comment engagement metrics</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="feature-section">
+        <h2>🔒 4. Authentication & Security</h2>
+        <ul class="feature-list">
+            <li><strong>Authentication Check:</strong> Only logged-in users can access profile features</li>
+            <li><strong>Automatic Redirect:</strong> Unauthenticated users redirected to `/signin`</li>
+            <li><strong>Protected Routes:</strong> Profile and profile settings require authentication</li>
+            <li><strong>Secure Upload:</strong> Profile picture upload requires valid JWT token</li>
+            <li><strong>Loading States:</strong> Proper loading indicators during auth checks</li>
+            <li><strong>Error Handling:</strong> Graceful handling of authentication failures</li>
+        </ul>
+    </div>
+
+    <div class="feature-section">
+        <h2>🛠️ 5. Technical Implementation</h2>
+        
+        <h3>File Upload System:</h3>
+        <div class="code-block">
+const handlePhotoUpload = async (event) => {
+  const file = event.target.files?.[0];
+  
+  // Validate file type and size
+  if (!file.type.match(/^image\/(jpeg|jpg|png)$/)) {
+    toast.error('Please select a valid image file');
+    return;
+  }
+  
+  // Upload to backend
+  const formData = new FormData();
+  formData.append('profilePicture', file);
+  
+  const response = await fetch('/api/upload-profile-picture', {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${token}` },
+    body: formData,
+  });
+  
+  // Update user context
+  await updateUser({ profileImage: data.imageUrl });
+};
+        </div>
+
+        <h3>API Endpoints Ready:</h3>
+        <ul class="feature-list">
+            <li><strong>POST /api/upload-profile-picture:</strong> Profile photo upload</li>
+            <li><strong>GET /api/user/posts:</strong> User's posts</li>
+            <li><strong>GET /api/user/likes:</strong> User's liked posts</li>
+            <li><strong>GET /api/user/saved:</strong> User's saved posts</li>
+            <li><strong>GET /api/user/comments:</strong> User's comments</li>
+        </ul>
+
+        <h3>Components Created:</h3>
+        <ul class="feature-list">
+            <li><strong>Profile.tsx:</strong> Main profile page with tabs</li>
+            <li><strong>ProfileSettings.tsx:</strong> Enhanced with photo upload</li>
+            <li><strong>UserMenu.tsx:</strong> Updated with Profile button</li>
+        </ul>
+    </div>
+
+    <div class="feature-section">
+        <h2>🧪 6. How to Test</h2>
+        
+        <h3>Profile Photo Upload:</h3>
+        <ol>
+            <li>Sign in to your account</li>
+            <li>Go to Profile Settings: <a href="http://localhost:5174/profile-settings" class="test-link">Profile Settings</a></li>
+            <li>Click the camera icon on your profile picture</li>
+            <li>Select a JPG or PNG image (under 5MB)</li>
+            <li>Watch the upload progress and see the new image</li>
+        </ol>
+
+        <h3>User Menu:</h3>
+        <ol>
+            <li>Click the user icon in the header</li>
+            <li>Should see "Profile" and "Profile Settings" options</li>
+            <li>Click "Profile" → should navigate to `/profile`</li>
+            <li>Click "Profile Settings" → should navigate to `/profile-settings`</li>
+        </ol>
+
+        <h3>Profile Page Tabs:</h3>
+        <ol>
+            <li>Visit your profile: <a href="http://localhost:5174/profile" class="test-link">My Profile</a></li>
+            <li>Test each tab: My Posts, Liked Posts, Saved Posts, Comments</li>
+            <li>Check loading states and empty states</li>
+            <li>Verify stats display correctly</li>
+        </ol>
+
+        <h3>Authentication:</h3>
+        <ol>
+            <li>Try accessing `/profile` without being logged in</li>
+            <li>Should redirect to `/signin` page</li>
+            <li>Sign in and try again → should work properly</li>
+        </ol>
+    </div>
+
+    <div class="feature-section">
+        <h2>📁 7. File Structure</h2>
+        <div class="code-block">
+frontend/src/
+├── pages/
+│   ├── Profile.tsx              # New profile page with tabs
+│   ├── ProfileSettings.tsx      # Enhanced with photo upload
+│   ├── SignIn.tsx               # Redirects to /home after login
+│   └── Register.tsx             # Redirects to /home after signup
+├── components/
+│   ├── UserMenu.tsx             # Updated with Profile button
+│   └── PostCard.tsx             # Used in profile tabs
+└── App.tsx                      # Updated with /profile route
+        </div>
+    </div>
+
+    <div class="status info">
+        🚀 <strong>Ready for Production!</strong> All profile features are fully implemented with proper authentication, file upload, API integration, and responsive design. The system is modular, secure, and user-friendly.
+    </div>
+
+    <div style="text-align: center; margin: 30px 0;">
+        <a href="http://localhost:5174/profile" class="test-link" style="font-size: 1.1em; padding: 12px 24px;">👤 Test Profile Features</a>
+        <a href="http://localhost:5174/profile-settings" class="test-link" style="font-size: 1.1em; padding: 12px 24px;">⚙️ Test Photo Upload</a>
+    </div>
+</body>
+</html>

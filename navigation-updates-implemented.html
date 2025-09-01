@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✅ TravelHub Navigation Updates - Implemented</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            background: #f8f9fa;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .feature-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .feature-list li:before {
+            content: "✅ ";
+            color: #28a745;
+        }
+        .status {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .component-card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+        .component-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .component-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .test-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 5px;
+            transition: background 0.3s ease;
+        }
+        .test-link:hover {
+            background: #0056b3;
+        }
+        .before-after {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .before, .after {
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .before {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+        }
+        .after {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🧭 TravelHub Navigation Updates</h1>
+        <p>Clickable logo, enhanced user menu, and modular components</p>
+    </div>
+
+    <div class="status success">
+        ✅ <strong>All Navigation Updates Successfully Implemented!</strong> The TravelHub header now has a clickable logo that navigates to home, and an enhanced user dropdown menu with proper authentication state management.
+    </div>
+
+    <div class="feature-section">
+        <h2>🎯 1. Home Navigation - Clickable Logo</h2>
+        <ul class="feature-list">
+            <li><strong>Clickable Logo:</strong> TravelHub logo and icon are now clickable</li>
+            <li><strong>Home Navigation:</strong> Clicking logo navigates to `/home` page</li>
+            <li><strong>Visual Feedback:</strong> Hover effect with opacity transition</li>
+            <li><strong>Consistent Styling:</strong> Maintains existing gradient and design</li>
+            <li><strong>Route Added:</strong> `/home` route added to App.tsx routing</li>
+        </ul>
+
+        <div class="before-after">
+            <div class="before">
+                <h4>❌ Before</h4>
+                <p>Logo was static, no click functionality</p>
+                <div class="code-block">
+&lt;div className="flex items-center gap-2"&gt;
+  &lt;div className="bg-gradient-hero p-2 rounded-lg"&gt;
+    &lt;Plane className="h-6 w-6 text-white" /&gt;
+  &lt;/div&gt;
+  &lt;h1&gt;TravelHub&lt;/h1&gt;
+&lt;/div&gt;
+                </div>
+            </div>
+            <div class="after">
+                <h4>✅ After</h4>
+                <p>Logo is clickable and navigates to home</p>
+                <div class="code-block">
+&lt;div 
+  className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+  onClick={() =&gt; navigate('/home')}
+&gt;
+  &lt;div className="bg-gradient-hero p-2 rounded-lg"&gt;
+    &lt;Plane className="h-6 w-6 text-white" /&gt;
+  &lt;/div&gt;
+  &lt;h1&gt;TravelHub&lt;/h1&gt;
+&lt;/div&gt;
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="feature-section">
+        <h2>👤 2. Enhanced User Dropdown Menu</h2>
+        <ul class="feature-list">
+            <li><strong>Conditional Rendering:</strong> Different options based on authentication state</li>
+            <li><strong>Not Logged In:</strong> Shows "Sign In" and "Register" options</li>
+            <li><strong>Logged In:</strong> Shows "Profile Settings" and "Logout" options</li>
+            <li><strong>Profile Settings:</strong> Navigates to `/profile-settings` page</li>
+            <li><strong>Logout Functionality:</strong> Clears authentication state and redirects to signin</li>
+            <li><strong>Visual Indicators:</strong> Green badge shows when user is authenticated</li>
+        </ul>
+
+        <div class="component-grid">
+            <div class="component-card">
+                <div class="component-name">🔓 Not Authenticated</div>
+                <ul class="feature-list">
+                    <li>Sign In → `/signin`</li>
+                    <li>Register → `/register`</li>
+                </ul>
+            </div>
+            <div class="component-card">
+                <div class="component-name">🔒 Authenticated</div>
+                <ul class="feature-list">
+                    <li>User Info Display (name, email)</li>
+                    <li>Profile Settings → `/profile-settings`</li>
+                    <li>Logout → Clears auth & redirects to `/signin`</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="feature-section">
+        <h2>🧩 3. Modular UserMenu Component</h2>
+        <p><strong>Location:</strong> <code>/components/UserMenu.tsx</code></p>
+        
+        <h3>Features:</h3>
+        <ul class="feature-list">
+            <li><strong>Reusable Component:</strong> Can be used anywhere in the app</li>
+            <li><strong>Authentication Integration:</strong> Uses AuthContext for state management</li>
+            <li><strong>Error Handling:</strong> Proper error handling for logout failures</li>
+            <li><strong>Loading States:</strong> Shows loading indicator during logout</li>
+            <li><strong>Toast Notifications:</strong> User feedback for actions</li>
+            <li><strong>TypeScript Support:</strong> Fully typed with proper interfaces</li>
+        </ul>
+
+        <h3>Props Interface:</h3>
+        <div class="code-block">
+interface UserMenuProps {
+  className?: string;
+}
+        </div>
+
+        <h3>Key Methods:</h3>
+        <div class="code-block">
+const handleLogout = async () => {
+  try {
+    await logout();
+    toast({ title: "Logged out successfully" });
+    navigate('/signin');
+  } catch (error) {
+    toast({ title: "Logout failed", variant: "destructive" });
+  }
+};
+        </div>
+    </div>
+
+    <div class="feature-section">
+        <h2>🛠️ 4. Technical Implementation</h2>
+        
+        <h3>Authentication Context Integration:</h3>
+        <ul class="feature-list">
+            <li><strong>useAuth Hook:</strong> Accesses user, isAuthenticated, logout from context</li>
+            <li><strong>State Management:</strong> Proper authentication state handling</li>
+            <li><strong>Token Management:</strong> Clears JWT tokens and local storage on logout</li>
+            <li><strong>Redirect Logic:</strong> Automatic redirect to signin after logout</li>
+        </ul>
+
+        <h3>Updated Files:</h3>
+        <ul class="feature-list">
+            <li><strong>Header.tsx:</strong> Updated to use UserMenu component and clickable logo</li>
+            <li><strong>UserMenu.tsx:</strong> New modular component for user authentication menu</li>
+            <li><strong>App.tsx:</strong> Added `/home` and `/profile-settings` routes</li>
+        </ul>
+
+        <h3>Styling & UX:</h3>
+        <ul class="feature-list">
+            <li><strong>Consistent Theme:</strong> Matches existing dropdown styling</li>
+            <li><strong>Hover Effects:</strong> Smooth transitions and visual feedback</li>
+            <li><strong>Icons:</strong> Appropriate Lucide icons for each action</li>
+            <li><strong>Responsive Design:</strong> Works on mobile and desktop</li>
+        </ul>
+    </div>
+
+    <div class="feature-section">
+        <h2>🧪 5. How to Test</h2>
+        
+        <h3>Logo Navigation:</h3>
+        <ol>
+            <li>Visit any page in the app</li>
+            <li>Click on the TravelHub logo in the header</li>
+            <li>Should navigate to the home page (`/home`)</li>
+            <li>Hover over logo to see opacity transition effect</li>
+        </ol>
+
+        <h3>User Menu - Not Logged In:</h3>
+        <ol>
+            <li>Ensure you're not logged in</li>
+            <li>Click the user icon in the header</li>
+            <li>Should see "Sign In" and "Register" options</li>
+            <li>Click "Sign In" → should navigate to `/signin`</li>
+            <li>Click "Register" → should navigate to `/register`</li>
+        </ol>
+
+        <h3>User Menu - Logged In:</h3>
+        <ol>
+            <li>Log in to the application</li>
+            <li>Notice green badge on user icon</li>
+            <li>Click the user icon in the header</li>
+            <li>Should see user info, "Profile Settings", and "Logout"</li>
+            <li>Click "Profile Settings" → should navigate to `/profile-settings`</li>
+            <li>Click "Logout" → should clear auth state and redirect to `/signin`</li>
+        </ol>
+    </div>
+
+    <div class="feature-section">
+        <h2>📁 6. File Structure</h2>
+        <div class="code-block">
+frontend/src/
+├── components/
+│   ├── Header.tsx              # Updated with clickable logo and UserMenu
+│   └── UserMenu.tsx            # New modular user authentication menu
+├── contexts/
+│   └── AuthContext.tsx         # Existing auth context (used by UserMenu)
+├── pages/
+│   ├── Index.tsx               # Home page (accessible via /home)
+│   ├── ProfileSettings.tsx     # Profile settings page
+│   ├── SignIn.tsx              # Sign in page
+│   └── Register.tsx            # Register page
+└── App.tsx                     # Updated with new routes
+        </div>
+    </div>
+
+    <div class="status info">
+        🚀 <strong>Ready for Production!</strong> All navigation updates are implemented with proper TypeScript typing, error handling, and consistent styling. The modular UserMenu component can be reused throughout the application.
+    </div>
+
+    <div style="text-align: center; margin: 30px 0;">
+        <a href="http://localhost:5174" class="test-link" style="font-size: 1.1em; padding: 12px 24px;">🏠 Test Navigation Updates</a>
+    </div>
+</body>
+</html>
