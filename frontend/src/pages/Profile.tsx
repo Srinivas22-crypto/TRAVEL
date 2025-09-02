@@ -13,6 +13,8 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import authService from '@/services/authService';
+import activityService from '@/services/activityService';
+import { ActivityBooking } from '@/lib/api';
 import {
   User,
   MapPin,
@@ -25,8 +27,23 @@ import {
   Bookmark,
   MessageCircle,
   Camera,
-  Edit
+  Edit,
+  Activity,
+  Clock,
+  X,
+  Users
 } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
 interface Post {
   id: number;
@@ -85,11 +102,14 @@ const Profile = () => {
   const [likedPosts, setLikedPosts] = useState<Post[]>([]);
   const [savedPosts, setSavedPosts] = useState<Post[]>([]);
   const [userComments, setUserComments] = useState<UserComment[]>([]);
+  const [bookedActivities, setBookedActivities] = useState<ActivityBooking[]>([]);
+  const [isLoadingActivities, setIsLoadingActivities] = useState(false);
   const [stats, setStats] = useState({
     posts: 0,
     liked: 0,
     saved: 0,
-    comments: 0
+    comments: 0,
+    activities: 0
   });
 
   // Get authentication token
@@ -332,22 +352,91 @@ const Profile = () => {
         fetchUserComments()
       ]);
 
+      const activities = activityService.getBookedActivities();
+
       setStats({
         posts: posts.length,
         liked: liked.length,
         saved: saved.length,
-        comments: comments.length
+        comments: comments.length,
+        activities: activities.length
       });
     } catch (error) {
       console.error('Error fetching user stats:', error);
-      // Set default stats
+      // Set default stats with activities
+      const activities = activityService.getBookedActivities();
       setStats({
         posts: 2,
         liked: 1,
         saved: 1,
-        comments: 2
+        comments: 2,
+        activities: activities.length
       });
     }
+  };
+
+  // Load booked activities
+  useEffect(() => {
+    const loadBookedActivities = () => {
+      setIsLoadingActivities(true);
+      try {
+        const activities = activityService.getBookedActivities();
+        setBookedActivities(activities);
+      } catch (error) {
+        console.error('Failed to load booked activities:', error);
+      } finally {
+        setIsLoadingActivities(false);
+      }
+    };
+
+    loadBookedActivities();
+
+    // Listen for activity booking events
+    const handleActivityBooked = (event: CustomEvent) => {
+      setBookedActivities(prev => [...prev, event.detail]);
+      setStats(prev => ({ ...prev, activities: prev.activities + 1 }));
+    };
+
+    const handleActivityCancelled = (event: CustomEvent) => {
+      setBookedActivities(prev => prev.filter(activity => activity.id !== event.detail.id));
+      setStats(prev => ({ ...prev, activities: Math.max(0, prev.activities - 1) }));
+    };
+
+    window.addEventListener('activity:booked', handleActivityBooked as EventListener);
+    window.addEventListener('activity:cancelled', handleActivityCancelled as EventListener);
+
+    return () => {
+      window.removeEventListener('activity:booked', handleActivityBooked as EventListener);
+      window.removeEventListener('activity:cancelled', handleActivityCancelled as EventListener);
+    };
+  }, []);
+
+  // Handle activity cancellation
+  const handleCancelActivity = (bookingId: string) => {
+    const success = activityService.cancelBooking(bookingId);
+    if (success) {
+      setBookedActivities(prev => prev.filter(activity => activity.id !== bookingId));
+      setStats(prev => ({ ...prev, activities: Math.max(0, prev.activities - 1) }));
+      toast({
+        title: "Activity cancelled",
+        description: "Your activity booking has been cancelled successfully.",
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: "Failed to cancel activity booking. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  // Format date helper
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
   };
 
   // Load data when tab changes
@@ -594,10 +683,14 @@ const Profile = () => {
 
         {/* Profile Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="posts" className="flex items-center gap-2">
               <FileText className="h-4 w-4" />
               My Posts
+            </TabsTrigger>
+            <TabsTrigger value="activities" className="flex items-center gap-2">
+              <Activity className="h-4 w-4" />
+              My Activities
             </TabsTrigger>
             <TabsTrigger value="liked" className="flex items-center gap-2">
               <Heart className="h-4 w-4" />
@@ -638,6 +731,151 @@ const Profile = () => {
                     </Button>
                   </CardContent>
                 </Card>
+              )}
+            </div>
+          </TabsContent>
+
+          
+          {/* My Activities Tab */}
+          <TabsContent value="activities">
+            <div className="space-y-6">
+              {isLoadingActivities ? (
+                <div className="flex items-center justify-center py-8">
+                  <Loader2 className="h-6 w-6 animate-spin mr-2" />
+                  <span>Loading your activities...</span>
+                </div>
+              ) : bookedActivities.length === 0 ? (
+                <Card>
+                  <CardContent className="p-8 text-center">
+                    <Activity className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                    <h3 className="text-lg font-semibold mb-2">No Activities Booked Yet</h3>
+                    <p className="text-muted-foreground mb-4">
+                      Start exploring destinations and book exciting activities to see them here.
+                    </p>
+                    <Button 
+                      onClick={() => navigate('/explore')}
+                      className="bg-gradient-hero hover:opacity-90"
+                    >
+                      Explore Destinations
+                    </Button>
+                  </CardContent>
+                </Card>
+              ) : (
+                <div className="space-y-6">
+                  {/* Summary Stats */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <Card>
+                      <CardContent className="p-4 text-center">
+                        <Activity className="h-6 w-6 mx-auto mb-2 text-blue-500" />
+                        <div className="text-2xl font-bold">{bookedActivities.length}</div>
+                        <div className="text-sm text-muted-foreground">Total Activities</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4 text-center">
+                        <MapPin className="h-6 w-6 mx-auto mb-2 text-green-500" />
+                        <div className="text-2xl font-bold">
+                          {new Set(bookedActivities.map(a => a.destination)).size}
+                        </div>
+                        <div className="text-sm text-muted-foreground">Destinations</div>
+                      </CardContent>
+                    </Card>
+                    <Card>
+                      <CardContent className="p-4 text-center">
+                        <Calendar className="h-6 w-6 mx-auto mb-2 text-purple-500" />
+                        <div className="text-2xl font-bold">
+                          ${activityService.getTotalAmountSpent()}
+                        </div>
+                        <div className="text-sm text-muted-foreground">Total Spent</div>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  {/* Activities List */}
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold">Your Booked Activities</h3>
+                    <div className="grid gap-4">
+                      {bookedActivities.map((activity) => (
+                        <Card key={activity.id} className="overflow-hidden">
+                          <div className="flex">
+                            <div className="w-32 h-24 flex-shrink-0">
+                              <img 
+                                src={activity.activityImage} 
+                                alt={activity.activityName}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                            <div className="flex-1 p-4">
+                              <div className="flex justify-between items-start">
+                                <div className="flex-1">
+                                  <h4 className="font-semibold text-lg mb-1">
+                                    {activity.activityName}
+                                  </h4>
+                                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
+                                    <div className="flex items-center gap-1">
+                                      <MapPin className="h-3 w-3" />
+                                      {activity.destination}
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                      <Clock className="h-3 w-3" />
+                                      {activity.duration}
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                      <Calendar className="h-3 w-3" />
+                                      Booked on {formatDate(activity.bookedAt)}
+                                    </div>
+                                  </div>
+                                  <div className="flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                      <Badge variant="outline" className="text-green-600 border-green-600">
+                                        ${activity.price}
+                                      </Badge>
+                                      <Badge variant="secondary">
+                                        {activity.status === 'booked' ? 'Active' : 'Cancelled'}
+                                      </Badge>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-2 ml-4">
+                                  <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                      <Button 
+                                        variant="outline" 
+                                        size="sm"
+                                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                                      >
+                                        <X className="h-3 w-3 mr-1" />
+                                        Cancel
+                                      </Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                      <AlertDialogHeader>
+                                        <AlertDialogTitle>Cancel Activity Booking</AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                          Are you sure you want to cancel your booking for "{activity.activityName}"? 
+                                          This action cannot be undone.
+                                        </AlertDialogDescription>
+                                      </AlertDialogHeader>
+                                      <AlertDialogFooter>
+                                        <AlertDialogCancel>Keep Booking</AlertDialogCancel>
+                                        <AlertDialogAction
+                                          onClick={() => handleCancelActivity(activity.id)}
+                                          className="bg-red-600 hover:bg-red-700"
+                                        >
+                                          Cancel Booking
+                                        </AlertDialogAction>
+                                      </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                  </AlertDialog>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </Card>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
           </TabsContent>

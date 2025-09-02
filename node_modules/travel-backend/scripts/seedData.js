@@ -6,7 +6,6 @@ import Flight from '../models/Flight.js';
 import Hotel from '../models/Hotel.js';
 import Car from '../models/Car.js';
 import Post from '../models/Post.js';
-import Group from '../models/Group.js';
 
 // Load env vars
 dotenv.config();
@@ -306,8 +305,6 @@ const importData = async () => {
     await Hotel.deleteMany();
     await Car.deleteMany();
     await Post.deleteMany();
-    await Group.deleteMany();
-
     console.log('Data Destroyed...');
 
     // Create users
@@ -335,29 +332,7 @@ const importData = async () => {
     await Car.create(cars);
     console.log('Cars Imported...');
 
-    // Create sample groups
-    const sampleGroups = [
-      {
-        name: 'Solo Travelers Unite',
-        description: 'Connect with fellow solo travelers and share experiences',
-        creator: createdUsers[1]._id,
-        category: 'Solo Travel',
-        tags: ['solo', 'adventure', 'backpacking'],
-        image: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828',
-      },
-      {
-        name: 'Budget Backpackers',
-        description: 'Tips and tricks for traveling on a budget',
-        creator: createdUsers[2]._id,
-        category: 'Budget Travel',
-        tags: ['budget', 'backpacking', 'hostels'],
-        image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62',
-      },
-    ];
-
-    const createdGroups = await Group.create(sampleGroups);
-    console.log('Groups Imported...');
-
+    
     // Create sample posts
     const samplePosts = [
       {
@@ -373,8 +348,7 @@ const importData = async () => {
         images: ['https://images.unsplash.com/photo-1613929633558-2448d2d03521'],
         location: 'Tokyo, Japan',
         tags: ['tokyo', 'food', 'ramen', 'streetfood'],
-        group: createdGroups[0]._id,
-      },
+              },
       {
         author: createdUsers[3]._id,
         content: 'Hiking in the Swiss Alps was a dream come true! The views from Matterhorn are absolutely breathtaking. Nature never fails to amaze me 🏔️',
@@ -404,8 +378,7 @@ const deleteData = async () => {
     await Hotel.deleteMany();
     await Car.deleteMany();
     await Post.deleteMany();
-    await Group.deleteMany();
-
+    
     console.log('Data Destroyed Successfully!');
     process.exit();
   } catch (error) {

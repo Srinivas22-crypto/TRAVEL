@@ -4,7 +4,7 @@ import { useToast } from '@/hooks/use-toast';
 import {
   Heart,
   Share2,
-Bookmark,
+  Bookmark,
   ExternalLink,
   Copy,
   Facebook,

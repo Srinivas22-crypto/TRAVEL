@@ -3,85 +3,112 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Bell, X, Plane, Hotel, Calendar, MapPin, AlertCircle } from 'lucide-react';
-
-const mockNotifications = [
-  {
-    id: 1,
-    type: 'booking',
-    title: 'Flight Booking Confirmed',
-    message: 'Your flight to Paris has been confirmed for March 15th, 2024',
-    timestamp: new Date(Date.now() - 1000 * 60 * 30), // 30 minutes ago
-    read: false,
-    icon: Plane,
-    variant: 'success',
-  },
-  {
-    id: 2,
-    type: 'reminder',
-    title: 'Check-in Reminder',
-    message: 'Don\'t forget to check in online for your flight tomorrow',
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 hours ago
-    read: false,
-    icon: Calendar,
-    variant: 'warning',
-  },
-  {
-    id: 3,
-    type: 'offer',
-    title: 'Special Hotel Deal',
-    message: '30% off luxury hotels in Rome - Limited time offer!',
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 4), // 4 hours ago
-    read: true,
-    icon: Hotel,
-    variant: 'default',
-  },
-  {
-    id: 4,
-    type: 'alert',
-    title: 'Weather Alert',
-    message: 'Rain expected in your destination tomorrow. Pack accordingly!',
-    timestamp: new Date(Date.now() - 1000 * 60 * 60 * 6), // 6 hours ago
-    read: true,
-    icon: AlertCircle,
-    variant: 'destructive',
-  },
-];
+import { useNavigate } from 'react-router-dom';
+import notificationService, { Notification } from '@/services/notificationService';
+import { 
+  Bell, 
+  X, 
+  Plane, 
+  Hotel, 
+  Calendar, 
+  MapPin, 
+  AlertCircle
+} from 'lucide-react';
 
 export const NotificationCenter = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [notifications, setNotifications] = useState(mockNotifications);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const navigate = useNavigate();
 
-  const unreadCount = notifications.filter(n => !n.read).length;
+  // Load notifications on component mount
+  useEffect(() => {
+    loadNotifications();
+  }, []);
 
-  const markAsRead = (id: number) => {
-    setNotifications(prev =>
-      prev.map(notification =>
-        notification.id === id ? { ...notification, read: true } : notification
-      )
-    );
+  // Listen for notification events
+  useEffect(() => {
+    const handleNewNotification = () => {
+      loadNotifications();
+    };
+
+    const handleNotificationRead = () => {
+      loadNotifications();
+    };
+
+    const handleNotificationRemoved = () => {
+      loadNotifications();
+    };
+
+    const handleAllRead = () => {
+      loadNotifications();
+    };
+
+    window.addEventListener('notification:new', handleNewNotification);
+    window.addEventListener('notification:read', handleNotificationRead);
+    window.addEventListener('notification:removed', handleNotificationRemoved);
+    window.addEventListener('notification:all_read', handleAllRead);
+
+    return () => {
+      window.removeEventListener('notification:new', handleNewNotification);
+      window.removeEventListener('notification:read', handleNotificationRead);
+      window.removeEventListener('notification:removed', handleNotificationRemoved);
+      window.removeEventListener('notification:all_read', handleAllRead);
+    };
+  }, []);
+
+  const loadNotifications = () => {
+    const allNotifications = notificationService.getNotifications();
+    const count = notificationService.getUnreadCount();
+    setNotifications(allNotifications);
+    setUnreadCount(count);
+  };
+
+  const markAsRead = (notificationId: string) => {
+    notificationService.markAsRead(notificationId);
   };
 
   const markAllAsRead = () => {
-    setNotifications(prev =>
-      prev.map(notification => ({ ...notification, read: true }))
-    );
+    notificationService.markAllAsRead();
   };
 
-  const removeNotification = (id: number) => {
-    setNotifications(prev => prev.filter(notification => notification.id !== id));
+  const removeNotification = (notificationId: string) => {
+    notificationService.removeNotification(notificationId);
   };
 
-  const formatTime = (timestamp: Date) => {
-    const now = new Date();
-    const diff = now.getTime() - timestamp.getTime();
-    const minutes = Math.floor(diff / (1000 * 60));
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const handleNotificationClick = (notification: Notification) => {
+    // Mark as read
+    markAsRead(notification.id);
+    
+    // Navigate to the notification's action URL if available
+    if (notification.actionUrl) {
+      setIsOpen(false);
+      navigate(notification.actionUrl);
+    }
+  };
 
-    if (minutes < 60) return `${minutes}m ago`;
-    if (hours < 24) return `${hours}h ago`;
-    return `${days}d ago`;
+  const getNotificationIcon = (notification: Notification) => {
+    // Travel notification
+    switch (notification.icon) {
+      case 'Plane':
+        return Plane;
+      case 'Hotel':
+        return Hotel;
+      case 'Calendar':
+        return Calendar;
+      case 'AlertCircle':
+        return AlertCircle;
+      case 'CheckCircle':
+        return Calendar;
+      case 'Activity':
+        return MapPin;
+      default:
+        return Bell;
+    }
+  };
+
+  const getNotificationVariant = (notification: Notification) => {
+    return notification.variant;
   };
 
   return (
@@ -99,7 +126,7 @@ export const NotificationCenter = () => {
             variant="destructive"
             className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
           >
-            {unreadCount}
+            {unreadCount > 99 ? '99+' : unreadCount}
           </Badge>
         )}
       </Button>
@@ -143,23 +170,25 @@ export const NotificationCenter = () => {
               ) : (
                 <div className="divide-y divide-border">
                   {notifications.map((notification) => {
-                    const IconComponent = notification.icon;
+                    const IconComponent = getNotificationIcon(notification);
+                    const variant = getNotificationVariant(notification);
+                    
                     return (
                       <div
                         key={notification.id}
-                        className={`p-4 hover:bg-accent/50 cursor-pointer ${
+                        className={`p-4 hover:bg-accent/50 cursor-pointer relative ${
                           !notification.read ? 'bg-accent/20' : ''
                         }`}
-                        onClick={() => markAsRead(notification.id)}
+                        onClick={() => handleNotificationClick(notification)}
                       >
                         <div className="flex items-start gap-3">
                           <div
                             className={`p-2 rounded-full ${
-                              notification.variant === 'success'
+                              variant === 'success'
                                 ? 'bg-success/20 text-success'
-                                : notification.variant === 'warning'
+                                : variant === 'warning'
                                 ? 'bg-warning/20 text-warning'
-                                : notification.variant === 'destructive'
+                                : variant === 'destructive'
                                 ? 'bg-destructive/20 text-destructive'
                                 : 'bg-primary/20 text-primary'
                             }`}
@@ -187,7 +216,7 @@ export const NotificationCenter = () => {
                               {notification.message}
                             </p>
                             <p className="text-xs text-muted-foreground mt-1">
-                              {formatTime(notification.timestamp)}
+                              {notificationService.formatTime(notification.timestamp)}
                             </p>
                           </div>
                         </div>

@@ -20,7 +20,6 @@ import hotelRoutes from './routes/hotels.js';
 import carRoutes from './routes/cars.js';
 import bookingRoutes from './routes/bookings.js';
 import postRoutes from './routes/posts.js';
-import groupRoutes from './routes/groups.js';
 import paymentRoutes from './routes/payments.js';
 import tripRoutes from './routes/trips.js';
 
@@ -107,7 +106,6 @@ app.use('/api/hotels', hotelRoutes);
 app.use('/api/cars', carRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/posts', postRoutes);
-app.use('/api/groups', groupRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/trips', tripRoutes);
 

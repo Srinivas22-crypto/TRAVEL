@@ -1,8 +1,7 @@
 import api, { 
   ApiResponse, 
   Post, 
-  Group, 
-  SearchParams 
+  SearchParams
 } from '../lib/api';
 
 export interface CreatePostData {
@@ -13,15 +12,6 @@ export interface CreatePostData {
   group?: string;
 }
 
-export interface CreateGroupData {
-  name: string;
-  description: string;
-  category: string;
-  image?: string;
-  isPrivate?: boolean;
-  rules?: string[];
-  tags?: string[];
-}
 
 class CommunityService {
   // Posts API
@@ -172,113 +162,7 @@ class CommunityService {
     }
   }
 
-  // Groups API
-
-  // Get all groups
-  async getGroups(params?: SearchParams): Promise<{
-    groups: Group[];
-    total: number;
-    pagination?: any;
-  }> {
-    try {
-      const response = await api.get<ApiResponse<Group[]>>('/groups', { params });
-
-      return {
-        groups: response.data.data,
-        total: response.data.total || 0,
-        pagination: response.data.pagination,
-      };
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Failed to fetch groups');
-    }
-  }
-
-  // Get single group
-  async getGroup(id: string): Promise<Group> {
-    try {
-      const response = await api.get<ApiResponse<Group>>(`/groups/${id}`);
-      return response.data.data;
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Failed to fetch group');
-    }
-  }
-
-  // Create new group
-  async createGroup(groupData: CreateGroupData): Promise<Group> {
-    try {
-      const response = await api.post<ApiResponse<Group>>('/groups', groupData);
-      return response.data.data;
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Failed to create group');
-    }
-  }
-
-  // Update group
-  async updateGroup(id: string, groupData: Partial<CreateGroupData>): Promise<Group> {
-    try {
-      const response = await api.put<ApiResponse<Group>>(`/groups/${id}`, groupData);
-      return response.data.data;
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Failed to update group');
-    }
-  }
-
-  // Delete group
-  async deleteGroup(id: string): Promise<void> {
-    try {
-      await api.delete(`/groups/${id}`);
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Failed to delete group');
-    }
-  }
-
-  // Join group
-  async joinGroup(id: string): Promise<{ memberCount: number }> {
-    try {
-      const response = await api.post(`/groups/${id}/join`);
-      return response.data.data;
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Failed to join group');
-    }
-  }
-
-  // Leave group
-  async leaveGroup(id: string): Promise<{ memberCount: number }> {
-    try {
-      const response = await api.post(`/groups/${id}/leave`);
-      return response.data.data;
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Failed to leave group');
-    }
-  }
-
-  // Get group members
-  async getGroupMembers(id: string): Promise<Group['members']> {
-    try {
-      const response = await api.get<ApiResponse<Group['members']>>(`/groups/${id}/members`);
-      return response.data.data;
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Failed to fetch group members');
-    }
-  }
-
-  // Get group posts
-  async getGroupPosts(id: string, params?: SearchParams): Promise<{
-    posts: Post[];
-    total: number;
-  }> {
-    try {
-      const response = await api.get<ApiResponse<Post[]>>(`/groups/${id}/posts`, { params });
-
-      return {
-        posts: response.data.data,
-        total: response.data.total || 0,
-      };
-    } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Failed to fetch group posts');
-    }
-  }
-
+  
   // Utility functions
 
   // Format post date
@@ -325,17 +209,7 @@ class CommunityService {
     return post.author._id === currentUserId || isAdmin;
   }
 
-  // Check if user is group member
-  isGroupMember(group: Group, userId: string): boolean {
-    return group.members.some(member => member.user._id === userId);
   }
-
-  // Get user role in group
-  getUserRoleInGroup(group: Group, userId: string): string | null {
-    const member = group.members.find(member => member.user._id === userId);
-    return member ? member.role : null;
-  }
-}
 
 // Create and export a singleton instance
 const communityService = new CommunityService();

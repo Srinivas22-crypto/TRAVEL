@@ -1,20 +1,16 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from '@/components/Header';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Feed from '@/components/Feed';
-import GroupsSection from '@/components/GroupsSection';
 import CreatePostModal from '@/components/CreatePostModal';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import communityService from '@/services/communityService';
 import {
-  Users,
   Plus,
-  TrendingUp,
-  ArrowDown
+  TrendingUp
 } from 'lucide-react';
 
 const Community = () => {
@@ -22,15 +18,11 @@ const Community = () => {
   const { isAuthenticated } = useAuth();
   const { toast } = useToast();
   const [posts, setPosts] = useState<any[]>([]);
-  const [groups, setGroups] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState('feed');
-  const groupsRef = useRef<HTMLDivElement>(null);
-
-  // Load posts and groups on component mount
+  
+  // Load posts on component mount
   useEffect(() => {
     loadPosts();
-    loadGroups();
   }, []);
 
   const loadPosts = async () => {
@@ -47,58 +39,11 @@ const Community = () => {
     }
   };
 
-  const loadGroups = async () => {
-    try {
-      const response = await communityService.getGroups({ limit: 10 });
-      setGroups(response.groups);
-    } catch (error) {
-      console.error('Failed to load groups:', error);
-      // Fall back to mock data
-      setGroups(mockGroups);
-    }
-  };
-
   const handlePostCreated = (newPost: any) => {
     setPosts(prevPosts => [newPost, ...prevPosts]);
     toast({
       title: "Post created!",
       description: "Your travel experience has been shared with the community.",
-    });
-  };
-
-  const handleJoinGroups = () => {
-    setActiveTab('groups');
-    // Smooth scroll to groups section
-    setTimeout(() => {
-      groupsRef.current?.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }, 100);
-  };
-
-  const handleJoinGroup = async (groupId: string | number) => {
-    if (!isAuthenticated) {
-      toast({
-        title: "Authentication Required",
-        description: "Please sign in to join groups.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    try {
-      await communityService.joinGroup(groupId.toString());
-      loadGroups(); // Refresh groups
-    } catch (error: any) {
-      console.error('Join group error:', error);
-    }
-  };
-
-  const handleCreateGroup = () => {
-    toast({
-      title: "Create Group",
-      description: "Group creation feature coming soon!",
     });
   };
 
@@ -170,63 +115,7 @@ const Community = () => {
     }
   ];
 
-  const mockGroups = [
-    {
-      id: 1,
-      name: "Solo Travelers Unite",
-      members: 15420,
-      description: "Connect with fellow solo travelers and share experiences",
-      image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828",
-      category: "Solo Travel",
-      recentActivity: "New post about safety tips"
-    },
-    {
-      id: 2,
-      name: "Budget Backpackers",
-      members: 8930,
-      description: "Tips and tricks for traveling on a budget",
-      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62",
-      category: "Budget Travel",
-      recentActivity: "Discussion about cheap hostels"
-    },
-    {
-      id: 3,
-      name: "Photography Enthusiasts",
-      members: 12600,
-      description: "Share your travel photography and get inspired",
-      image: "https://images.unsplash.com/photo-1452421822248-d4c2b47f0c81",
-      category: "Photography",
-      recentActivity: "Photo contest submissions"
-    },
-    {
-      id: 4,
-      name: "Foodie Adventures",
-      members: 9850,
-      description: "Discover amazing local cuisines around the world",
-      image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5",
-      category: "Food & Culture",
-      recentActivity: "Recipe sharing from Italy"
-    },
-    {
-      id: 5,
-      name: "Adventure Seekers",
-      members: 11200,
-      description: "For those who love extreme sports and outdoor adventures",
-      image: "https://images.unsplash.com/photo-1551524164-6cf2ac2d8c9c",
-      category: "Adventure",
-      recentActivity: "Planning group hiking trip"
-    },
-    {
-      id: 6,
-      name: "Family Travel",
-      members: 7650,
-      description: "Tips and destinations perfect for family vacations",
-      image: "https://images.unsplash.com/photo-1511895426328-dc8714191300",
-      category: "Family Travel",
-      recentActivity: "Kid-friendly destination ideas"
-    }
-  ];
-
+  
   const trendingTopics = [
     { name: "#SustainableTravel", posts: 2340 },
     { name: "#HiddenGems", posts: 1890 },
@@ -256,66 +145,17 @@ const Community = () => {
                 Create Post
               </Button>
             </CreatePostModal>
-            <Button variant="outline" onClick={handleJoinGroups}>
-              <Users className="h-4 w-4 mr-2" />
-              Join Groups
-              <ArrowDown className="h-4 w-4 ml-2" />
-            </Button>
           </div>
         </div>
 
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-3">
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="feed">Feed</TabsTrigger>
-                <TabsTrigger value="groups">Groups</TabsTrigger>
-                <TabsTrigger value="create">Create Post</TabsTrigger>
-              </TabsList>
-
-              {/* Feed Tab */}
-              <TabsContent value="feed">
-                <Feed 
-                  posts={posts.length > 0 ? posts : mockPosts}
-                  onRefresh={loadPosts}
-                  isLoading={isLoading}
-                />
-              </TabsContent>
-
-              {/* Groups Tab */}
-              <TabsContent value="groups" ref={groupsRef}>
-                <GroupsSection
-                  groups={groups.length > 0 ? groups : mockGroups}
-                  onJoinGroup={handleJoinGroup}
-                  onCreateGroup={handleCreateGroup}
-                  isAuthenticated={isAuthenticated}
-                />
-              </TabsContent>
-
-              {/* Create Post Tab */}
-              <TabsContent value="create">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Share Your Travel Experience</CardTitle>
-                    <CardDescription>Tell the community about your latest adventure</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    <div className="text-center py-8">
-                      <p className="text-muted-foreground mb-4">
-                        Create and share your travel stories with the community
-                      </p>
-                      <CreatePostModal onPostCreated={handlePostCreated}>
-                        <Button className="bg-gradient-hero hover:opacity-90">
-                          <Plus className="h-4 w-4 mr-2" />
-                          Create New Post
-                        </Button>
-                      </CreatePostModal>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            </Tabs>
+            <Feed 
+              posts={posts.length > 0 ? posts : mockPosts}
+              onRefresh={loadPosts}
+              isLoading={isLoading}
+            />
           </div>
 
           {/* Sidebar */}
@@ -379,11 +219,7 @@ const Community = () => {
                     Share Experience
                   </Button>
                 </CreatePostModal>
-                <Button variant="outline" className="w-full justify-start" onClick={handleJoinGroups}>
-                  <Users className="h-4 w-4 mr-2" />
-                  Browse Groups
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
+                                <Button variant="outline" className="w-full justify-start">
                   <TrendingUp className="h-4 w-4 mr-2" />
                   Trending Posts
                 </Button>

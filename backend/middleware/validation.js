@@ -108,23 +108,3 @@ export const validatePost = [
   handleValidationErrors,
 ];
 
-// Group validation
-export const validateGroup = [
-  body('name')
-    .trim()
-    .isLength({ min: 3, max: 100 })
-    .withMessage('Group name must be between 3 and 100 characters'),
-  body('description')
-    .trim()
-    .isLength({ min: 10, max: 500 })
-    .withMessage('Description must be between 10 and 500 characters'),
-  body('category')
-    .trim()
-    .isLength({ min: 2, max: 50 })
-    .withMessage('Category must be between 2 and 50 characters'),
-  body('isPrivate')
-    .optional()
-    .isBoolean()
-    .withMessage('isPrivate must be a boolean'),
-  handleValidationErrors,
-];

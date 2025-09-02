@@ -219,6 +219,30 @@ export interface Car {
   rentalCompany?: string;
 }
 
+// Activity Types
+export interface Activity {
+  id: string;
+  name: string;
+  image: string;
+  price: number;
+  duration: string;
+  description: string;
+  destination: string;
+}
+
+// Activity Booking Types
+export interface ActivityBooking {
+  id: string;
+  activityId: string;
+  activityName: string;
+  activityImage: string;
+  price: number;
+  duration: string;
+  destination: string;
+  bookedAt: string;
+  status: 'booked' | 'cancelled';
+}
+
 // Booking Types
 export interface Booking {
   _id: string;

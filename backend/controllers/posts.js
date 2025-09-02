@@ -1,5 +1,4 @@
 import Post from '../models/Post.js';
-import Group from '../models/Group.js';
 
 // @desc    Get all posts (feed)
 // @route   GET /api/posts
@@ -23,11 +22,7 @@ export const getPosts = async (req, res, next) => {
       query.location = { $regex: req.query.location, $options: 'i' };
     }
 
-    // Filter by group
-    if (req.query.group) {
-      query.group = req.query.group;
-    }
-
+    
     // Sort options
     let sort = { createdAt: -1 };
     if (req.query.sort) {
@@ -46,7 +41,6 @@ export const getPosts = async (req, res, next) => {
     const total = await Post.countDocuments(query);
     const posts = await Post.find(query)
       .populate('author', 'name profileImage')
-      .populate('group', 'name')
       .populate('comments.user', 'name profileImage')
       .sort(sort)
       .limit(limit)
@@ -79,7 +73,6 @@ export const getPost = async (req, res, next) => {
   try {
     const post = await Post.findById(req.params.id)
       .populate('author', 'name profileImage bio')
-      .populate('group', 'name description')
       .populate('comments.user', 'name profileImage')
       .populate('comments.replies.user', 'name profileImage');
 
@@ -106,30 +99,9 @@ export const createPost = async (req, res, next) => {
   try {
     req.body.author = req.user.id;
 
-    // If posting to a group, verify membership
-    if (req.body.group) {
-      const group = await Group.findById(req.body.group);
-      if (!group) {
-        return res.status(404).json({
-          success: false,
-          message: 'Group not found',
-        });
-      }
-
-      if (!group.isMember(req.user.id)) {
-        return res.status(403).json({
-          success: false,
-          message: 'You must be a member to post in this group',
-        });
-      }
-    }
-
     const post = await Post.create(req.body);
     
     await post.populate('author', 'name profileImage');
-    if (post.group) {
-      await post.populate('group', 'name');
-    }
 
     res.status(201).json({
       success: true,

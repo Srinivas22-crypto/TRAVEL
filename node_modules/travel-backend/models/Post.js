@@ -152,11 +152,7 @@ const postSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  group: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Group',
-  },
-}, {
+  }, {
   timestamps: true,
   toJSON: { virtuals: true },
   toObject: { virtuals: true },
@@ -167,7 +163,6 @@ postSchema.index({ author: 1, createdAt: -1 });
 postSchema.index({ tags: 1 });
 postSchema.index({ location: 'text', content: 'text' });
 postSchema.index({ createdAt: -1 });
-postSchema.index({ group: 1, createdAt: -1 });
 
 // Virtual for like count
 postSchema.virtual('likeCount').get(function() {

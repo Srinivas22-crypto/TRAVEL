@@ -7,6 +7,9 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import ActionButtons from '@/components/ActionButtons';
 import { useTranslation } from 'react-i18next';
+import { useToast } from '@/hooks/use-toast';
+import activityService from '@/services/activityService';
+import { Activity } from '@/lib/api';
 import { 
   MapPin, 
   Star, 
@@ -22,7 +25,8 @@ import {
   Camera,
   Mountain,
   Utensils,
-  Plane
+  Plane,
+  Check
 } from 'lucide-react';
 
 interface DestinationData {
@@ -60,8 +64,10 @@ const DestinationDetail = () => {
   const { t } = useTranslation();
   const { destinationName } = useParams<{ destinationName: string }>();
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [destination, setDestination] = useState<DestinationData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [bookedActivities, setBookedActivities] = useState<Set<string>>(new Set());
 
   // Destination data - in a real app, this would come from an API
   const destinationsData: Record<string, DestinationData> = {
@@ -782,10 +788,73 @@ const DestinationDetail = () => {
       
       if (destinationData) {
         setDestination(destinationData);
+        // Load booked activities for this destination
+        loadBookedActivities(destinationData);
       }
       setIsLoading(false);
     }
   }, [destinationName]);
+
+  // Load booked activities from localStorage
+  const loadBookedActivities = (dest: DestinationData) => {
+    const booked = new Set<string>();
+    dest.activities.forEach((activity, index) => {
+      const activityId = `${dest.id}_${index}`;
+      if (activityService.isActivityBooked(activityId)) {
+        booked.add(activityId);
+      }
+    });
+    setBookedActivities(booked);
+  };
+
+  // Handle activity booking
+  const handleActivityBooking = (activity: any, index: number) => {
+    if (!destination) return;
+
+    const activityId = `${destination.id}_${index}`;
+    
+    if (bookedActivities.has(activityId)) {
+      // Activity already booked, show message
+      toast({
+        title: "Already Booked",
+        description: `You have already booked ${activity.name}`,
+        variant: "default",
+      });
+      return;
+    }
+
+    // Create activity object for booking
+    const activityToBook: Activity = {
+      id: activityId,
+      name: activity.name,
+      image: activity.image,
+      price: activity.price,
+      duration: activity.duration,
+      description: activity.description,
+      destination: destination.name
+    };
+
+    try {
+      // Book the activity
+      const booking = activityService.bookActivity(activityToBook);
+      
+      // Update local state
+      setBookedActivities(prev => new Set([...prev, activityId]));
+
+      // Show success message
+      toast({
+        title: "Activity Booked!",
+        description: `Successfully booked ${activity.name} for ${activity.price}`,
+        variant: "default",
+      });
+    } catch (error) {
+      toast({
+        title: "Booking Failed",
+        description: "Failed to book activity. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
 
   const handleBookNow = () => {
     if (destination) {
@@ -914,35 +983,53 @@ const DestinationDetail = () => {
             <section>
               <h2 className="text-2xl font-semibold mb-6">Popular Activities</h2>
               <div className="grid md:grid-cols-2 gap-6">
-                {destination.activities.map((activity, index) => (
-                  <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow">
-                    <div className="aspect-video overflow-hidden">
-                      <img 
-                        src={activity.image} 
-                        alt={activity.name}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                    <CardContent className="p-4">
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-semibold">{activity.name}</h3>
-                        <Badge variant="outline">${activity.price}</Badge>
+                {destination.activities.map((activity, index) => {
+                  const activityId = `${destination.id}_${index}`;
+                  const isBooked = bookedActivities.has(activityId);
+                  
+                  return (
+                    <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow">
+                      <div className="aspect-video overflow-hidden">
+                        <img 
+                          src={activity.image} 
+                          alt={activity.name}
+                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        />
                       </div>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        {activity.description}
-                      </p>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <Clock className="h-3 w-3" />
-                          {activity.duration}
+                      <CardContent className="p-4">
+                        <div className="flex justify-between items-start mb-2">
+                          <h3 className="font-semibold">{activity.name}</h3>
+                          <Badge variant="outline">${activity.price}</Badge>
                         </div>
-                        <Button size="sm" variant="outline">
-                          Book Activity
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                        <p className="text-sm text-muted-foreground mb-3">
+                          {activity.description}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                            <Clock className="h-3 w-3" />
+                            {activity.duration}
+                          </div>
+                          <Button 
+                            size="sm" 
+                            variant={isBooked ? "default" : "outline"}
+                            onClick={() => handleActivityBooking(activity, index)}
+                            className={isBooked ? "bg-green-600 hover:bg-green-700 text-white" : ""}
+                            disabled={isBooked}
+                          >
+                            {isBooked ? (
+                              <>
+                                <Check className="h-3 w-3 mr-1" />
+                                Booked
+                              </>
+                            ) : (
+                              "Book Activity"
+                            )}
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
               </div>
             </section>
           </div>
