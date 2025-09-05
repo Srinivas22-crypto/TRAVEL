@@ -8,12 +8,16 @@ import { Separator } from '@/components/ui/separator';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import PostCard from '@/components/PostCard';
+import SavedPostsSection from '@/components/SavedPostsSection';
+import MyCommentsSection from '@/components/MyCommentsSection';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import authService from '@/services/authService';
 import activityService from '@/services/activityService';
+import postService, { Post as ApiPost } from '@/services/postService';
+import userService from '@/services/userService';
 import { ActivityBooking } from '@/lib/api';
 import {
   User,
@@ -147,8 +151,31 @@ const Profile = () => {
   // Fetch user-specific posts created by the logged-in user
   const fetchUserPosts = async (): Promise<Post[]> => {
     try {
-      const response: ApiResponse<Post> = await apiCall('/user/posts');
-      return response.data.filter(post => post.author.id === user?.id);
+      // Use the new API service to get user posts
+      if (user?._id) {
+        const response = await postService.getUserPosts(user._id);
+        return response.data.map(post => ({
+          id: parseInt(post._id),
+          content: post.content,
+          author: {
+            id: parseInt(post.author._id),
+            name: `${post.author.firstName} ${post.author.lastName}`,
+            avatar: post.author.profileImage || ""
+          },
+          timestamp: formatTimeAgo(post.createdAt),
+          likes: post.likeCount,
+          comments: post.commentCount,
+          shares: post.shares,
+          image: post.images?.[0],
+          location: post.location,
+          tags: post.tags,
+          isLiked: false,
+          isBookmarked: false,
+          createdAt: post.createdAt,
+          updatedAt: post.updatedAt
+        }));
+      }
+      return [];
     } catch (error) {
       console.error('Error fetching user posts:', error);
       // Return mock data for demonstration
@@ -157,7 +184,7 @@ const Profile = () => {
           id: 1,
           content: "Just returned from an amazing trip to Tokyo! The cherry blossoms were absolutely stunning. Can't wait to go back next spring! 🌸",
           author: {
-            id: user?._id || 1,
+            id: 1,
             name: getUserFullName(),
             avatar: user?.profileImage || ""
           },
@@ -166,28 +193,9 @@ const Profile = () => {
           comments: 8,
           image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf",
           location: "Tokyo, Japan",
-          tags: ["#Tokyo", "#CherryBlossoms", "#Japan", "#Travel"],
+          tags: ["Tokyo", "CherryBlossoms", "Japan", "Travel"],
           isLiked: false,
           isBookmarked: true,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
-        },
-        {
-          id: 2,
-          content: "Sunset views from Santorini never get old. This place is pure magic! ✨",
-          author: {
-            id: user?._id || 1,
-            name: getUserFullName(),
-            avatar: user?.profileImage || ""
-          },
-          timestamp: "1 week ago",
-          likes: 42,
-          comments: 12,
-          image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff",
-          location: "Santorini, Greece",
-          tags: ["#Santorini", "#Sunset", "#Greece", "#Paradise"],
-          isLiked: true,
-          isBookmarked: false,
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString()
         }
@@ -198,64 +206,35 @@ const Profile = () => {
   // Fetch posts liked by the logged-in user
   const fetchLikedPosts = async (): Promise<Post[]> => {
     try {
-      const response: ApiResponse<Post> = await apiCall('/user/likes');
-      return response.data;
+      // This would need a new API endpoint for liked posts
+      return [];
     } catch (error) {
       console.error('Error fetching liked posts:', error);
-      // Return mock data for demonstration
-      return [
-        {
-          id: 3,
-          content: "Hidden gem in Tuscany! This little village has the best pasta I've ever tasted 🍝",
-          author: {
-            id: 2,
-            name: "Maria Rodriguez",
-            avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786"
-          },
-          timestamp: "3 days ago",
-          likes: 18,
-          comments: 5,
-          image: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9",
-          location: "Tuscany, Italy",
-          tags: ["#Tuscany", "#Italy", "#Food", "#HiddenGem"],
-          isLiked: true,
-          isBookmarked: false,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
-        }
-      ];
+      return [];
     }
   };
 
   // Fetch posts saved/bookmarked by the logged-in user
   const fetchSavedPosts = async (): Promise<Post[]> => {
     try {
-      const response: ApiResponse<Post> = await apiCall('/user/saved');
-      return response.data;
+      // This is now handled by SavedPostsSection component
+      return [];
     } catch (error) {
       console.error('Error fetching saved posts:', error);
-      // Return mock data for demonstration
-      return [
-        {
-          id: 4,
-          content: "Ultimate packing guide for backpacking through Southeast Asia! Save this for your next adventure 🎒",
-          author: {
-            id: 3,
-            name: "Travel Pro",
-            avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d"
-          },
-          timestamp: "5 days ago",
-          likes: 156,
-          comments: 23,
-          location: "Southeast Asia",
-          tags: ["#Backpacking", "#PackingTips", "#SoutheastAsia", "#Travel"],
-          isLiked: false,
-          isBookmarked: true,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
-        }
-      ];
+      return [];
     }
+  };
+
+  // Helper function to format time ago
+  const formatTimeAgo = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
+    
+    if (diffInHours < 1) return 'Just now';
+    if (diffInHours < 24) return `${diffInHours}h ago`;
+    if (diffInHours < 168) return `${Math.floor(diffInHours / 24)}d ago`;
+    return date.toLocaleDateString();
   };
 
   // Fetch comments made by the logged-in user
@@ -716,7 +695,34 @@ const Profile = () => {
                 </div>
               ) : userPosts.length > 0 ? (
                 userPosts.map((post) => (
-                  <PostCard key={post.id} post={post} />
+                  <div key={post.id} className="border rounded-lg p-4">
+                    <div className="flex items-start gap-3">
+                      <Avatar>
+                        <AvatarImage src={post.author.avatar} alt={post.author.name} />
+                        <AvatarFallback>{getInitials(post.author.name)}</AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="font-medium">{post.author.name}</span>
+                          <span className="text-sm text-muted-foreground">{post.timestamp}</span>
+                        </div>
+                        <p className="mb-3">{post.content}</p>
+                        {post.image && (
+                          <img src={post.image} alt="Post" className="w-full h-48 object-cover rounded-lg mb-3" />
+                        )}
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                          <span className="flex items-center gap-1">
+                            <Heart className="h-4 w-4" />
+                            {post.likes}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <MessageCircle className="h-4 w-4" />
+                            {post.comments}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 ))
               ) : (
                 <Card>
@@ -890,7 +896,34 @@ const Profile = () => {
                 </div>
               ) : likedPosts.length > 0 ? (
                 likedPosts.map((post) => (
-                  <PostCard key={post.id} post={post} />
+                  <div key={post.id} className="border rounded-lg p-4">
+                    <div className="flex items-start gap-3">
+                      <Avatar>
+                        <AvatarImage src={post.author.avatar} alt={post.author.name} />
+                        <AvatarFallback>{getInitials(post.author.name)}</AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="font-medium">{post.author.name}</span>
+                          <span className="text-sm text-muted-foreground">{post.timestamp}</span>
+                        </div>
+                        <p className="mb-3">{post.content}</p>
+                        {post.image && (
+                          <img src={post.image} alt="Post" className="w-full h-48 object-cover rounded-lg mb-3" />
+                        )}
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                          <span className="flex items-center gap-1">
+                            <Heart className="h-4 w-4" />
+                            {post.likes}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <MessageCircle className="h-4 w-4" />
+                            {post.comments}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 ))
               ) : (
                 <Card>
@@ -911,99 +944,12 @@ const Profile = () => {
 
           {/* Saved Posts Tab */}
           <TabsContent value="saved">
-            <div className="space-y-6">
-              {isLoading ? (
-                <div className="flex items-center justify-center py-8">
-                  <Loader2 className="h-6 w-6 animate-spin mr-2" />
-                  <span>Loading saved posts...</span>
-                </div>
-              ) : savedPosts.length > 0 ? (
-                savedPosts.map((post) => (
-                  <PostCard key={post.id} post={post} />
-                ))
-              ) : (
-                <Card>
-                  <CardContent className="p-8 text-center">
-                    <Bookmark className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">No saved posts</h3>
-                    <p className="text-muted-foreground mb-4">
-                      Posts you bookmark will appear here
-                    </p>
-                    <Button onClick={() => navigate('/community')}>
-                      Find Posts to Save
-                    </Button>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
+            <SavedPostsSection />
           </TabsContent>
 
           {/* Comments Tab */}
           <TabsContent value="comments">
-            <div className="space-y-4">
-              {isLoading ? (
-                <div className="flex items-center justify-center py-8">
-                  <Loader2 className="h-6 w-6 animate-spin mr-2" />
-                  <span>Loading comments...</span>
-                </div>
-              ) : userComments.length > 0 ? (
-                userComments.map((comment) => (
-                  <Card key={comment.id}>
-                    <CardContent className="p-4">
-                      <div className="flex items-start gap-3">
-                        <Avatar className="h-8 w-8">
-                          <AvatarImage src={user.profileImage} alt={getUserFullName()} />
-                          <AvatarFallback className="text-xs">
-                            {getInitials(getUserFullName())}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="font-medium text-sm">{getUserFullName()}</span>
-                            <span className="text-xs text-muted-foreground">{comment.timestamp}</span>
-                          </div>
-                          <p className="text-sm text-muted-foreground mb-2">
-                            Commented on: <span className="font-medium">{comment.post.title}</span>
-                          </p>
-                          <p className="text-sm mb-2">{comment.content}</p>
-                          <div className="bg-muted/50 p-3 rounded-md">
-                            <div className="flex items-center gap-2 mb-1">
-                              <Avatar className="h-5 w-5">
-                                <AvatarImage src={comment.post.author.avatar} alt={comment.post.author.name} />
-                                <AvatarFallback className="text-xs">
-                                  {getInitials(comment.post.author.name)}
-                                </AvatarFallback>
-                              </Avatar>
-                              <span className="text-xs font-medium">{comment.post.author.name}</span>
-                            </div>
-                            <p className="text-xs text-muted-foreground">{comment.post.content}</p>
-                          </div>
-                          <div className="flex items-center gap-4 mt-2">
-                            <button className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary">
-                              <Heart className="h-3 w-3" />
-                              {comment.likes}
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))
-              ) : (
-                <Card>
-                  <CardContent className="p-8 text-center">
-                    <MessageCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">No comments yet</h3>
-                    <p className="text-muted-foreground mb-4">
-                      Your comments on posts will appear here
-                    </p>
-                    <Button onClick={() => navigate('/community')}>
-                      Join Conversations
-                    </Button>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
+            <MyCommentsSection />
           </TabsContent>
         </Tabs>
       </main>

@@ -6,6 +6,10 @@ import {
   updateUser,
   deleteUser,
   uploadProfileImage,
+  getSavedPosts,
+  getUserComments,
+  getUserPreferences,
+  updateUserPreferences,
 } from '../controllers/users.js';
 import { protect, authorize } from '../middleware/auth.js';
 
@@ -132,6 +136,96 @@ router
  *                       type: string
  */
 router.post('/upload-profile-image', uploadProfileImage);
+
+/**
+ * @swagger
+ * /api/users/saved-posts:
+ *   get:
+ *     summary: Get user's saved posts
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: Page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         description: Number of posts per page
+ *     responses:
+ *       200:
+ *         description: User's saved posts
+ */
+router.get('/saved-posts', getSavedPosts);
+
+/**
+ * @swagger
+ * /api/users/my-comments:
+ *   get:
+ *     summary: Get user's comments
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: Page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         description: Number of comments per page
+ *     responses:
+ *       200:
+ *         description: User's comments and replies
+ */
+router.get('/my-comments', getUserComments);
+
+/**
+ * @swagger
+ * /api/users/preferences:
+ *   get:
+ *     summary: Get user's content preferences
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User's content preferences
+ *   put:
+ *     summary: Update user's content preferences
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               interestedTags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               notInterestedTags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Preferences updated successfully
+ */
+router
+  .route('/preferences')
+  .get(getUserPreferences)
+  .put(updateUserPreferences);
 
 /**
  * @swagger

@@ -9,9 +9,18 @@ import {
   unlikePost,
   addComment,
   deleteComment,
+  updateComment,
   sharePost,
   getPostsByTag,
   getUserPosts,
+  savePost,
+  unsavePost,
+  addReply,
+  likeComment,
+  unlikeComment,
+  markInterested,
+  markNotInterested,
+  reportPost,
 } from '../controllers/posts.js';
 import { protect, optionalAuth } from '../middleware/auth.js';
 import { validatePost } from '../middleware/validation.js';
@@ -368,5 +377,245 @@ router.delete('/:id/comment/:commentId', protect, deleteComment);
  *         description: Post shared successfully
  */
 router.post('/:id/share', protect, sharePost);
+
+/**
+ * @swagger
+ * /api/posts/{id}/save:
+ *   post:
+ *     summary: Save a post
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Post ID
+ *     responses:
+ *       200:
+ *         description: Post saved successfully
+ *   delete:
+ *     summary: Unsave a post
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Post ID
+ *     responses:
+ *       200:
+ *         description: Post unsaved successfully
+ */
+router
+  .route('/:id/save')
+  .post(protect, savePost)
+  .delete(protect, unsavePost);
+
+/**
+ * @swagger
+ * /api/posts/{id}/comment/{commentId}:
+ *   put:
+ *     summary: Update comment
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Post ID
+ *       - in: path
+ *         name: commentId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Comment ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - content
+ *             properties:
+ *               content:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Comment updated successfully
+ */
+router.put('/:id/comment/:commentId', protect, updateComment);
+
+/**
+ * @swagger
+ * /api/posts/{id}/comment/{commentId}/reply:
+ *   post:
+ *     summary: Add reply to comment
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Post ID
+ *       - in: path
+ *         name: commentId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Comment ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - content
+ *             properties:
+ *               content:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Reply added successfully
+ */
+router.post('/:id/comment/:commentId/reply', protect, addReply);
+
+/**
+ * @swagger
+ * /api/posts/{id}/comment/{commentId}/like:
+ *   post:
+ *     summary: Like a comment
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Post ID
+ *       - in: path
+ *         name: commentId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Comment ID
+ *     responses:
+ *       200:
+ *         description: Comment liked successfully
+ *   delete:
+ *     summary: Unlike a comment
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Post ID
+ *       - in: path
+ *         name: commentId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Comment ID
+ *     responses:
+ *       200:
+ *         description: Comment unliked successfully
+ */
+router
+  .route('/:id/comment/:commentId/like')
+  .post(protect, likeComment)
+  .delete(protect, unlikeComment);
+
+/**
+ * @swagger
+ * /api/posts/{id}/interested:
+ *   post:
+ *     summary: Mark post as interested
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Post ID
+ *     responses:
+ *       200:
+ *         description: Post marked as interested
+ */
+router.post('/:id/interested', protect, markInterested);
+
+/**
+ * @swagger
+ * /api/posts/{id}/not-interested:
+ *   post:
+ *     summary: Mark post as not interested
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Post ID
+ *     responses:
+ *       200:
+ *         description: Post marked as not interested
+ */
+router.post('/:id/not-interested', protect, markNotInterested);
+
+/**
+ * @swagger
+ * /api/posts/{id}/report:
+ *   post:
+ *     summary: Report a post
+ *     tags: [Posts]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Post ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - reason
+ *             properties:
+ *               reason:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Post reported successfully
+ */
+router.post('/:id/report', protect, reportPost);
 
 export default router;

@@ -10,11 +10,16 @@ import rateLimit from 'express-rate-limit';
 
 const router = express.Router();
 
-// Rate limiting for auth routes
+// Rate limiting for auth routes (more lenient for development)
 const authRateLimit = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 5, // limit each IP to 5 requests per windowMs for auth routes
-  message: 'Too many authentication attempts, please try again later.'
+  max: 20, // limit each IP to 20 requests per windowMs for auth routes (increased)
+  message: {
+    success: false,
+    message: 'Too many authentication attempts, please try again later.'
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 
 // Rate limiting for account deletion (more restrictive)

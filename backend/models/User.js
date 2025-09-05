@@ -131,6 +131,34 @@ const userSchema = new mongoose.Schema({
       },
     },
   },
+  savedPosts: [{
+    type: mongoose.Schema.ObjectId,
+    ref: 'Post',
+  }],
+  contentPreferences: {
+    interestedTags: [{
+      type: String,
+      lowercase: true,
+    }],
+    notInterestedTags: [{
+      type: String,
+      lowercase: true,
+    }],
+    reportedPosts: [{
+      post: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Post',
+      },
+      reason: {
+        type: String,
+        required: true,
+      },
+      reportedAt: {
+        type: Date,
+        default: Date.now,
+      },
+    }],
+  },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
   emailVerificationToken: String,
@@ -186,6 +214,66 @@ userSchema.methods.getResetPasswordToken = function() {
   this.resetPasswordExpire = Date.now() + 10 * 60 * 1000; // 10 minutes
 
   return resetToken;
+};
+
+// Method to save a post
+userSchema.methods.savePost = function(postId) {
+  if (!this.savedPosts.includes(postId)) {
+    this.savedPosts.push(postId);
+  }
+  return this.save();
+};
+
+// Method to unsave a post
+userSchema.methods.unsavePost = function(postId) {
+  this.savedPosts = this.savedPosts.filter(id => !id.equals(postId));
+  return this.save();
+};
+
+// Method to check if post is saved
+userSchema.methods.isPostSaved = function(postId) {
+  return this.savedPosts.includes(postId);
+};
+
+// Method to add interested tag
+userSchema.methods.addInterestedTag = function(tag) {
+  const normalizedTag = tag.toLowerCase();
+  if (!this.contentPreferences.interestedTags.includes(normalizedTag)) {
+    this.contentPreferences.interestedTags.push(normalizedTag);
+    // Remove from not interested if it exists
+    this.contentPreferences.notInterestedTags = this.contentPreferences.notInterestedTags.filter(
+      t => t !== normalizedTag
+    );
+  }
+  return this.save();
+};
+
+// Method to add not interested tag
+userSchema.methods.addNotInterestedTag = function(tag) {
+  const normalizedTag = tag.toLowerCase();
+  if (!this.contentPreferences.notInterestedTags.includes(normalizedTag)) {
+    this.contentPreferences.notInterestedTags.push(normalizedTag);
+    // Remove from interested if it exists
+    this.contentPreferences.interestedTags = this.contentPreferences.interestedTags.filter(
+      t => t !== normalizedTag
+    );
+  }
+  return this.save();
+};
+
+// Method to report a post
+userSchema.methods.reportPost = function(postId, reason) {
+  const existingReport = this.contentPreferences.reportedPosts.find(
+    report => report.post.equals(postId)
+  );
+  
+  if (!existingReport) {
+    this.contentPreferences.reportedPosts.push({
+      post: postId,
+      reason: reason,
+    });
+  }
+  return this.save();
 };
 
 const User = mongoose.model('User', userSchema);

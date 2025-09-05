@@ -283,7 +283,8 @@ export interface Post {
   _id: string;
   author: {
     _id: string;
-    name: string;
+    firstName: string;
+    lastName: string;
     profileImage?: string;
   };
   content: string;
@@ -295,7 +296,8 @@ export interface Post {
     _id: string;
     user: {
       _id: string;
-      name: string;
+      firstName: string;
+      lastName: string;
       profileImage?: string;
     };
     content: string;
@@ -316,7 +318,8 @@ export interface Group {
   description: string;
   creator: {
     _id: string;
-    name: string;
+    firstName: string;
+    lastName: string;
     profileImage?: string;
   };
   category: string;
@@ -324,7 +327,8 @@ export interface Group {
   members: Array<{
     user: {
       _id: string;
-      name: string;
+      firstName: string;
+      lastName: string;
       profileImage?: string;
     };
     role: 'member' | 'moderator' | 'admin';

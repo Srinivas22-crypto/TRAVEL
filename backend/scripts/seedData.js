@@ -16,7 +16,8 @@ mongoose.connect(process.env.MONGODB_URI);
 // Sample data
 const users = [
   {
-    name: 'Admin User',
+    firstName: 'Admin',
+    lastName: 'User',
     email: 'admin@travel.com',
     password: 'password123',
     role: 'admin',
@@ -24,21 +25,24 @@ const users = [
     isVerified: true,
   },
   {
-    name: 'John Doe',
+    firstName: 'John',
+    lastName: 'Doe',
     email: 'john@example.com',
     password: 'password123',
     bio: 'Adventure seeker and travel enthusiast',
     isVerified: true,
   },
   {
-    name: 'Jane Smith',
+    firstName: 'Jane',
+    lastName: 'Smith',
     email: 'jane@example.com',
     password: 'password123',
     bio: 'Solo traveler exploring the world',
     isVerified: true,
   },
   {
-    name: 'Mike Johnson',
+    firstName: 'Mike',
+    lastName: 'Johnson',
     email: 'mike@example.com',
     password: 'password123',
     bio: 'Photography lover and culture explorer',

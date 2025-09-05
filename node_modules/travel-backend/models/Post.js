@@ -207,4 +207,59 @@ postSchema.methods.addComment = function(userId, content) {
   return this.save();
 };
 
+// Method to add reply to comment
+postSchema.methods.addReply = function(commentId, userId, content) {
+  const comment = this.comments.id(commentId);
+  if (!comment) {
+    throw new Error('Comment not found');
+  }
+  
+  comment.replies.push({
+    user: userId,
+    content: content,
+  });
+  return this.save();
+};
+
+// Method to like a comment
+postSchema.methods.likeComment = function(commentId, userId) {
+  const comment = this.comments.id(commentId);
+  if (!comment) {
+    throw new Error('Comment not found');
+  }
+  
+  if (!comment.likes.includes(userId)) {
+    comment.likes.push(userId);
+  }
+  return this.save();
+};
+
+// Method to unlike a comment
+postSchema.methods.unlikeComment = function(commentId, userId) {
+  const comment = this.comments.id(commentId);
+  if (!comment) {
+    throw new Error('Comment not found');
+  }
+  
+  comment.likes = comment.likes.filter(id => !id.equals(userId));
+  return this.save();
+};
+
+// Method to update comment
+postSchema.methods.updateComment = function(commentId, content) {
+  const comment = this.comments.id(commentId);
+  if (!comment) {
+    throw new Error('Comment not found');
+  }
+  
+  comment.content = content;
+  return this.save();
+};
+
+// Method to delete comment
+postSchema.methods.deleteComment = function(commentId) {
+  this.comments.id(commentId).deleteOne();
+  return this.save();
+};
+
 export default mongoose.model('Post', postSchema);

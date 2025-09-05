@@ -41,8 +41,12 @@ const Feed: React.FC<FeedProps> = ({ posts, onRefresh, isLoading = false }) => {
       // Sort by recent (assuming timestamp format allows string comparison)
       sorted.sort((a, b) => {
         // Simple timestamp comparison - in real app, use proper date parsing
-        const timeA = a.timestamp.includes('hour') ? 1 : a.timestamp.includes('day') ? 24 : 0;
-        const timeB = b.timestamp.includes('hour') ? 1 : b.timestamp.includes('day') ? 24 : 0;
+        const timeA = a.timestamp && typeof a.timestamp === 'string' 
+          ? (a.timestamp.includes('hour') ? 1 : a.timestamp.includes('day') ? 24 : 0)
+          : 0;
+        const timeB = b.timestamp && typeof b.timestamp === 'string'
+          ? (b.timestamp.includes('hour') ? 1 : b.timestamp.includes('day') ? 24 : 0)
+          : 0;
         return timeA - timeB;
       });
     }
