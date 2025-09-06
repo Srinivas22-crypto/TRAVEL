@@ -443,7 +443,7 @@ const Explore = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Button className="w-full">Start Planning</Button>
+                <Button className="w-full" onClick={() => navigate('/route-planner')}>Start Planning</Button>
               </CardContent>
             </Card>
 
