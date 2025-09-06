@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Star, MapPin, Calendar } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import LocationCardMenu from '@/components/LocationCardMenu';
 
 const PopularDestinations = () => {
   const { t } = useTranslation();
@@ -109,7 +110,7 @@ const PopularDestinations = () => {
           {destinations.map((destination) => (
             <Card 
               key={destination.id} 
-              className="hover:shadow-lg transition-shadow overflow-hidden cursor-pointer"
+              className="hover:shadow-lg transition-shadow overflow-hidden cursor-pointer group"
               onClick={() => handleDestinationClick(destination)}
             >
               <div className="aspect-video bg-muted relative">
@@ -118,6 +119,7 @@ const PopularDestinations = () => {
                   alt={destination.name}
                   className="w-full h-full object-cover"
                 />
+                <LocationCardMenu />
                 <Badge className="absolute top-4 right-4 bg-background/90 text-foreground">
                   <Star className="h-3 w-3 fill-current mr-1" />
                   {destination.rating}

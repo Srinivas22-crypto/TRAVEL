@@ -16,6 +16,7 @@ import PostOptionsMenu from './PostOptionsMenu';
 import CommentsSection from './CommentsSection';
 import postService, { Post, Comment } from '@/services/postService';
 import { useAuth } from '@/contexts/AuthContext';
+import LocationCardMenu from './LocationCardMenu';
 
 interface PostCardProps {
   post: Post;
@@ -241,12 +242,13 @@ const PostCard: React.FC<PostCardProps> = ({
           <p className="mb-4 leading-relaxed">{post.content}</p>
           
           {post.images && post.images.length > 0 && (
-            <div className="aspect-video overflow-hidden rounded-lg mb-4 cursor-pointer group">
+            <div className="aspect-video overflow-hidden rounded-lg mb-4 cursor-pointer group relative">
               <img
                 src={post.images[0]}
                 alt="Post image"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
+              <LocationCardMenu />
             </div>
           )}
           

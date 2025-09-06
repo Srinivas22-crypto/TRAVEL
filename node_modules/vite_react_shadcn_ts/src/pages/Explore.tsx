@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import SearchBar from '@/components/SearchBar';
 import { useTranslation } from 'react-i18next';
 import { MapPin, Search, Star, Clock, Users, Filter, RefreshCw } from 'lucide-react';
+import LocationCardMenu from '@/components/LocationCardMenu';
 
 const Explore = () => {
   const { t } = useTranslation();
@@ -391,12 +392,13 @@ const Explore = () => {
                   className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
                   onClick={() => handleDestinationClick(destination)}
                 >
-                  <div className="aspect-video overflow-hidden">
+                  <div className="aspect-video overflow-hidden relative group">
                     <img 
                       src={destination.image} 
                       alt={destination.name}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
+                    <LocationCardMenu />
                   </div>
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between mb-2">
