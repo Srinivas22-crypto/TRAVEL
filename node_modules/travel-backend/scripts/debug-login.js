@@ -14,11 +14,11 @@ console.log('');
 async function checkBackendHealth() {
   console.log('Step 1: Checking if backend server is running...');
   try {
-    const response = await axios.get('http://localhost:5001/health', { timeout: 5000 });
-    console.log('✅ Backend server is running on port 5001');
+    const response = await axios.get('http://localhost:5000/health', { timeout: 5000 });
+    console.log('✅ Backend server is running on port 5000');
     return true;
   } catch (error) {
-    console.log('❌ Backend server is NOT running on port 5001');
+    console.log('❌ Backend server is NOT running on port 5000');
     console.log('Please start the backend server first: cd backend && npm start');
     return false;
   }
@@ -28,7 +28,7 @@ async function testDatabaseConnection() {
   console.log('');
   console.log('Step 2: Testing database connection...');
   try {
-    const response = await axios.get('http://localhost:5001/api/auth/me', {
+    const response = await axios.get('http://localhost:5000/api/auth/me', {
       headers: { 'Authorization': 'Bearer invalid_token' },
       timeout: 5000
     });
@@ -47,7 +47,7 @@ async function testAuthEndpoint() {
   console.log('');
   console.log('Step 3: Testing auth endpoint directly...');
   try {
-    const response = await axios.post('http://localhost:5001/api/auth/login', {
+    const response = await axios.post('http://localhost:5000/api/auth/login', {
       email: 'demo@travelhub.com',
       password: 'password123'
     }, {

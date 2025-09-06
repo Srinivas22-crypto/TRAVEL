@@ -77,7 +77,7 @@ async function testLogin() {
   
   try {
     const axios = (await import('axios')).default;
-    const response = await axios.post('http://localhost:5001/api/auth/login', {
+    const response = await axios.post('http://localhost:5000/api/auth/login', {
       email: 'test@example.com',
       password: 'password123'
     }, {
@@ -116,7 +116,7 @@ async function main() {
   console.log('');
   console.log('4. Check the network request to /api/auth/login');
   console.log('5. Look for these common issues:');
-  console.log('   - Request URL should be: http://localhost:5001/api/auth/login');
+  console.log('   - Request URL should be: http://localhost:5000/api/auth/login');
   console.log('   - Request method should be: POST');
   console.log('   - Content-Type should be: application/json');
   console.log('   - Response status should be: 200 (success) or 401 (invalid credentials)');

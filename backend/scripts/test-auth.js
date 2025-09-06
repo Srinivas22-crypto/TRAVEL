@@ -5,12 +5,12 @@ console.log('    AUTHENTICATION TEST SCRIPT');
 console.log('========================================');
 console.log('');
 
-const API_BASE_URL = 'http://localhost:5001/api';
+const API_BASE_URL = 'http://localhost:5000/api';
 
 async function testHealthEndpoint() {
   console.log('Testing health endpoint...');
   try {
-    const response = await axios.get('http://localhost:5001/health');
+    const response = await axios.get('http://localhost:5000/health');
     console.log('✅ Health endpoint working');
     console.log('Response:', response.data);
   } catch (error) {

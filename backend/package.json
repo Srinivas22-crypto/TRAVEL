@@ -12,7 +12,7 @@
     "debug:login": "node scripts/debug-login.js",
     "create:test-user": "node scripts/create-test-user.js",
     "seed:data": "node scripts/seedData.js",
-    "health:check": "curl -s http://localhost:5001/health || echo 'Backend server not running'",
+    "health:check": "curl -s http://localhost:5000/health || echo 'Backend server not running'",
     "test:auth": "node scripts/test-auth.js"
   },
   "keywords": [
