@@ -8,7 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import SearchBar from '@/components/SearchBar';
 import { useTranslation } from 'react-i18next';
 import { MapPin, Search, Star, Clock, Users, Filter, RefreshCw } from 'lucide-react';
-import LocationCardMenu from '@/components/LocationCardMenu';
 
 const Explore = () => {
   const { t } = useTranslation();
@@ -141,13 +140,13 @@ const Explore = () => {
   ];
 
   const categories = [
-    { name: "All", id: "all", icon: "🌍", count: popularDestinations.length },
-    { name: "Adventure", id: "adventure", icon: "🏔️", count: popularDestinations.filter(d => d.category === 'adventure').length },
-    { name: "Beach", id: "beach", icon: "🏖️", count: popularDestinations.filter(d => d.category === 'beach').length },
-    { name: "Culture", id: "culture", icon: "🏛️", count: popularDestinations.filter(d => d.category === 'culture').length },
-    { name: "Food", id: "food", icon: "🍜", count: popularDestinations.filter(d => d.category === 'food').length },
-    { name: "Nature", id: "nature", icon: "🌿", count: popularDestinations.filter(d => d.category === 'nature').length },
-    { name: "City", id: "city", icon: "🏙️", count: popularDestinations.filter(d => d.category === 'city').length }
+    { name: "All", id: "all", icon: "", count: popularDestinations.length },
+    { name: "Adventure", id: "adventure", icon: "", count: popularDestinations.filter(d => d.category === 'adventure').length },
+    { name: "Beach", id: "beach", icon: "", count: popularDestinations.filter(d => d.category === 'beach').length },
+    { name: "Culture", id: "culture", icon: "", count: popularDestinations.filter(d => d.category === 'culture').length },
+    { name: "Food", id: "food", icon: "", count: popularDestinations.filter(d => d.category === 'food').length },
+    { name: "Nature", id: "nature", icon: "", count: popularDestinations.filter(d => d.category === 'nature').length },
+    { name: "City", id: "city", icon: "", count: popularDestinations.filter(d => d.category === 'city').length }
   ];
 
   // Enhanced search function with better matching
@@ -398,7 +397,6 @@ const Explore = () => {
                       alt={destination.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
-                    <LocationCardMenu />
                   </div>
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between mb-2">
