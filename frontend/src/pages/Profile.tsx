@@ -48,6 +48,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface Post {
   id: number;
@@ -60,6 +61,7 @@ interface Post {
   timestamp: string;
   likes: number;
   comments: number;
+  shares: number;
   image?: string;
   location?: string;
   tags?: string[];
@@ -667,9 +669,9 @@ const Profile = () => {
               <FileText className="h-4 w-4" />
               My Posts
             </TabsTrigger>
-            <TabsTrigger value="activities" className="flex items-center gap-2">
+            <TabsTrigger value="history" className="flex items-center gap-2">
               <Activity className="h-4 w-4" />
-              My Activities
+              History
             </TabsTrigger>
             <TabsTrigger value="liked" className="flex items-center gap-2">
               <Heart className="h-4 w-4" />
@@ -741,148 +743,222 @@ const Profile = () => {
             </div>
           </TabsContent>
 
-          
-          {/* My Activities Tab */}
-          <TabsContent value="activities">
-            <div className="space-y-6">
-              {isLoadingActivities ? (
-                <div className="flex items-center justify-center py-8">
-                  <Loader2 className="h-6 w-6 animate-spin mr-2" />
-                  <span>Loading your activities...</span>
-                </div>
-              ) : bookedActivities.length === 0 ? (
-                <Card>
-                  <CardContent className="p-8 text-center">
-                    <Activity className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">No Activities Booked Yet</h3>
-                    <p className="text-muted-foreground mb-4">
-                      Start exploring destinations and book exciting activities to see them here.
-                    </p>
-                    <Button 
-                      onClick={() => navigate('/explore')}
-                      className="bg-gradient-hero hover:opacity-90"
-                    >
-                      Explore Destinations
-                    </Button>
-                  </CardContent>
-                </Card>
-              ) : (
-                <div className="space-y-6">
-                  {/* Summary Stats */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          {/* History Tab */}
+          <TabsContent value="history">
+            <div className="space-y-8">
+              {/* Activities History Section */}
+              <section>
+                <h3 className="text-2xl font-semibold mb-4">Activities History</h3>
+                {
+                  isLoadingActivities ? (
+                    <div className="flex items-center justify-center py-8">
+                      <Loader2 className="h-6 w-6 animate-spin mr-2" />
+                      <span>Loading your activities...</span>
+                    </div>
+                  ) : bookedActivities.length === 0 ? (
                     <Card>
-                      <CardContent className="p-4 text-center">
-                        <Activity className="h-6 w-6 mx-auto mb-2 text-blue-500" />
-                        <div className="text-2xl font-bold">{bookedActivities.length}</div>
-                        <div className="text-sm text-muted-foreground">Total Activities</div>
+                      <CardContent className="p-8 text-center">
+                        <Activity className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                        <h3 className="text-lg font-semibold mb-2">No Activities Booked Yet</h3>
+                        <p className="text-muted-foreground mb-4">
+                          Start exploring destinations and book exciting activities to see them here.
+                        </p>
+                        <Button 
+                          onClick={() => navigate('/explore')}
+                          className="bg-gradient-hero hover:opacity-90"
+                        >
+                          Explore Destinations
+                        </Button>
                       </CardContent>
                     </Card>
-                    <Card>
-                      <CardContent className="p-4 text-center">
-                        <MapPin className="h-6 w-6 mx-auto mb-2 text-green-500" />
-                        <div className="text-2xl font-bold">
-                          {new Set(bookedActivities.map(a => a.destination)).size}
-                        </div>
-                        <div className="text-sm text-muted-foreground">Destinations</div>
-                      </CardContent>
-                    </Card>
-                    <Card>
-                      <CardContent className="p-4 text-center">
-                        <Calendar className="h-6 w-6 mx-auto mb-2 text-purple-500" />
-                        <div className="text-2xl font-bold">
-                          ${activityService.getTotalAmountSpent()}
-                        </div>
-                        <div className="text-sm text-muted-foreground">Total Spent</div>
-                      </CardContent>
-                    </Card>
-                  </div>
-
-                  {/* Activities List */}
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-semibold">Your Booked Activities</h3>
-                    <div className="grid gap-4">
-                      {bookedActivities.map((activity) => (
-                        <Card key={activity.id} className="overflow-hidden">
-                          <div className="flex">
-                            <div className="w-32 h-24 flex-shrink-0">
-                              <img 
-                                src={activity.activityImage} 
-                                alt={activity.activityName}
-                                className="w-full h-full object-cover"
-                              />
+                  ) : (
+                    <div className="space-y-6">
+                      {/* Summary Stats */}
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <Card>
+                          <CardContent className="p-4 text-center">
+                            <Activity className="h-6 w-6 mx-auto mb-2 text-blue-500" />
+                            <div className="text-2xl font-bold">{bookedActivities.length}</div>
+                            <div className="text-sm text-muted-foreground">Total Activities</div>
+                          </CardContent>
+                        </Card>
+                        <Card>
+                          <CardContent className="p-4 text-center">
+                            <MapPin className="h-6 w-6 mx-auto mb-2 text-green-500" />
+                            <div className="text-2xl font-bold">
+                              {new Set(bookedActivities.map(a => a.destination)).size}
                             </div>
-                            <div className="flex-1 p-4">
-                              <div className="flex justify-between items-start">
-                                <div className="flex-1">
-                                  <h4 className="font-semibold text-lg mb-1">
-                                    {activity.activityName}
-                                  </h4>
-                                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
-                                    <div className="flex items-center gap-1">
-                                      <MapPin className="h-3 w-3" />
-                                      {activity.destination}
-                                    </div>
-                                    <div className="flex items-center gap-1">
-                                      <Clock className="h-3 w-3" />
-                                      {activity.duration}
-                                    </div>
-                                    <div className="flex items-center gap-1">
-                                      <Calendar className="h-3 w-3" />
-                                      Booked on {formatDate(activity.bookedAt)}
-                                    </div>
-                                  </div>
-                                  <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-2">
-                                      <Badge variant="outline" className="text-green-600 border-green-600">
-                                        ${activity.price}
-                                      </Badge>
-                                      <Badge variant="secondary">
-                                        {activity.status === 'booked' ? 'Active' : 'Cancelled'}
-                                      </Badge>
-                                    </div>
-                                  </div>
+                            <div className="text-sm text-muted-foreground">Destinations</div>
+                          </CardContent>
+                        </Card>
+                        <Card>
+                          <CardContent className="p-4 text-center">
+                            <Calendar className="h-6 w-6 mx-auto mb-2 text-purple-500" />
+                            <div className="text-2xl font-bold">
+                              ${activityService.getTotalAmountSpent()}
+                            </div>
+                            <div className="text-sm text-muted-foreground">Total Spent</div>
+                          </CardContent>
+                        </Card>
+                      </div>
+
+                      {/* Activities List */}
+                      <div className="space-y-4">
+                        <div className="grid gap-4">
+                          {bookedActivities.map((activity) => (
+                            <Card key={activity.id} className="overflow-hidden">
+                              <div className="flex">
+                                <div className="w-32 h-24 flex-shrink-0">
+                                  <img 
+                                    src={activity.activityImage} 
+                                    alt={activity.activityName}
+                                    className="w-full h-full object-cover"
+                                  />
                                 </div>
-                                <div className="flex items-center gap-2 ml-4">
-                                  <AlertDialog>
-                                    <AlertDialogTrigger asChild>
-                                      <Button 
-                                        variant="outline" 
-                                        size="sm"
-                                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                                      >
-                                        <X className="h-3 w-3 mr-1" />
-                                        Cancel
-                                      </Button>
-                                    </AlertDialogTrigger>
-                                    <AlertDialogContent>
-                                      <AlertDialogHeader>
-                                        <AlertDialogTitle>Cancel Activity Booking</AlertDialogTitle>
-                                        <AlertDialogDescription>
-                                          Are you sure you want to cancel your booking for "{activity.activityName}"? 
-                                          This action cannot be undone.
-                                        </AlertDialogDescription>
-                                      </AlertDialogHeader>
-                                      <AlertDialogFooter>
-                                        <AlertDialogCancel>Keep Booking</AlertDialogCancel>
-                                        <AlertDialogAction
-                                          onClick={() => handleCancelActivity(activity.id)}
-                                          className="bg-red-600 hover:bg-red-700"
-                                        >
-                                          Cancel Booking
-                                        </AlertDialogAction>
-                                      </AlertDialogFooter>
-                                    </AlertDialogContent>
-                                  </AlertDialog>
+                                <div className="flex-1 p-4">
+                                  <div className="flex justify-between items-start">
+                                    <div className="flex-1">
+                                      <h4 className="font-semibold text-lg mb-1">
+                                        {activity.activityName}
+                                      </h4>
+                                      <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
+                                        <div className="flex items-center gap-1">
+                                          <MapPin className="h-3 w-3" />
+                                          {activity.destination}
+                                        </div>
+                                        <div className="flex items-center gap-1">
+                                          <Clock className="h-3 w-3" />
+                                          {activity.duration}
+                                        </div>
+                                        <div className="flex items-center gap-1">
+                                          <Calendar className="h-3 w-3" />
+                                          Booked on {formatDate(activity.bookedAt)}
+                                        </div>
+                                      </div>
+                                      <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-2">
+                                          <Badge variant="outline" className="text-green-600 border-green-600">
+                                            ${activity.price}
+                                          </Badge>
+                                          <Badge variant="secondary">
+                                            {activity.status === 'booked' ? 'Active' : 'Cancelled'}
+                                          </Badge>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="flex items-center gap-2 ml-4">
+                                      <AlertDialog>
+                                        <AlertDialogTrigger asChild>
+                                          <Button 
+                                            variant="outline" 
+                                            size="sm"
+                                            className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                                          >
+                                            <X className="h-3 w-3 mr-1" />
+                                            Cancel
+                                          </Button>
+                                        </AlertDialogTrigger>
+                                        <AlertDialogContent>
+                                          <AlertDialogHeader>
+                                            <AlertDialogTitle>Cancel Activity Booking</AlertDialogTitle>
+                                            <AlertDialogDescription>
+                                              Are you sure you want to cancel your booking for "{activity.activityName}"? 
+                                              This action cannot be undone.
+                                            </AlertDialogDescription>
+                                          </AlertDialogHeader>
+                                          <AlertDialogFooter>
+                                            <AlertDialogCancel>Keep Booking</AlertDialogCancel>
+                                            <AlertDialogAction
+                                              onClick={() => handleCancelActivity(activity.id)}
+                                              className="bg-red-600 hover:bg-red-700"
+                                            >
+                                              Cancel Booking
+                                            </AlertDialogAction>
+                                          </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                      </AlertDialog>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </div>
-                        </Card>
-                      ))}
+                            </Card>
+                          ))}
+                        </div>
+                      </div>
                     </div>
+                  )
+                }
+              </section>
+
+              <Separator />
+
+              {/* Travel History Section */}
+              <section>
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-2xl font-semibold">Travel History</h3>
+                  <div className="flex items-center gap-2">
+                    <Select>
+                      <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Sort by..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="date-desc">Date (Newest)</SelectItem>
+                        <SelectItem value="date-asc">Date (Oldest)</SelectItem>
+                        <SelectItem value="cost-desc">Cost (High to Low)</SelectItem>
+                        <SelectItem value="cost-asc">Cost (Low to High)</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
-              )}
+                {
+                  // Mock data for travel history - replace with actual data later
+                  true ? (
+                    <div className="space-y-6">
+                      <Card>
+                        <CardHeader>
+                          <CardTitle>Trip to Paris</CardTitle>
+                          <CardDescription>A 5-day romantic getaway.</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                            <div><p className="font-semibold">Amount Spent:</p><p>$2,500</p></div>
+                            <div><p className="font-semibold">Tickets Booked:</p><p>2 Flights</p></div>
+                            <div><p className="font-semibold">Hotels Booked:</p><p>1 Hotel</p></div>
+                            <div><p className="font-semibold">Days Spent:</p><p>5 Days</p></div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                      <Card>
+                        <CardHeader>
+                          <CardTitle>Weekend in New York</CardTitle>
+                          <CardDescription>A 3-day solo trip to the Big Apple.</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                            <div><p className="font-semibold">Amount Spent:</p><p>$1,200</p></div>
+                            <div><p className="font-semibold">Tickets Booked:</p><p>1 Train</p></div>
+                            <div><p className="font-semibold">Cars Booked:</p><p>3 Cabs</p></div>
+                            <div><p className="font-semibold">Days Spent:</p><p>3 Days</p></div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  ) : (
+                    <Card>
+                      <CardContent className="p-8 text-center">
+                        <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                        <h3 className="text-lg font-semibold mb-2">No Travel History Yet</h3>
+                        <p className="text-muted-foreground mb-4">
+                          Plan your routes and book your travel to see your history here.
+                        </p>
+                        <Button onClick={() => navigate('/route-planner')}>
+                          Plan a New Route
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  )
+                }
+              </section>
             </div>
           </TabsContent>
 
