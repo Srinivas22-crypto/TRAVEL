@@ -3,23 +3,7 @@ import PostCard from './PostCard';
 import { Button } from '@/components/ui/button';
 import { RefreshCw, Filter } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-
-interface Post {
-  id: number;
-  author: {
-    name: string;
-    avatar: string;
-    username: string;
-  };
-  content: string;
-  image?: string;
-  location: string;
-  timestamp: string;
-  likes: number;
-  comments: number;
-  shares: number;
-  tags: string[];
-}
+import { Post } from '@/services/postService';
 
 interface FeedProps {
   posts: Post[];
@@ -36,7 +20,7 @@ const Feed: React.FC<FeedProps> = ({ posts, onRefresh, isLoading = false }) => {
     let sorted = [...posts];
     
     if (sortBy === 'popular') {
-      sorted.sort((a, b) => (b.likes + b.comments) - (a.likes + a.comments));
+      sorted.sort((a, b) => (b.likeCount + b.commentCount) - (a.likeCount + a.commentCount));
     } else {
       // Sort by recent (assuming timestamp format allows string comparison)
       sorted.sort((a, b) => {
@@ -54,17 +38,17 @@ const Feed: React.FC<FeedProps> = ({ posts, onRefresh, isLoading = false }) => {
     setFilteredPosts(sorted);
   }, [posts, sortBy]);
 
-  const handleLike = (postId: number) => {
+  const handleLike = (postId: string) => {
     // In a real app, this would make an API call
     console.log('Liked post:', postId);
   };
 
-  const handleComment = (postId: number) => {
+  const handleComment = (postId: string) => {
     // In a real app, this would open a comment modal or navigate to post detail
     console.log('Comment on post:', postId);
   };
 
-  const handleShare = (postId: number) => {
+  const handleShare = (postId: string) => {
     // In a real app, this would handle sharing logic
     console.log('Shared post:', postId);
   };
@@ -147,11 +131,11 @@ const Feed: React.FC<FeedProps> = ({ posts, onRefresh, isLoading = false }) => {
         <div className="space-y-6">
           {filteredPosts.map((post) => (
             <PostCard
-              key={post.id}
+              key={post._id}
               post={post}
-              onLike={handleLike}
-              onComment={handleComment}
-              onShare={handleShare}
+              onLike={() => handleLike(post._id)}
+              onComment={() => handleComment(post._id)}
+              onShare={() => handleShare(post._id)}
             />
           ))}
         </div>

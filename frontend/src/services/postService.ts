@@ -1,54 +1,6 @@
-import api from '@/lib/api';
+import api, { Post, Comment, Reply } from '@/lib/api';
 
-export interface Post {
-  _id: string;
-  author: {
-    _id: string;
-    firstName: string;
-    lastName: string;
-    profileImage?: string;
-  };
-  content: string;
-  images?: string[];
-  location?: string;
-  tags: string[];
-  likes: string[];
-  comments: Comment[];
-  shares: number;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-  likeCount: number;
-  commentCount: number;
-  engagementScore: number;
-}
-
-export interface Comment {
-  _id: string;
-  user: {
-    _id: string;
-    firstName: string;
-    lastName: string;
-    profileImage?: string;
-  };
-  content: string;
-  likes: string[];
-  replies: Reply[];
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface Reply {
-  _id: string;
-  user: {
-    _id: string;
-    firstName: string;
-    lastName: string;
-    profileImage?: string;
-  };
-  content: string;
-  createdAt: string;
-}
+export type { Post, Comment, Reply };
 
 export interface CreatePostData {
   content: string;

@@ -16,7 +16,7 @@ const mockPosts = [
       location: 'Tokyo, Japan',
     },
     content: 'Just discovered this amazing hidden ramen shop in Shibuya! The tonkotsu broth is absolutely incredible. Perfect after a long day exploring the city. 🍜✨',
-    images: [],
+    images: ['/2018b5db-0b62-4e2e-a2d3-3dd8452f3d6f.png'],
     location: 'Shibuya, Tokyo',
     timestamp: '2 hours ago',
     likes: 24,
@@ -222,18 +222,26 @@ export const CommunityFeed = () => {
                   </div>
                 )}
 
-                {/* Images placeholder */}
-                {post.images.length > 0 && (
-                  <div className="grid grid-cols-2 gap-2 mb-3">
-                    {post.images.map((image, index) => (
-                      <div
-                        key={index}
-                        className="h-48 bg-gradient-to-br from-accent/20 to-primary/20 rounded-lg flex items-center justify-center"
-                      >
-                        <Camera className="h-8 w-8 text-muted-foreground" />
-                      </div>
-                    ))}
-                  </div>
+                {/* Images */}
+                {post.id === 1 ? (
+                  <img 
+                    src="/a7c3ac4f-bc30-4b7f-9b7b-066aa3115a8b.png" 
+                    alt="Tokyo food scene" 
+                    className="w-full h-64 object-cover rounded-xl mt-3" 
+                  />
+                ) : (
+                  post.images.length > 0 && (
+                    <div className="grid grid-cols-2 gap-2 mb-3">
+                      {post.images.map((image, index) => (
+                        <img
+                          key={index}
+                          src={image}
+                          alt={`Post image ${index + 1}`}
+                          className="w-full h-48 object-cover rounded-xl"
+                        />
+                      ))}
+                    </div>
+                  )
                 )}
 
                 {/* Tags */}

@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import communityService from '@/services/communityService';
+import { Post } from '@/lib/api';
 import {
   Plus,
   TrendingUp
@@ -17,7 +18,7 @@ const Community = () => {
   const { t } = useTranslation();
   const { isAuthenticated } = useAuth();
   const { toast } = useToast();
-  const [posts, setPosts] = useState<any[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   
   // Load posts on component mount
@@ -39,7 +40,7 @@ const Community = () => {
     }
   };
 
-  const handlePostCreated = (newPost: any) => {
+  const handlePostCreated = (newPost: Post) => {
     setPosts(prevPosts => [newPost, ...prevPosts]);
     toast({
       title: "Post created!",
@@ -48,70 +49,98 @@ const Community = () => {
   };
 
   // Mock data for fallback
-  const mockPosts = [
+  const mockPosts: Post[] = [
     {
-      id: 1,
+      _id: '1',
       author: {
-        name: "Sarah Johnson",
-        avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786",
-        username: "@sarahj"
+        _id: 'user1',
+        firstName: "Sarah",
+        lastName: "Johnson",
+        profileImage: "https://images.unsplash.com/photo-1494790108755-2616b612b786",
       },
-      content: "Just had the most amazing sunset in Santorini! The blue domes and white buildings create such a magical atmosphere. Already planning my next visit! 🌅",
-      image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff",
+      content: "Just had the most amazing sunset in Santorini! The blue domes and white buildings create such a magical atmosphere. Already planning my next visit! ",
+      images: ["https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff"],
       location: "Santorini, Greece",
-      timestamp: "2 hours ago",
-      likes: 127,
-      comments: 23,
+      createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
+      updatedAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+      likes: [],
+      likeCount: 127,
+      comments: [],
+      commentCount: 23,
       shares: 8,
-      tags: ["sunset", "santorini", "greece", "travel"]
+      tags: ["sunset", "santorini", "greece", "travel"],
+      isActive: true,
+      engagementScore: 158,
+      timestamp: ''
     },
     {
-      id: 2,
+      _id: '2',
       author: {
-        name: "Mike Chen",
-        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d",
-        username: "@mikec"
+        _id: 'user2',
+        firstName: "Mike",
+        lastName: "Chen",
+        profileImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d",
       },
-      content: "Tokyo's street food scene is absolutely incredible! Spent the whole day exploring Shibuya and trying different foods. The ramen here is on another level 🍜",
-      image: "https://images.unsplash.com/photo-1613929633558-2448d2d03521",
+      content: "Tokyo's street food scene is absolutely incredible! Spent the whole day exploring Shibuya and trying different foods. The ramen here is on another level ",
+      images: ["https://plus.unsplash.com/premium_photo-1726768931708-df1c7a699c2e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fHRva3lvJTIwZm9vZHxlbnwwfHwwfHx8MA%3D%3D"],
       location: "Tokyo, Japan",
-      timestamp: "5 hours ago",
-      likes: 89,
-      comments: 15,
+      createdAt: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(), // 5 hours ago
+      updatedAt: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
+      likes: [],
+      likeCount: 89,
+      comments: [],
+      commentCount: 15,
       shares: 12,
-      tags: ["tokyo", "food", "ramen", "streetfood"]
+      tags: ["tokyo", "food", "ramen", "streetfood"],
+      isActive: true,
+      engagementScore: 116,
+      timestamp: ''
     },
     {
-      id: 3,
+      _id: '3',
       author: {
-        name: "Emma Wilson",
-        avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80",
-        username: "@emmaw"
+        _id: 'user3',
+        firstName: "Emma",
+        lastName: "Wilson",
+        profileImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80",
       },
-      content: "Hiking in the Swiss Alps was a dream come true! The views from Matterhorn are absolutely breathtaking. Nature never fails to amaze me 🏔️",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4",
+      content: "Hiking in the Swiss Alps was a dream come true! The views from Matterhorn are absolutely breathtaking. Nature never fails to amaze me ",
+      images: ["https://images.unsplash.com/photo-1506905925346-21bda4d32df4"],
       location: "Swiss Alps, Switzerland",
-      timestamp: "1 day ago",
-      likes: 203,
-      comments: 34,
+      createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
+      updatedAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(),
+      likes: [],
+      likeCount: 203,
+      comments: [],
+      commentCount: 34,
       shares: 19,
-      tags: ["hiking", "alps", "switzerland", "nature"]
+      tags: ["hiking", "alps", "switzerland", "nature"],
+      isActive: true,
+      engagementScore: 256,
+      timestamp: ''
     },
     {
-      id: 4,
+      _id: '4',
       author: {
-        name: "Alex Rivera",
-        avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e",
-        username: "@alexr"
+        _id: 'user4',
+        firstName: "Alex",
+        lastName: "Rivera",
+        profileImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e",
       },
-      content: "Exploring the vibrant markets of Marrakech was an incredible sensory experience! The colors, sounds, and aromas are unforgettable. 🇲🇦",
-      image: "https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e",
+      content: "Exploring the vibrant markets of Marrakech was an incredible sensory experience! The colors, sounds, and aromas are unforgettable. ",
+      images: ["https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e"],
       location: "Marrakech, Morocco",
-      timestamp: "3 days ago",
-      likes: 156,
-      comments: 28,
+      createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), // 3 days ago
+      updatedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+      likes: [],
+      likeCount: 156,
+      comments: [],
+      commentCount: 28,
       shares: 15,
-      tags: ["morocco", "markets", "culture", "adventure"]
+      tags: ["morocco", "markets", "culture", "adventure"],
+      isActive: true,
+      engagementScore: 199,
+      timestamp: ''
     }
   ];
 
@@ -219,7 +248,7 @@ const Community = () => {
                     Share Experience
                   </Button>
                 </CreatePostModal>
-                                <Button variant="outline" className="w-full justify-start">
+                <Button variant="outline" className="w-full justify-start">
                   <TrendingUp className="h-4 w-4 mr-2" />
                   Trending Posts
                 </Button>

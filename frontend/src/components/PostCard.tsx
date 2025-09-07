@@ -16,18 +16,23 @@ import PostOptionsMenu from './PostOptionsMenu';
 import CommentsSection from './CommentsSection';
 import postService, { Post, Comment } from '@/services/postService';
 import { useAuth } from '@/contexts/AuthContext';
-import LocationCardMenu from './LocationCardMenu';
 
 interface PostCardProps {
   post: Post;
   onPostUpdate?: (updatedPost: Post) => void;
   onPostDelete?: (postId: string) => void;
+  onLike?: () => void;
+  onComment?: () => void;
+  onShare?: () => void;
 }
 
 const PostCard: React.FC<PostCardProps> = ({
   post,
   onPostUpdate,
-  onPostDelete
+  onPostDelete,
+  onLike,
+  onComment,
+  onShare,
 }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
@@ -133,7 +138,6 @@ const PostCard: React.FC<PostCardProps> = ({
       await postService.sharePost(post._id);
       setShareCount(prev => prev + 1);
       
-      // Copy post link to clipboard
       const postUrl = `${window.location.origin}/community/post/${post._id}`;
       await navigator.clipboard.writeText(postUrl);
       
@@ -170,7 +174,6 @@ const PostCard: React.FC<PostCardProps> = ({
     return date.toLocaleDateString();
   };
 
-  // Safety check for post.author
   if (!post.author) {
     return null;
   }
@@ -248,7 +251,6 @@ const PostCard: React.FC<PostCardProps> = ({
                 alt="Post image"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
-              <LocationCardMenu />
             </div>
           )}
           
@@ -271,7 +273,7 @@ const PostCard: React.FC<PostCardProps> = ({
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={handleLike}
+                onClick={onLike || handleLike}
                 disabled={isLoading}
                 className={`transition-colors ${
                   isLiked
@@ -285,7 +287,7 @@ const PostCard: React.FC<PostCardProps> = ({
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={handleComment}
+                onClick={onComment || handleComment}
                 className="text-muted-foreground hover:text-blue-500 transition-colors"
               >
                 <MessageCircle className="h-4 w-4 mr-1" />
@@ -294,7 +296,7 @@ const PostCard: React.FC<PostCardProps> = ({
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={handleShare}
+                onClick={onShare || handleShare}
                 className="text-muted-foreground hover:text-green-500 transition-colors"
               >
                 <Share2 className="h-4 w-4 mr-1" />
@@ -305,7 +307,6 @@ const PostCard: React.FC<PostCardProps> = ({
         </CardContent>
       </Card>
 
-      {/* Comments Dialog */}
       <Dialog open={showComments} onOpenChange={setShowComments}>
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
