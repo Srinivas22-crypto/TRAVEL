@@ -100,28 +100,28 @@ const DestinationDetail = () => {
       activities: [
         {
           name: "Seine River Cruise",
-          image: "data:image/jpeg;base64,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",
+          image: "https://images.unsplash.com/photo-1622660515771-2f78f3b7aaba?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8c2VpbmUlMjByaXZlcnxlbnwwfHwwfHx8MA%3D%3D",
           price: 25,
           duration: "1 hour",
           description: "Romantic boat cruise along the Seine with views of iconic landmarks"
         },
         {
           name: "Louvre Museum Tour",
-          image: "https://images.unsplash.com/photo-1593332934274-8845c859c4a5",
+          image: "https://images.unsplash.com/photo-1567942585146-33d62b775db0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bG91dnJlfGVufDB8fDB8fHww",
           price: 45,
           duration: "3 hours",
           description: "Skip-the-line guided tour of the world's most famous museum"
         },
         {
           name: "Eiffel Tower Experience",
-          image: "https://images.unsplash.com/photo-1511383879784-a960bf40e7f2",
+          image: "https://plus.unsplash.com/premium_photo-1683120751032-41fdd5226ab6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGVpZmZlbCUyMHRvd2VyfGVufDB8fDB8fHww",
           price: 35,
           duration: "2 hours",
           description: "Visit all levels of the Eiffel Tower with stunning city views"
         },
         {
           name: "Montmartre Walking Tour",
-          image: "https://images.unsplash.com/photo-1502602898536-47ad22581b52",
+          image: "https://images.unsplash.com/photo-1589805054722-c407021fa8ef?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8bW9udG1hcnRyZXxlbnwwfHwwfHx8MA%3D%3D",
           price: 20,
           duration: "2.5 hours",
           description: "Explore the artistic heart of Paris with local guide"
@@ -166,7 +166,7 @@ const DestinationDetail = () => {
         },
         {
           name: "Tokyo City Tour",
-          image: "https://images.unsplash.com/photo-1513407030348-c983a97b998d",
+          image: "https://plus.unsplash.com/premium_photo-1666700698920-d2d2bba589f8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHRva3lvfGVufDB8fDB8fHww",
           price: 65,
           duration: "8 hours",
           description: "Full day tour covering major attractions and hidden gems"
@@ -180,7 +180,7 @@ const DestinationDetail = () => {
         },
         {
           name: "Robot Restaurant Show",
-          image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf",
+          image: "https://media.gettyimages.com/id/1244052148/photo/semi-humanoid-robot-pepper-is-pictured-with-other-serving-robots-at-a-demonstration-by-japans.jpg?s=612x612&w=0&k=20&c=uxW2pPr6DXB-x5Qrr-Fuv4EVUkrO78V2aUDPuvRfN-k=",
           price: 55,
           duration: "1 hour",
           description: "Unique entertainment experience with robots and neon lights"
@@ -191,7 +191,7 @@ const DestinationDetail = () => {
       id: 3,
       name: "New York, USA",
       country: "United States",
-      image: "https://images.unsplash.com/photo-1496442226666-47ad22581b52",
+      image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9",
       rating: 4.7,
       reviews: 2100,
       description: "The city that never sleeps offers endless possibilities and experiences. From world-famous landmarks and Broadway shows to diverse neighborhoods and incredible dining, New York City is a melting pot of culture, art, and ambition.",
@@ -218,7 +218,7 @@ const DestinationDetail = () => {
       activities: [
         {
           name: "Broadway Show",
-          image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d",
+          image: "https://plus.unsplash.com/premium_photo-1683219367985-b59ec6e32e5b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YnJvYWR3YXl8ZW58MHx8MHx8fDA%3D",
           price: 120,
           duration: "2.5 hours",
           description: "Experience world-class theater in the heart of Times Square"
@@ -232,7 +232,7 @@ const DestinationDetail = () => {
         },
         {
           name: "Central Park Bike Tour",
-          image: "https://images.unsplash.com/photo-1564349683136-77e08dba1ef7",
+          image: "https://images.unsplash.com/photo-1600403477955-2b8c2cfab221?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGJpa2UlMjB0b3VyfGVufDB8fDB8fHww",
           price: 45,
           duration: "2 hours",
           description: "Explore Central Park's highlights on a guided bike tour"
@@ -277,7 +277,7 @@ const DestinationDetail = () => {
       activities: [
         {
           name: "Sunrise Mount Batur Hike",
-          image: "https://images.unsplash.com/photo-1518709594023-6eab9bab7b23",
+          image: "https://images.unsplash.com/photo-1508591086314-d7deb00cede9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bW91bnQlMjBiYXR1cnxlbnwwfHwwfHx8MA%3D%3D",
           price: 50,
           duration: "6 hours",
           description: "Early morning hike to catch spectacular sunrise from volcano summit"
@@ -298,7 +298,7 @@ const DestinationDetail = () => {
         },
         {
           name: "Spa & Wellness Retreat",
-          image: "https://images.unsplash.com/photo-1540555700478-f5c462d49f74",
+          image: "https://images.unsplash.com/photo-1600618528240-fb9fc964b853?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8d2VsbG5lc3MlMjByZXRyZWF0fGVufDB8fDB8fHww",
           price: 60,
           duration: "3 hours",
           description: "Traditional Balinese massage and wellness treatments"
@@ -336,7 +336,7 @@ const DestinationDetail = () => {
       activities: [
         {
           name: "Matterhorn Glacier Paradise",
-          image: "https://images.unsplash.com/photo-1531366936337-47ad22581b52",
+          image: "https://plus.unsplash.com/premium_photo-1673254848097-84610483ea94?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8TWF0dGVyaG9ybiUyMEdsYWNpZXIlMkMlMjBaZXJtYXR0JTJDJTIwU3ZpenplcmF8ZW58MHx8MHx8fDA%3D",
           price: 95,
           duration: "4 hours",
           description: "Cable car journey to highest cable car station in Europe"
@@ -350,14 +350,14 @@ const DestinationDetail = () => {
         },
         {
           name: "Mountain Hiking Tour",
-          image: "data:image/jpeg;base64,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",
+          image: "https://plus.unsplash.com/premium_photo-1661962676870-f87ad4a4c7dd?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG1vdW50YWluJTIwaGlrZXxlbnwwfHwwfHx8MA%3D%3D",
           price: 75,
           duration: "6 hours",
           description: "Guided hiking tour through scenic mountain trails"
         },
         {
           name: "Swiss Chocolate Workshop",
-          image: "https://images.unsplash.com/photo-1511383879784-a960bf40e7f2",
+          image: "https://images.unsplash.com/photo-1623053045271-e53d909ef33b?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c3dpc3MlMjBjaG9jb2xhdGV8ZW58MHx8MHx8fDA%3D",
           price: 45,
           duration: "2 hours",
           description: "Learn to make authentic Swiss chocolate from master chocolatiers"
@@ -368,7 +368,7 @@ const DestinationDetail = () => {
       id: 6,
       name: "Tuscany, Italy",
       country: "Italy",
-      image: "https://images.unsplash.com/photo-1523906834658-6eab9bab7b23",
+      image: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9",
       rating: 4.8,
       reviews: 734,
       description: "Rolling hills, vineyards, and authentic Italian cuisine define this enchanting region. Tuscany offers Renaissance art, medieval towns, world-renowned wines, and some of the most beautiful countryside in the world.",
@@ -409,14 +409,14 @@ const DestinationDetail = () => {
         },
         {
           name: "Florence Art Tour",
-          image: "https://images.unsplash.com/photo-1543429258-3d2e4e2c4c8e",
+          image: "https://images.unsplash.com/photo-1476362174823-3a23f4aa6d76?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZmxvcmVuY2V8ZW58MHx8MHx8fDA%3D",
           price: 55,
           duration: "3 hours",
           description: "Explore Renaissance masterpieces in the Uffizi Gallery"
         },
         {
           name: "Countryside Bike Tour",
-          image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64",
+          image: "https://images.unsplash.com/photo-1650558534001-4d3c1f13ada2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YmlrZSUyMHRvdXJ8ZW58MHx8MHx8fDA%3D",
           price: 65,
           duration: "5 hours",
           description: "Cycle through picturesque Tuscan hills and villages"
@@ -427,7 +427,7 @@ const DestinationDetail = () => {
       id: 7,
       name: "Costa Rica",
       country: "Costa Rica",
-      image: "https://images.unsplash.com/photo-1518709594023-6eab9bab7b23",
+      image: "https://images.unsplash.com/photo-1607287322237-e9eeee4849a8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y29zdGElMjByaWNhJTIwYmVhY2h8ZW58MHx8MHx8fDA%3D",
       rating: 4.7,
       reviews: 423,
       description: "Rich biodiversity and stunning natural landscapes make Costa Rica a paradise for nature lovers. From pristine beaches to lush rainforests, this Central American gem offers incredible wildlife and adventure activities.",
@@ -454,7 +454,7 @@ const DestinationDetail = () => {
       activities: [
         {
           name: "Zip-lining Adventure",
-          image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8",
+          image: "https://images.unsplash.com/photo-1637511077877-3c6a00eb32ba?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8emlwJTIwbGluZXxlbnwwfHwwfHx8MA%3D%3D",
           price: 75,
           duration: "3 hours",
           description: "Soar through the canopy on thrilling zip-line courses"
@@ -475,7 +475,7 @@ const DestinationDetail = () => {
         },
         {
           name: "White Water Rafting",
-          image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5f",
+          image: "https://images.unsplash.com/photo-1629248564797-8c5ba85da9d3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8d2hpdGV3YXRlciUyMHJhZnRpbmd8ZW58MHx8MHx8fDA%3D",
           price: 85,
           duration: "5 hours",
           description: "Navigate exciting rapids through tropical rainforest"
@@ -513,28 +513,28 @@ const DestinationDetail = () => {
       activities: [
         {
           name: "Sunset Sailing Tour",
-          image: "https://images.unsplash.com/photo-1613395877344-13d4a8e0d49e",
+          image: "https://images.unsplash.com/photo-1656829462099-6a030d23df41?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHNhaWxpbmclMjBzdW5zZXR8ZW58MHx8MHx8fDA%3D",
           price: 95,
           duration: "5 hours",
           description: "Sail around the caldera with dinner and sunset views"
         },
         {
           name: "Wine Tasting Tour",
-          image: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb",
+          image: "https://plus.unsplash.com/premium_photo-1661506383340-4deb1242daa8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHdpbmUlMjB0YXN0aW5nfGVufDB8fDB8fHww",
           price: 70,
           duration: "4 hours",
           description: "Taste unique volcanic wines at traditional wineries"
         },
         {
           name: "Volcano Excursion",
-          image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4",
+          image: "https://images.unsplash.com/photo-1581888517319-570283943d82?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHZvbGNhbm98ZW58MHx8MHx8fDA%3D",
           price: 55,
           duration: "3 hours",
           description: "Boat trip to active volcanic islands in the caldera"
         },
         {
           name: "Photography Tour",
-          image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff",
+          image: "https://plus.unsplash.com/premium_photo-1718146019167-110481171ad2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8dG91cnxlbnwwfHwwfHx8MA%3D%3D",
           price: 80,
           duration: "4 hours",
           description: "Capture the most Instagram-worthy spots with professional guide"
@@ -545,7 +545,7 @@ const DestinationDetail = () => {
       id: 9,
       name: "Iceland",
       country: "Iceland",
-      image: "https://plus.unsplash.com/premium_photo-1700346373090-151ac589b07d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aWNlbGFuZCUyMGJlYWNofGVufDB8fDB8fHww",
+      image: "https://images.unsplash.com/photo-1657780576805-ea092344358e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8aWNlbGFuZCUyMHdhdGVyZmFsbHxlbnwwfHwwfHx8MA%3D%3D",
       rating: 4.8,
       reviews: 654,
       description: "Land of fire and ice with stunning waterfalls, geysers, and northern lights. Iceland offers dramatic landscapes, from glacial lagoons to volcanic fields, making it a photographer's paradise and nature lover's dream destination.",
@@ -579,21 +579,21 @@ const DestinationDetail = () => {
         },
         {
           name: "Golden Circle Tour",
-          image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96",
+          image: "https://images.unsplash.com/photo-1642760421906-a748c1a45907?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Z29sZGVuJTIwY2lyY2xlJTIwaWNlbGFuZHxlbnwwfHwwfHx8MA%3D%3D",
           price: 85,
           duration: "8 hours",
           description: "Visit Iceland's most famous natural attractions in one day"
         },
         {
           name: "Blue Lagoon Experience",
-          image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96",
+          image: "https://images.unsplash.com/photo-1462993340984-49bd9e0f32dd?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Ymx1ZSUyMGxhZ29vbnxlbnwwfHwwfHx8MA%3D%3D",
           price: 65,
           duration: "3 hours",
           description: "Relax in the famous geothermal spa with silica mud masks"
         },
         {
           name: "Glacier Hiking",
-          image: "https://images.unsplash.com/photo-1464822759844-d150ad6d1c71",
+          image: "https://plus.unsplash.com/premium_photo-1661900005779-4ad8baac0f15?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Z2xhY2llciUyMGhpa2luZ3xlbnwwfHwwfHx8MA%3D%3D",
           price: 150,
           duration: "6 hours",
           description: "Explore ancient glaciers with crampons and ice axes"
@@ -631,28 +631,28 @@ const DestinationDetail = () => {
       activities: [
         {
           name: "Sagrada Familia Tour",
-          image: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4",
+          image: "https://plus.unsplash.com/premium_photo-1661885514351-ad93dcfb25f3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c2FncmFkYSUyMGZhbWlsaWF8ZW58MHx8MHx8fDA%3D",
           price: 35,
           duration: "2 hours",
           description: "Skip-the-line tour of Gaudi's architectural masterpiece"
         },
         {
           name: "Tapas Walking Tour",
-          image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5",
+          image: "https://images.unsplash.com/photo-1656423521731-9665583f100c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dGFwYXN8ZW58MHx8MHx8fDA%3D",
           price: 55,
           duration: "3 hours",
           description: "Taste authentic Spanish tapas in local neighborhoods"
         },
         {
           name: "Flamenco Show",
-          image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d",
+          image: "https://images.unsplash.com/photo-1700720711555-ad42761e70bb?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDB8fGZsYW1lbmNvfGVufDB8fDB8fHww",
           price: 45,
           duration: "1.5 hours",
           description: "Experience passionate flamenco dancing and music"
         },
         {
           name: "Gothic Quarter Walking Tour",
-          image: "https://images.unsplash.com/photo-1543429258-3d2e4e2c4c8e",
+          image: "https://images.unsplash.com/photo-1591537358436-68a8bd90600f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTd8fGdvdGhpYyUyMHF1YXJ0ZXJ8ZW58MHx8MHx8fDA%3D",
           price: 25,
           duration: "2.5 hours",
           description: "Explore medieval streets and hidden squares"
@@ -690,28 +690,28 @@ const DestinationDetail = () => {
       activities: [
         {
           name: "Burj Khalifa Experience",
-          image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c",
+          image: "https://plus.unsplash.com/premium_photo-1694475631307-0f0a85924605?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGJ1cmolMjBraGFsaWZhfGVufDB8fDB8fHww",
           price: 85,
           duration: "2 hours",
           description: "Visit the world's tallest building and observation deck"
         },
         {
           name: "Desert Safari",
-          image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5f",
+          image: "https://images.unsplash.com/photo-1624062999726-083e5268525d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZGVzZXJ0JTIwc2FmYXJpfGVufDB8fDB8fHww",
           price: 75,
           duration: "6 hours",
           description: "Dune bashing, camel riding, and traditional Bedouin dinner"
         },
         {
           name: "Dubai Marina Cruise",
-          image: "https://images.unsplash.com/photo-1502602898536-47ad22581b52",
+          image: "https://images.unsplash.com/photo-1609874351819-8a267932ed67?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZHViYWklMjBtYXJpbmF8ZW58MHx8MHx8fDA%3D",
           price: 45,
           duration: "2 hours",
           description: "Luxury yacht cruise with stunning skyline views"
         },
         {
           name: "Shopping Tour",
-          image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8",
+          image: "https://images.unsplash.com/photo-1481437156560-3205f6a55735?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2hvcHBpbmd8ZW58MHx8MHx8fDA%3D",
           price: 40,
           duration: "4 hours",
           description: "Explore traditional souks and modern shopping malls"
@@ -722,7 +722,7 @@ const DestinationDetail = () => {
       id: 12,
       name: "Goa, India",
       country: "India",
-      image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2",
+      image: "https://images.unsplash.com/photo-1594801001182-99ee8f8d5db9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDR8fGdvYSUyMGluZGlhfGVufDB8fDB8fHww",
       rating: 4.5,
       reviews: 892,
       description: "Beautiful beaches, Portuguese architecture, and vibrant nightlife in India's coastal paradise. Goa offers a unique blend of Indian and Portuguese cultures, with stunning beaches and laid-back atmosphere.",
@@ -749,28 +749,28 @@ const DestinationDetail = () => {
       activities: [
         {
           name: "Beach Hopping Tour",
-          image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2",
+          image: "https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHRyYXZlbCUyMGJlYWNofGVufDB8fDB8fHww",
           price: 35,
           duration: "8 hours",
           description: "Visit multiple beaches from Baga to Palolem with lunch"
         },
         {
           name: "Spice Plantation Tour",
-          image: "https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b",
+          image: "https://plus.unsplash.com/premium_photo-1678653651313-81305572b508?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c3BpY2UlMjBnYXJkZW58ZW58MHx8MHx8fDA%3D",
           price: 25,
           duration: "4 hours",
           description: "Learn about spice cultivation with traditional Goan lunch"
         },
         {
           name: "Water Sports Package",
-          image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5",
+          image: "https://images.unsplash.com/photo-1615301649602-358e40412b81?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8d2F0ZXIlMjBzcG9ydHxlbnwwfHwwfHx8MA%3D%3D",
           price: 50,
           duration: "3 hours",
           description: "Parasailing, jet skiing, and banana boat rides"
         },
         {
           name: "Old Goa Heritage Tour",
-          image: "https://images.unsplash.com/photo-1543429258-3d2e4e2c4c8e",
+          image: "https://images.unsplash.com/photo-1702799464761-29b1200c9549?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8b2xkJTIwZ29hfGVufDB8fDB8fHww",
           price: 20,
           duration: "3 hours",
           description: "Explore Portuguese colonial architecture and churches"

@@ -80,7 +80,7 @@ const Explore = () => {
     {
       id: 7,
       name: "Costa Rica",
-      image: "https://images.unsplash.com/photo-1518709594023-e3a8d69ac5ff",
+      image: "https://images.unsplash.com/photo-1607287322237-e9eeee4849a8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y29zdGElMjByaWNhJTIwYmVhY2h8ZW58MHx8MHx8fDA%3D",
       rating: 4.7,
       reviews: 423,
       description: "Rich biodiversity and stunning natural landscapes.",
@@ -100,7 +100,7 @@ const Explore = () => {
     {
       id: 9,
       name: "Goa, India",
-      image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2",
+      image: "https://images.unsplash.com/photo-1594801001182-99ee8f8d5db9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDR8fGdvYSUyMGluZGlhfGVufDB8fDB8fHww",
       rating: 4.5,
       reviews: 892,
       description: "Beautiful beaches, Portuguese architecture, and vibrant nightlife in India's coastal paradise.",
@@ -120,7 +120,7 @@ const Explore = () => {
     {
       id: 11,
       name: "Iceland",
-      image: "https://images.unsplash.com/photo-1539066834862-2e0c2e2c9b8e",
+      image: "https://images.unsplash.com/photo-1657780576805-ea092344358e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8aWNlbGFuZCUyMHdhdGVyZmFsbHxlbnwwfHwwfHx8MA%3D%3D",
       rating: 4.8,
       reviews: 654,
       description: "Land of fire and ice with stunning waterfalls, geysers, and northern lights.",

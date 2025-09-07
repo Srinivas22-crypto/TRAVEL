@@ -6,7 +6,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Star, MapPin, Calendar } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import LocationCardMenu from '@/components/LocationCardMenu';
 
 const PopularDestinations = () => {
   const { t } = useTranslation();
@@ -76,7 +75,7 @@ const PopularDestinations = () => {
       reviews: 2567,
       price: 1799,
       duration: "8 days",
-      image: "/placeholder.svg",
+      image: "https://images.unsplash.com/photo-1657780576805-ea092344358e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8aWNlbGFuZCUyMHdhdGVyZmFsbHxlbnwwfHwwfHx8MA%3D%3D",
       highlights: ["Northern Lights", "Geysers", "Blue Lagoon"]
     },
     {
@@ -119,7 +118,6 @@ const PopularDestinations = () => {
                   alt={destination.name}
                   className="w-full h-full object-cover"
                 />
-                <LocationCardMenu />
                 <Badge className="absolute top-4 right-4 bg-background/90 text-foreground">
                   <Star className="h-3 w-3 fill-current mr-1" />
                   {destination.rating}
