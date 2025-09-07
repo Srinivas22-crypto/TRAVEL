@@ -80,7 +80,7 @@ const Explore = () => {
     {
       id: 7,
       name: "Costa Rica",
-      image: "https://images.unsplash.com/photo-1518709594023-6eab9bab7b23",
+      image: "https://images.unsplash.com/photo-1518709594023-e3a8d69ac5ff",
       rating: 4.7,
       reviews: 423,
       description: "Rich biodiversity and stunning natural landscapes.",

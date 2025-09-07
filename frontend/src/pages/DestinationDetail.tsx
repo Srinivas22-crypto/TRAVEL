@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { useToast } from '@/hooks/use-toast';
 import activityService from '@/services/activityService';
 import { Activity } from '@/lib/api';
+import DestinationActions from '@/components/DestinationActions';
 import { 
   MapPin, 
   Star, 
@@ -349,7 +350,7 @@ const DestinationDetail = () => {
         },
         {
           name: "Mountain Hiking Tour",
-          image: "data:image/jpeg;base64,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",
+          image: "data:image/jpeg;base64,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",
           price: 75,
           duration: "6 hours",
           description: "Guided hiking tour through scenic mountain trails"
@@ -907,21 +908,20 @@ const DestinationDetail = () => {
         </Button>
 
         {/* Hero Section */}
-        <div className="relative mb-8">
-          <div className="aspect-[21/9] overflow-hidden rounded-lg">
-            <img 
-              src={destination.image} 
-              alt={destination.name}
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-
-        {/* Title and Rating */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
-          <div>
-            <h1 className="text-4xl font-bold mb-2">{destination.name}</h1>
-            <div className="flex items-center gap-4 mt-2 text-muted-foreground">
+        <div className="relative mb-12">
+          <img 
+            src={destination.image} 
+            alt={destination.name}
+            className="w-full h-[500px] object-cover rounded-lg shadow-lg"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg" />
+          <DestinationActions 
+            destinationId={destination.id} 
+            destinationName={destination.name} 
+          />
+          <div className="absolute bottom-8 left-8 text-white">
+            <h1 className="text-5xl font-bold mb-2">{destination.name}</h1>
+            <div className="flex items-center gap-4 text-lg">
               <div className="flex items-center gap-1">
                 <Star className="h-5 w-5 mr-2" />
                 <span className="font-semibold">{destination.rating}</span>
@@ -932,13 +932,6 @@ const DestinationDetail = () => {
                 <span>{destination.reviews.toLocaleString()} Reviews</span>
               </div>
             </div>
-          </div>
-          <div className="mt-4 md:mt-0 text-right">
-            <p className="text-3xl font-bold text-primary">${destination.price}</p>
-            <p className="text-sm text-muted-foreground">per person</p>
-            <Button className="mt-2 bg-gradient-hero hover:opacity-90" onClick={handleBookNow}>
-              Book Now
-            </Button>
           </div>
         </div>
 
