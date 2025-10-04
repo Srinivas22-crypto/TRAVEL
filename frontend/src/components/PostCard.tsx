@@ -16,6 +16,7 @@ import PostOptionsMenu from './PostOptionsMenu';
 import CommentsSection from './CommentsSection';
 import postService, { Post, Comment } from '@/services/postService';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 interface PostCardProps {
   post: Post;
@@ -34,6 +35,7 @@ const PostCard: React.FC<PostCardProps> = ({
   onComment,
   onShare,
 }) => {
+  const { t } = useTranslation();
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [likeCount, setLikeCount] = useState(post.likeCount || 0);
@@ -53,9 +55,9 @@ const PostCard: React.FC<PostCardProps> = ({
   const handleLike = async () => {
     if (!user) {
       toast({
-        title: "Please sign in",
-        description: "You need to be signed in to like posts",
-        variant: "destructive",
+        title: t('post.signInRequired'),
+        description: t('post.likeSignIn'),
+        variant: 'destructive',
       });
       return;
     }
@@ -71,18 +73,17 @@ const PostCard: React.FC<PostCardProps> = ({
         setLikeCount(response.data.likeCount);
         setIsLiked(true);
         toast({
-          title: "Post liked!",
-          description: "You liked this post",
+          title: t('post.likedTitle'),
+          description: t('post.likedDescription'),
           duration: 2000,
         });
       }
     } catch (error: any) {
-      console.error('Like error:', error);
-      const errorMessage = error.response?.data?.message || error.message || "Failed to update like status";
+      const errorMessage = error.response?.data?.message || error.message || t('post.likeError');
       toast({
-        title: "Error",
+        title: t('post.error'),
         description: errorMessage,
-        variant: "destructive",
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
@@ -92,9 +93,9 @@ const PostCard: React.FC<PostCardProps> = ({
   const handleSave = async () => {
     if (!user) {
       toast({
-        title: "Please sign in",
-        description: "You need to be signed in to save posts",
-        variant: "destructive",
+        title: t('post.signInRequired'),
+        description: t('post.saveSignIn'),
+        variant: 'destructive',
       });
       return;
     }
@@ -105,52 +106,50 @@ const PostCard: React.FC<PostCardProps> = ({
         await postService.unsavePost(post._id);
         setIsSaved(false);
         toast({
-          title: "Removed from saved posts",
-          description: "Post removed from your saved posts",
+          title: t('post.removedSavedTitle'),
+          description: t('post.removedSavedDescription'),
           duration: 2000,
         });
       } else {
         await postService.savePost(post._id);
         setIsSaved(true);
         toast({
-          title: "Post saved!",
-          description: "Post added to your saved posts",
+          title: t('post.savedTitle'),
+          description: t('post.savedDescription'),
           duration: 2000,
         });
       }
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to update save status",
-        variant: "destructive",
+        title: t('post.error'),
+        description: t('post.saveError'),
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleComment = () => {
-    setShowComments(true);
-  };
+  const handleComment = () => setShowComments(true);
 
   const handleShare = async () => {
     try {
       await postService.sharePost(post._id);
       setShareCount(prev => prev + 1);
-      
+
       const postUrl = `${window.location.origin}/community/post/${post._id}`;
       await navigator.clipboard.writeText(postUrl);
-      
+
       toast({
-        title: "Link copied!",
-        description: "Post link copied to clipboard",
+        title: t('post.linkCopiedTitle'),
+        description: t('post.linkCopiedDescription'),
         duration: 2000,
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to share post",
-        variant: "destructive",
+        title: t('post.error'),
+        description: t('post.shareError'),
+        variant: 'destructive',
       });
     }
   };
@@ -167,16 +166,14 @@ const PostCard: React.FC<PostCardProps> = ({
     const date = new Date(dateString);
     const now = new Date();
     const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
-    
-    if (diffInHours < 1) return 'Just now';
-    if (diffInHours < 24) return `${diffInHours}h ago`;
-    if (diffInHours < 168) return `${Math.floor(diffInHours / 24)}d ago`;
+
+    if (diffInHours < 1) return t('post.justNow');
+    if (diffInHours < 24) return `${diffInHours}h ${t('post.ago')}`;
+    if (diffInHours < 168) return `${Math.floor(diffInHours / 24)}d ${t('post.ago')}`;
     return date.toLocaleDateString();
   };
 
-  if (!post.author) {
-    return null;
-  }
+  if (!post.author) return null;
 
   return (
     <>
@@ -186,16 +183,17 @@ const PostCard: React.FC<PostCardProps> = ({
             <Avatar className="cursor-pointer">
               <AvatarImage
                 src={post.author.profileImage}
-                alt={`${post.author.firstName || 'Unknown'} ${post.author.lastName || 'User'}`}
+                alt={`${post.author.firstName || t('post.unknown')} ${post.author.lastName || t('post.user')}`}
               />
               <AvatarFallback>
-                {post.author.firstName?.[0] || 'U'}{post.author.lastName?.[0] || 'N'}
+                {post.author.firstName?.[0] || 'U'}
+                {post.author.lastName?.[0] || 'N'}
               </AvatarFallback>
             </Avatar>
             <div className="flex-1">
               <div className="flex items-center gap-2">
                 <h3 className="font-semibold hover:underline cursor-pointer">
-                  {post.author.firstName || 'Unknown'} {post.author.lastName || 'User'}
+                  {post.author.firstName || t('post.unknown')} {post.author.lastName || t('post.user')}
                 </h3>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -216,47 +214,36 @@ const PostCard: React.FC<PostCardProps> = ({
                 onClick={handleSave}
                 disabled={isLoading}
                 className={isSaved ? 'text-yellow-500' : 'text-muted-foreground'}
+                aria-label={isSaved ? t('post.unsave') : t('post.save')}
               >
                 <Bookmark className={`h-4 w-4 ${isSaved ? 'fill-current' : ''}`} />
               </Button>
               <PostOptionsMenu
                 postId={post._id}
-                onInterested={() => {
-                  toast({
-                    title: "Preferences updated",
-                    description: "We'll show you more content like this",
-                  });
-                }}
-                onNotInterested={() => {
-                  toast({
-                    title: "Preferences updated",
-                    description: "We'll show you less content like this",
-                  });
-                }}
-                onReported={() => {
-                  // Optionally hide the post or mark it as reported
-                }}
+                onInterested={() => toast({ title: t('post.preferencesUpdated'), description: t('post.showMore') })}
+                onNotInterested={() => toast({ title: t('post.preferencesUpdated'), description: t('post.showLess') })}
+                onReported={() => {}}
               />
             </div>
           </div>
         </CardHeader>
-        
+
         <CardContent className="pt-0">
           <p className="mb-4 leading-relaxed">{post.content}</p>
-          
-          {post.images && post.images.length > 0 && (
+
+          {post.images?.length > 0 && (
             <div className="aspect-video overflow-hidden rounded-lg mb-4 cursor-pointer group relative">
               <img
                 src={post.images[0]}
-                alt="Post image"
+                alt={t('post.imageAlt')}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
             </div>
           )}
-          
-          {post.tags && post.tags.length > 0 && (
+
+          {post.tags?.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-4">
-              {post.tags.map((tag) => (
+              {post.tags.map(tag => (
                 <Badge
                   key={tag}
                   variant="secondary"
@@ -267,7 +254,7 @@ const PostCard: React.FC<PostCardProps> = ({
               ))}
             </div>
           )}
-          
+
           <div className="flex items-center justify-between pt-3 border-t">
             <div className="flex items-center gap-4">
               <Button
@@ -275,11 +262,7 @@ const PostCard: React.FC<PostCardProps> = ({
                 size="sm"
                 onClick={onLike || handleLike}
                 disabled={isLoading}
-                className={`transition-colors ${
-                  isLiked
-                    ? 'text-red-500 hover:text-red-600'
-                    : 'text-muted-foreground hover:text-red-500'
-                }`}
+                className={`transition-colors ${isLiked ? 'text-red-500 hover:text-red-600' : 'text-muted-foreground hover:text-red-500'}`}
               >
                 <Heart className={`h-4 w-4 mr-1 ${isLiked ? 'fill-current' : ''}`} />
                 {likeCount}
@@ -310,7 +293,7 @@ const PostCard: React.FC<PostCardProps> = ({
       <Dialog open={showComments} onOpenChange={setShowComments}>
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Comments</DialogTitle>
+            <DialogTitle>{t('post.comments')}</DialogTitle>
           </DialogHeader>
           <CommentsSection
             postId={post._id}

@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -21,11 +21,13 @@ import {
 
 const Payment = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useTranslation();
   const { toast } = useToast();
   
   const [paymentMethod, setPaymentMethod] = useState('credit-card');
   const [isLoading, setIsLoading] = useState(false);
+  const [orderItems, setOrderItems] = useState<Array<{ name: string; price: number }>>([]);
   const [formData, setFormData] = useState({
     cardNumber: '',
     expiryDate: '',
@@ -37,6 +39,22 @@ const Payment = () => {
     zipCode: '',
     country: ''
   });
+
+  useEffect(() => {
+    // Get destination and price information from navigation state
+    const state = location.state;
+    if (state?.destination) {
+      setOrderItems([
+        {
+          name: `Flight to ${state.destination.name}`,
+          price: state.amount || state.destination.price
+        }
+      ]);
+    } else {
+      // Redirect back if no destination info
+      navigate('/explore');
+    }
+  }, [location.state, navigate]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({
@@ -53,18 +71,12 @@ const Payment = () => {
     setTimeout(() => {
       toast({
         title: t('payment.paymentSuccess'),
-        description: "Your payment has been processed successfully.",
+        description: t('payment.successMessage'),
       });
       setIsLoading(false);
       navigate('/');
     }, 2000);
   };
-
-  const orderItems = [
-    { name: 'Flight to Paris', price: 299.99 },
-    { name: 'Hotel Booking (3 nights)', price: 450.00 },
-    { name: 'Travel Insurance', price: 29.99 }
-  ];
 
   const subtotal = orderItems.reduce((sum, item) => sum + item.price, 0);
   const taxes = subtotal * 0.1;

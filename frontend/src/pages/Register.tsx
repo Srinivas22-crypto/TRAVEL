@@ -56,44 +56,44 @@ export default function Register() {
 
     // First name validation
     if (!formData.firstName.trim()) {
-      newErrors.firstName = 'First name is required';
+      newErrors.firstName = t('auth.errors.firstNameRequired');
     } else if (formData.firstName.trim().length < 2) {
-      newErrors.firstName = 'First name must be at least 2 characters';
+      newErrors.firstName = t('auth.errors.firstNameLength');
     }
 
     // Last name validation
     if (!formData.lastName.trim()) {
-      newErrors.lastName = 'Last name is required';
+      newErrors.lastName = t('auth.errors.lastNameRequired');
     } else if (formData.lastName.trim().length < 2) {
-      newErrors.lastName = 'Last name must be at least 2 characters';
+      newErrors.lastName = t('auth.errors.lastNameLength');
     }
 
     // Email validation
     if (!formData.email) {
-      newErrors.email = 'Email is required';
+      newErrors.email = t('auth.errors.emailRequired');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = t('auth.errors.emailInvalid');
     }
 
     // Password validation
     if (!formData.password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = t('auth.errors.passwordRequired');
     } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
+      newErrors.password = t('auth.errors.passwordLength');
     } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
-      newErrors.password = 'Password must contain at least one uppercase letter, one lowercase letter, and one number';
+      newErrors.password = t('auth.errors.passwordComplexity');
     }
 
     // Confirm password validation
     if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Please confirm your password';
+      newErrors.confirmPassword = t('auth.errors.confirmPasswordRequired');
     } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
+      newErrors.confirmPassword = t('auth.passwordsNoMatch');
     }
 
     // Terms validation
     if (!acceptTerms) {
-      newErrors.terms = 'You must accept the terms and conditions';
+      newErrors.terms = t('auth.errors.termsRequired');
     }
 
     setErrors(newErrors);
@@ -136,8 +136,8 @@ export default function Register() {
       console.error('❌ Registration failed:', error.message);
 
       toast({
-        title: "Registration Failed",
-        description: error.message || "Failed to create account. Please try again.",
+        title: t('auth.registrationFailed'),
+        description: error.message || t('auth.registrationFailedDesc'),
         variant: "destructive"
       });
     } finally {
@@ -172,7 +172,7 @@ export default function Register() {
                   <Input
                     id="firstName"
                     name="firstName"
-                    placeholder="John"
+                    placeholder={t('auth.firstNamePlaceholder')}
                     value={formData.firstName}
                     onChange={handleInputChange}
                     className={errors.firstName ? "border-red-500" : ""}
@@ -187,7 +187,7 @@ export default function Register() {
                   <Input
                     id="lastName"
                     name="lastName"
-                    placeholder="Doe"
+                    placeholder={t('auth.lastNamePlaceholder')}
                     value={formData.lastName}
                     onChange={handleInputChange}
                     className={errors.lastName ? "border-red-500" : ""}
@@ -205,7 +205,7 @@ export default function Register() {
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="john@example.com"
+                  placeholder={t('auth.emailPlaceholder')}
                   value={formData.email}
                   onChange={handleInputChange}
                   className={errors.email ? "border-red-500" : ""}

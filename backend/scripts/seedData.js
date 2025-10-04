@@ -53,6 +53,7 @@ const users = [
 const destinations = [
   {
     name: 'Santorini',
+    englishName: 'Santorini, Greece',
     description: 'Beautiful Greek island known for its stunning sunsets, white-washed buildings, and crystal-clear waters.',
     country: 'Greece',
     city: 'Santorini',
@@ -76,6 +77,7 @@ const destinations = [
   },
   {
     name: 'Tokyo',
+    englishName: 'Tokyo, Japan',
     description: 'Vibrant metropolis blending traditional culture with cutting-edge technology and incredible cuisine.',
     country: 'Japan',
     city: 'Tokyo',
@@ -99,6 +101,7 @@ const destinations = [
   },
   {
     name: 'Swiss Alps',
+    englishName: 'Swiss Alps, Switzerland',
     description: 'Majestic mountain range offering breathtaking views, skiing, and outdoor adventures.',
     country: 'Switzerland',
     city: 'Zermatt',

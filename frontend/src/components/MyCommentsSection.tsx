@@ -1,33 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useToast } from '@/hooks/use-toast';
-import {
-  Heart,
-  MessageCircle,
-  Edit,
-  Trash2,
-  ExternalLink,
-  Reply,
-} from 'lucide-react';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+import { Heart, MessageCircle, Edit, Trash2, ExternalLink, Reply } from 'lucide-react';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Textarea } from '@/components/ui/textarea';
 import userService, { UserComment } from '@/services/userService';
 import postService from '@/services/postService';
 
 const MyCommentsSection: React.FC = () => {
+  const { t } = useTranslation();
   const [comments, setComments] = useState<UserComment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [editingComment, setEditingComment] = useState<string | null>(null);
@@ -47,9 +33,9 @@ const MyCommentsSection: React.FC = () => {
       setComments(response.data);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to load your comments",
-        variant: "destructive",
+        title: t('error'),
+        description: t('failed_load_comments'),
+        variant: 'destructive',
       });
     } finally {
       setIsLoading(false);
@@ -68,7 +54,6 @@ const MyCommentsSection: React.FC = () => {
     try {
       await postService.updateComment(comment.post._id, comment._id, editContent);
       
-      // Update the comment in the local state
       setComments(prev => prev.map(c => 
         c._id === comment._id 
           ? { ...c, content: editContent, updatedAt: new Date().toISOString() }
@@ -79,14 +64,14 @@ const MyCommentsSection: React.FC = () => {
       setEditContent('');
       
       toast({
-        title: "Comment updated",
-        description: "Your comment has been updated successfully",
+        title: t('comment_updated'),
+        description: t('comment_update_success'),
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to update comment",
-        variant: "destructive",
+        title: t('error'),
+        description: t('failed_update_comment'),
+        variant: 'destructive',
       });
     } finally {
       setIsUpdating(false);
@@ -97,18 +82,17 @@ const MyCommentsSection: React.FC = () => {
     try {
       await postService.deleteComment(comment.post._id, comment._id);
       
-      // Remove the comment from local state
       setComments(prev => prev.filter(c => c._id !== comment._id));
       
       toast({
-        title: "Comment deleted",
-        description: "Your comment has been deleted successfully",
+        title: t('comment_deleted'),
+        description: t('comment_delete_success'),
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to delete comment",
-        variant: "destructive",
+        title: t('error'),
+        description: t('failed_delete_comment'),
+        variant: 'destructive',
       });
     }
     setDeleteComment(null);
@@ -124,9 +108,9 @@ const MyCommentsSection: React.FC = () => {
     const now = new Date();
     const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
     
-    if (diffInHours < 1) return 'Just now';
-    if (diffInHours < 24) return `${diffInHours}h ago`;
-    if (diffInHours < 168) return `${Math.floor(diffInHours / 24)}d ago`;
+    if (diffInHours < 1) return t('just_now');
+    if (diffInHours < 24) return t('hours_ago', { count: diffInHours });
+    if (diffInHours < 168) return t('days_ago', { count: Math.floor(diffInHours / 24) });
     return date.toLocaleDateString();
   };
 
@@ -138,7 +122,7 @@ const MyCommentsSection: React.FC = () => {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>My Comments</CardTitle>
+          <CardTitle>{t('my_comments')}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           {[...Array(3)].map((_, i) => (
@@ -158,7 +142,7 @@ const MyCommentsSection: React.FC = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
-            My Comments
+            {t('my_comments')}
             <Badge variant="secondary">{comments.length}</Badge>
           </CardTitle>
         </CardHeader>
@@ -166,14 +150,13 @@ const MyCommentsSection: React.FC = () => {
           {comments.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
               <MessageCircle className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <p>You haven't made any comments yet.</p>
-              <p className="text-sm">Start engaging with posts to see your comments here!</p>
+              <p>{t('no_comments_yet')}</p>
+              <p className="text-sm">{t('start_engaging')}</p>
             </div>
           ) : (
             <div className="space-y-6">
               {comments.map((comment) => (
                 <div key={comment._id} className="border-b pb-4 last:border-b-0">
-                  {/* Comment header with post info */}
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
@@ -181,7 +164,7 @@ const MyCommentsSection: React.FC = () => {
                           <Reply className="h-4 w-4 text-muted-foreground" />
                         )}
                         <span className="text-sm font-medium">
-                          {comment.isReply ? 'Reply to comment' : 'Comment'} on post
+                          {comment.isReply ? t('reply_to_comment') : t('comment_on_post')}
                         </span>
                         <Button
                           variant="ghost"
@@ -192,8 +175,7 @@ const MyCommentsSection: React.FC = () => {
                           <ExternalLink className="h-3 w-3 ml-1" />
                         </Button>
                       </div>
-                      
-                      {/* Original post preview */}
+
                       <div className="bg-muted rounded p-2 mb-2">
                         <div className="flex items-center gap-2 mb-1">
                           <Avatar className="h-5 w-5">
@@ -211,7 +193,6 @@ const MyCommentsSection: React.FC = () => {
                         </p>
                       </div>
 
-                      {/* Parent comment if this is a reply */}
                       {comment.isReply && comment.parentComment && (
                         <div className="bg-blue-50 border-l-2 border-blue-200 pl-3 py-2 mb-2">
                           <div className="flex items-center gap-2 mb-1">
@@ -231,7 +212,7 @@ const MyCommentsSection: React.FC = () => {
                         </div>
                       )}
                     </div>
-                    
+
                     <div className="flex items-center gap-1 ml-4">
                       <Button
                         variant="ghost"
@@ -252,7 +233,6 @@ const MyCommentsSection: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Comment content */}
                   <div className="bg-background border rounded-lg p-3">
                     {editingComment === comment._id ? (
                       <div className="space-y-2">
@@ -267,14 +247,14 @@ const MyCommentsSection: React.FC = () => {
                             onClick={() => handleSaveEdit(comment)}
                             disabled={isUpdating || !editContent.trim()}
                           >
-                            {isUpdating ? 'Saving...' : 'Save'}
+                            {isUpdating ? t('saving') : t('save')}
                           </Button>
                           <Button
                             size="sm"
                             variant="outline"
                             onClick={handleCancelEdit}
                           >
-                            Cancel
+                            {t('cancel')}
                           </Button>
                         </div>
                       </div>
@@ -297,7 +277,7 @@ const MyCommentsSection: React.FC = () => {
                           <div className="flex items-center gap-2">
                             <span>{formatDate(comment.createdAt)}</span>
                             {comment.updatedAt !== comment.createdAt && (
-                              <span className="text-xs">(edited)</span>
+                              <span className="text-xs">({t('edited')})</span>
                             )}
                           </div>
                         </div>
@@ -311,17 +291,16 @@ const MyCommentsSection: React.FC = () => {
         </CardContent>
       </Card>
 
-      {/* Delete confirmation dialog */}
       <AlertDialog open={!!deleteComment} onOpenChange={() => setDeleteComment(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Comment</AlertDialogTitle>
+            <AlertDialogTitle>{t('delete_comment')}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this comment? This action cannot be undone.
+              {t('delete_comment_confirmation')}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => {
                 const comment = comments.find(c => c._id === deleteComment);
@@ -329,7 +308,7 @@ const MyCommentsSection: React.FC = () => {
               }}
               className="bg-destructive text-destructive-foreground"
             >
-              Delete
+              {t('delete')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

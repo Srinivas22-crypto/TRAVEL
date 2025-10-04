@@ -7,7 +7,8 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import SearchBar from '@/components/SearchBar';
 import { useTranslation } from 'react-i18next';
-import { MapPin, Search, Star, Clock, Users, Filter, RefreshCw } from 'lucide-react';
+import { Search, Clock, Filter, RefreshCw, Star, MapPin, Users, Plane } from 'lucide-react';
+import { DestinationCard } from '@/components/DestinationCard';
 
 const Explore = () => {
   const { t } = useTranslation();
@@ -19,134 +20,134 @@ const Explore = () => {
   const popularDestinations = [
     {
       id: 1,
-      name: "Paris, France",
+      name: t('explore.destinationsData.paris.name'),
       image: "https://plus.unsplash.com/premium_photo-1661919210043-fd847a58522d?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       rating: 4.8,
       reviews: 1250,
-      description: "The City of Light awaits with its iconic landmarks and romantic atmosphere.",
+      description: t('explore.destinationsData.paris.description'),
       category: "culture",
       price: 1200
     },
     {
       id: 2,
-      name: "Tokyo, Japan",
+      name: t('explore.destinationsData.tokyo.name'),
       image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf",
       rating: 4.9,
       reviews: 980,
-      description: "Experience the perfect blend of traditional culture and modern innovation.",
+      description: t('explore.destinationsData.tokyo.description'),
       category: "city",
       price: 1800
     },
     {
       id: 3,
-      name: "New York, USA",
+      name: t('explore.destinationsData.newYork.name'),
       image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9",
       rating: 4.7,
       reviews: 2100,
-      description: "The city that never sleeps offers endless possibilities and experiences.",
+      description: t('explore.destinationsData.newYork.description'),
       category: "city",
       price: 1500
     },
     {
       id: 4,
-      name: "Bali, Indonesia",
+      name: t('explore.destinationsData.bali.name'),
       image: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1",
       rating: 4.6,
       reviews: 840,
-      description: "Tropical paradise with stunning beaches and rich cultural heritage.",
+      description: t('explore.destinationsData.bali.description'),
       category: "beach",
       price: 900
     },
     {
       id: 5,
-      name: "Swiss Alps, Switzerland",
+      name: t('explore.destinationsData.swissAlps.name'),
       image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4",
       rating: 4.9,
       reviews: 567,
-      description: "Breathtaking mountain views and world-class skiing adventures.",
+      description: t('explore.destinationsData.swissAlps.description'),
       category: "adventure",
       price: 2200
     },
     {
       id: 6,
-      name: "Tuscany, Italy",
+      name: t('explore.destinationsData.tuscany.name'),
       image: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9",
       rating: 4.8,
       reviews: 734,
-      description: "Rolling hills, vineyards, and authentic Italian cuisine.",
+      description: t('explore.destinationsData.tuscany.description'),
       category: "food",
       price: 1300
     },
     {
       id: 7,
-      name: "Costa Rica",
+      name: t('explore.destinationsData.costaRica.name'),
       image: "https://images.unsplash.com/photo-1607287322237-e9eeee4849a8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y29zdGElMjByaWNhJTIwYmVhY2h8ZW58MHx8MHx8fDA%3D",
       rating: 4.7,
       reviews: 423,
-      description: "Rich biodiversity and stunning natural landscapes.",
+      description: t('explore.destinationsData.costaRica.description'),
       category: "nature",
       price: 1100
     },
     {
       id: 8,
-      name: "Santorini, Greece",
+      name: t('explore.destinationsData.santorini.name'),
       image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff",
       rating: 4.8,
       reviews: 1156,
-      description: "Iconic white buildings and spectacular sunsets.",
+      description: t('explore.destinationsData.santorini.description'),
       category: "beach",
       price: 1400
     },
     {
       id: 9,
-      name: "Goa, India",
+      name: t('explore.destinationsData.goa.name'),
       image: "https://images.unsplash.com/photo-1594801001182-99ee8f8d5db9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDR8fGdvYSUyMGluZGlhfGVufDB8fDB8fHww",
       rating: 4.5,
       reviews: 892,
-      description: "Beautiful beaches, Portuguese architecture, and vibrant nightlife in India's coastal paradise.",
+      description: t('explore.destinationsData.goa.description'),
       category: "beach",
       price: 600
     },
     {
       id: 10,
-      name: "Dubai, UAE",
+      name: t('explore.destinationsData.dubai.name'),
       image: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c",
       rating: 4.6,
       reviews: 1340,
-      description: "Luxury shopping, ultramodern architecture, and desert adventures in the Middle East.",
+      description: t('explore.destinationsData.dubai.description'),
       category: "city",
       price: 1600
     },
     {
       id: 11,
-      name: "Iceland",
+      name: t('explore.destinationsData.iceland.name'),
       image: "https://images.unsplash.com/photo-1657780576805-ea092344358e?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8aWNlbGFuZCUyMHdhdGVyZmFsbHxlbnwwfHwwfHx8MA%3D%3D",
       rating: 4.8,
       reviews: 654,
-      description: "Land of fire and ice with stunning waterfalls, geysers, and northern lights.",
+      description: t('explore.destinationsData.iceland.description'),
       category: "nature",
       price: 1900
     },
     {
       id: 12,
-      name: "Barcelona, Spain",
+      name: t('explore.destinationsData.barcelona.name'),
       image: "https://images.unsplash.com/photo-1539037116277-4db20889f2d4",
       rating: 4.7,
       reviews: 1567,
-      description: "Gaudi's architectural masterpieces, vibrant culture, and Mediterranean beaches.",
+      description: t('explore.destinationsData.barcelona.description'),
       category: "culture",
       price: 1100
     }
   ];
 
   const categories = [
-    { name: "All", id: "all", icon: "", count: popularDestinations.length },
-    { name: "Adventure", id: "adventure", icon: "", count: popularDestinations.filter(d => d.category === 'adventure').length },
-    { name: "Beach", id: "beach", icon: "", count: popularDestinations.filter(d => d.category === 'beach').length },
-    { name: "Culture", id: "culture", icon: "", count: popularDestinations.filter(d => d.category === 'culture').length },
-    { name: "Food", id: "food", icon: "", count: popularDestinations.filter(d => d.category === 'food').length },
-    { name: "Nature", id: "nature", icon: "", count: popularDestinations.filter(d => d.category === 'nature').length },
-    { name: "City", id: "city", icon: "", count: popularDestinations.filter(d => d.category === 'city').length }
+    { name: t('explore.categories.all'), id: "all", icon: "", count: popularDestinations.length },
+    { name: t('explore.categories.adventure'), id: "adventure", icon: "", count: popularDestinations.filter(d => d.category === 'adventure').length },
+    { name: t('explore.categories.beach'), id: "beach", icon: "", count: popularDestinations.filter(d => d.category === 'beach').length },
+    { name: t('explore.categories.culture'), id: "culture", icon: "", count: popularDestinations.filter(d => d.category === 'culture').length },
+    { name: t('explore.categories.food'), id: "food", icon: "", count: popularDestinations.filter(d => d.category === 'food').length },
+    { name: t('explore.categories.nature'), id: "nature", icon: "", count: popularDestinations.filter(d => d.category === 'nature').length },
+    { name: t('explore.categories.city'), id: "city", icon: "", count: popularDestinations.filter(d => d.category === 'city').length }
   ];
 
   // Enhanced search function with better matching
@@ -286,7 +287,7 @@ const Explore = () => {
           {/* Enhanced Search Bar */}
           <SearchBar
             onSearch={handleSearch}
-            placeholder="Search destinations (e.g., Tokyo, Paris, Beach, Culture...)"
+            placeholder={t('explore.searchPlaceholderEnhanced')}
             className="max-w-xl mx-auto mb-6"
             initialValue={searchTerm}
           />
@@ -296,7 +297,7 @@ const Explore = () => {
             <div className="max-w-xl mx-auto mb-6">
               <div className="flex items-center justify-between text-sm text-muted-foreground">
                 <span>
-                  Searching for: <strong className="text-foreground">"{searchTerm}"</strong>
+                  {t('explore.searchingFor')} <strong className="text-foreground">"{searchTerm}"</strong>
                 </span>
                 <Button
                   variant="ghost"
@@ -305,7 +306,7 @@ const Explore = () => {
                   className="text-muted-foreground hover:text-foreground"
                 >
                   <RefreshCw className="h-3 w-3 mr-1" />
-                  Clear all
+                  {t('common.clearAll')}
                 </Button>
               </div>
             </div>
@@ -318,10 +319,10 @@ const Explore = () => {
                 <SelectValue placeholder={t('explore.sortBy')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="rating">Highest Rated</SelectItem>
-                <SelectItem value="price-low">Price: Low to High</SelectItem>
-                <SelectItem value="price-high">Price: High to Low</SelectItem>
-                <SelectItem value="reviews">Most Reviewed</SelectItem>
+                <SelectItem value="rating">{t('explore.sortByOptions.rating')}</SelectItem>
+                <SelectItem value="price-low">{t('explore.sortByOptions.priceLow')}</SelectItem>
+                <SelectItem value="price-high">{t('explore.sortByOptions.priceHigh')}</SelectItem>
+                <SelectItem value="reviews">{t('explore.sortByOptions.reviews')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -330,10 +331,10 @@ const Explore = () => {
         {/* Categories */}
         <section className="mb-12">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-semibold">Browse by Category</h2>
+            <h2 className="text-2xl font-semibold">{t('explore.browseByCategory')}</h2>
             {searchTerm && (
               <Badge variant="secondary" className="text-xs">
-                Filtered by search
+                {t('explore.filteredBySearch')}
               </Badge>
             )}
           </div>
@@ -350,7 +351,7 @@ const Explore = () => {
                   <div className="text-2xl mb-2">{category.icon}</div>
                   <h3 className="font-medium mb-1">{category.name}</h3>
                   <p className="text-sm text-muted-foreground">
-                    {category.count} {category.count === 1 ? 'place' : 'places'}
+                    {t('explore.places_one', { count: category.count })}
                   </p>
                 </CardContent>
               </Card>
@@ -362,16 +363,16 @@ const Explore = () => {
         <section className="mb-12">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-semibold">
-              {selectedCategory === 'all' ? 'All Destinations' : `${categories.find(c => c.id === selectedCategory)?.name} Destinations`}
+              {selectedCategory === 'all' ? t('explore.allDestinations') : `${t('explore.categories.' + selectedCategory)} ${t('explore.destinations')}`}
             </h2>
             <Badge variant="outline">
-              {filteredDestinations.length} {filteredDestinations.length === 1 ? 'destination' : 'destinations'} found
+              {t('explore.destinationsFound', { count: filteredDestinations.length })}
             </Badge>
           </div>
           
           {filteredDestinations.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-muted-foreground text-lg">No destinations found matching your criteria.</p>
+              <p className="text-muted-foreground text-lg">{t('explore.noDestinationsFound')}</p>
               <Button 
                 variant="outline" 
                 className="mt-4"
@@ -380,45 +381,73 @@ const Explore = () => {
                   setSelectedCategory('all');
                 }}
               >
-                Clear Filters
+                {t('explore.clearFilters')}
               </Button>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-6">
               {filteredDestinations.map((destination) => (
                 <Card 
                   key={destination.id} 
-                  className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
-                  onClick={() => handleDestinationClick(destination)}
+                  className="overflow-hidden hover:shadow-lg transition-shadow group h-full"
                 >
-                  <div className="aspect-video overflow-hidden relative group">
+                  <div 
+                    className="aspect-video overflow-hidden relative cursor-pointer"
+                    onClick={() => handleDestinationClick(destination)}
+                  >
                     <img 
                       src={destination.image} 
                       alt={destination.name}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   </div>
-                  <CardContent className="p-4">
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="font-semibold text-lg">{destination.name}</h3>
+                  <CardContent className="p-3 flex flex-col h-full space-y-3">
+                    <div className="flex items-start justify-between">
+                      <h3 className="font-semibold text-lg group-hover:text-primary transition-colors">{destination.name}</h3>
                       <Badge variant="secondary" className="flex items-center gap-1">
                         <Star className="h-3 w-3 fill-current" />
                         {destination.rating}
                       </Badge>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-3">
+                    
+                    <p className="text-sm text-muted-foreground line-clamp-2">
                       {destination.description}
                     </p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                        <span className="flex items-center gap-1">
-                          <Users className="h-3 w-3" />
-                          {destination.reviews} reviews
-                        </span>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-lg font-bold text-primary">${destination.price}</p>
-                        <p className="text-xs text-muted-foreground">per person</p>
+
+                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                      <span className="flex items-center gap-1">
+                        <Users className="h-3 w-3" />
+                        {destination.reviews} {t('explore.reviews')}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <MapPin className="h-3 w-3" />
+                        <span className="capitalize">{destination.category}</span>
+                      </span>
+                    </div>
+
+                    <div className="mt-auto pt-3 border-t border-border">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1">
+                          <span className="text-lg font-bold text-primary">${destination.price}</span>
+                          <span className="text-xs text-muted-foreground">{t('explore.perPerson')}</span>
+                        </div>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="hover:bg-primary hover:text-white transition-colors"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate('/payment', { 
+                              state: { 
+                                type: 'flight',
+                                destination,
+                                amount: destination.price
+                              } 
+                            });
+                          }}
+                        >
+                          <Plane className="h-4 w-4" />
+                        </Button>
                       </div>
                     </div>
                   </CardContent>
@@ -430,20 +459,20 @@ const Explore = () => {
 
         {/* Featured Tools */}
         <section>
-          <h2 className="text-2xl font-semibold mb-6">Explore Tools</h2>
+          <h2 className="text-2xl font-semibold mb-6">{t('explore.exploreTools')}</h2>
           <div className="grid md:grid-cols-2 gap-6">
             <Card className="hover:shadow-md transition-shadow">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <MapPin className="h-5 w-5 text-primary" />
-                  Route Planner
+                  {t('explore.tools.routePlanner.title')}
                 </CardTitle>
                 <CardDescription>
-                  Plan your perfect journey with our intelligent route planner
+                  {t('explore.tools.routePlanner.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Button className="w-full" onClick={() => navigate('/route-planner')}>Start Planning</Button>
+                <Button className="w-full" onClick={() => navigate('/route-planner')}>{t('explore.tools.routePlanner.cta')}</Button>
               </CardContent>
             </Card>
 
@@ -451,14 +480,14 @@ const Explore = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Search className="h-5 w-5 text-secondary" />
-                  Destination Finder
+                  {t('explore.tools.destinationFinder.title')}
                 </CardTitle>
                 <CardDescription>
-                  Discover hidden gems and popular attractions worldwide
+                  {t('explore.tools.destinationFinder.description')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Button variant="outline" className="w-full">Explore Now</Button>
+                <Button variant="outline" className="w-full">{t('explore.tools.destinationFinder.cta')}</Button>
               </CardContent>
             </Card>
           </div>

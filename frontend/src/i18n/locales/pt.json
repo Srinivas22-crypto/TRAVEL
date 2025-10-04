@@ -51,5 +51,28 @@
     "edit": "Editar",
     "delete": "Excluir",
     "close": "Fechar"
+  },
+  "destinations": {
+    "paris": {
+      "name": "Paris",
+      "country": "França",
+      "description": "A Cidade das Luzes o espera com seus monumentos icônicos, museus de classe mundial, cafés charmosos e atmosfera romântica. Paris combina perfeitamente arquitetura histórica com sofisticação moderna, oferecendo aos visitantes uma experiência inesquecível repleta de arte, cultura e delícias culinárias.",
+      "highlights": [
+        "Torre Eiffel - Icônica torre de ferro e símbolo de Paris",
+        "Museu do Louvre - Maior museu de arte do mundo com a Mona Lisa",
+        "Catedral de Notre-Dame - Obra-prima gótica na Île de la Cité",
+        "Champs-Élysées - Famosa avenida para compras e gastronomia",
+        "Montmartre - Bairro artístico com a Basílica de Sacré-Cœur"
+      ],
+      "quickFacts": {
+        "bestTime": "Abril a junho e setembro a outubro",
+        "language": "Francês",
+        "currency": "Euro (EUR)",
+        "timezone": "Horário da Europa Central (CET)"
+      },
+      "weather": {
+        "condition": "Parcialmente nublado"
+      }
+    }
   }
-}
+}    

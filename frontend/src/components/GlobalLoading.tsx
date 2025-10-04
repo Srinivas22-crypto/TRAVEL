@@ -1,5 +1,6 @@
 import React from 'react';
 import { Loader2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface GlobalLoadingProps {
   message?: string;
@@ -8,10 +9,12 @@ interface GlobalLoadingProps {
 }
 
 const GlobalLoading: React.FC<GlobalLoadingProps> = ({ 
-  message = 'Loading...', 
+  message, 
   size = 'md',
   fullScreen = false 
 }) => {
+  const { t } = useTranslation();
+
   const sizeClasses = {
     sm: 'h-4 w-4',
     md: 'h-8 w-8',
@@ -26,9 +29,9 @@ const GlobalLoading: React.FC<GlobalLoadingProps> = ({
     <div className={containerClasses}>
       <div className="flex flex-col items-center gap-4">
         <Loader2 className={`${sizeClasses[size]} animate-spin text-primary`} />
-        {message && (
-          <p className="text-muted-foreground text-sm font-medium">{message}</p>
-        )}
+        <p className="text-muted-foreground text-sm font-medium">
+          {message ? t(message) : t('globalLoading.loading')}
+        </p>
       </div>
     </div>
   );

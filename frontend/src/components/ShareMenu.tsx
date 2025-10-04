@@ -15,6 +15,7 @@ import {
   MoreVertical,
 } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 interface ShareMenuProps {
   url: string;
@@ -61,23 +62,23 @@ const ShareMenu: FC<ShareMenuProps> = ({ url, title = "" }) => {
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={handleCopyLink}>
           <Copy className="mr-2 h-4 w-4" />
-          <span>Copy Link</span>
+          <span>t("Copy Link")</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handleShareFacebook}>
           <Facebook className="mr-2 h-4 w-4" />
-          <span>Share on Facebook</span>
+          <span>t("Share on") Facebook</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handleShareTwitter}>
           <Twitter className="mr-2 h-4 w-4" />
-          <span>Share on Twitter</span>
+          <span>t("Share on") Twitter</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handleShareInstagram}>
           <Instagram className="mr-2 h-4 w-4" />
-          <span>Share on Instagram</span>
+          <span>t("Share on") Instagram</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handleOpenInNewTab}>
           <ExternalLink className="mr-2 h-4 w-4" />
-          <span>Open in New Tab</span>
+          <span>t("Open in New Tab")</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

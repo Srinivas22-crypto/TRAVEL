@@ -199,7 +199,8 @@ const Profile = () => {
           isLiked: false,
           isBookmarked: true,
           createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
+          updatedAt: new Date().toISOString(),
+          shares: 0
         }
       ];
     }
@@ -538,9 +539,9 @@ const Profile = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 text-center md:text-left">
         {/* Header */}
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex items-center gap-4 mb-8 justify-center md:justify-start">
           <Button 
             variant="ghost" 
             size="icon"
@@ -558,7 +559,7 @@ const Profile = () => {
         {/* Profile Header */}
         <Card className="mb-8">
           <CardContent className="p-6">
-            <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-6 md:justify-between">
               <div className="relative">
                 <Avatar className="h-24 w-24">
                   <AvatarImage src={user.profileImage} alt={getUserFullName()} />
@@ -662,9 +663,25 @@ const Profile = () => {
           </CardContent>
         </Card>
 
+        {/* Mobile dropdown for Profile Sections */}
+        <div className="md:hidden mb-4">
+          <Select value={activeTab} onValueChange={setActiveTab}>
+            <SelectTrigger className="w-full bg-card border-border rounded-md">
+              <SelectValue placeholder="Profile Sections" />
+            </SelectTrigger>
+            <SelectContent className="bg-card border-border text-sm">
+              <SelectItem value="posts">My Posts</SelectItem>
+              <SelectItem value="history">History</SelectItem>
+              <SelectItem value="liked">Liked Posts</SelectItem>
+              <SelectItem value="saved">Saved Posts</SelectItem>
+              <SelectItem value="comments">Comments</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
         {/* Profile Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="hidden md:grid w-full grid-cols-5">
             <TabsTrigger value="posts" className="flex items-center gap-2">
               <FileText className="h-4 w-4" />
               My Posts

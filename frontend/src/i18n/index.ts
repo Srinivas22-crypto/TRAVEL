@@ -25,9 +25,17 @@ i18n
   .init({
     resources,
     lng: localStorage.getItem('travel-app-language') || 'en',
-    fallbackLng: 'en',
+    fallbackLng: ['en'],
+    supportedLngs: ['en', 'es', 'fr', 'de', 'it', 'pt', 'ja', 'zh'],
     interpolation: {
       escapeValue: false,
+    },
+    returnNull: false,
+    returnEmptyString: false,
+    keySeparator: '.',
+    nsSeparator: ':',
+    missingKeyHandler: (lng, ns, key, fallbackValue) => {
+      console.warn(`Missing translation: ${key} in ${lng}`);
     },
   });
 

@@ -292,6 +292,7 @@ export interface Reply {
 }
 
 export interface Comment {
+  likes: unknown;
   _id: string;
   user: {
     _id: string;

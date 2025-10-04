@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { useTransition } from 'react';
 
 // Fix for default markers in React Leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -129,7 +130,7 @@ const RouteMap: React.FC<RouteMapProps> = ({ locations, className = '' }) => {
       <div className={`w-full h-full flex items-center justify-center bg-accent/30 rounded-lg ${className}`}>
         <div className="text-center text-muted-foreground">
           <div className="text-4xl mb-2">🗺️</div>
-          <p>Enter locations to see the route map</p>
+          <p>t("Enter locations to see the route map")</p>
         </div>
       </div>
     );

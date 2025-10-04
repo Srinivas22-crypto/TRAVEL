@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { SearchResults } from './SearchResults';
 import { useTranslation } from 'react-i18next';
 import { 
-  NavigationMenu, 
+  NavigationMenu,
   NavigationMenuContent, 
   NavigationMenuItem, 
   NavigationMenuLink, 
@@ -24,10 +24,15 @@ import {
   Calendar,
   Users,
   X,
-  Route
+  Route,
+  User as UserIcon
 } from 'lucide-react';
 
-export const Header = () => {
+interface HeaderProps {
+  className?: string;
+}
+
+export const Header = ({ className }: HeaderProps) => {
   const { t } = useTranslation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -42,104 +47,112 @@ export const Header = () => {
   };
 
   const handleSearchKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
+    if (e.key === 'Enter') handleSearch();
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
-      <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
-          {/* Logo - Clickable */}
+    <header className="z-40 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
+      <div className="container mx-auto px-2 sm:px-4">
+        <div className="flex h-14 md:h-16 items-center justify-between">
+          {/* Logo */}
           <div 
             className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
             onClick={() => navigate('/home')}
           >
-            <div className="flex items-center gap-2">
-              <div className="bg-gradient-hero p-2 rounded-lg">
-                <Plane className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold bg-gradient-hero bg-clip-text text-transparent">
-                  TravelHub
-                </h1>
-                <p className="text-xs text-muted-foreground">Your Journey Starts Here</p>
-              </div>
+            <div className="bg-gradient-hero p-2 rounded-lg">
+              <Plane className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h1 className="text-lg md:text-xl font-bold bg-gradient-hero bg-clip-text text-transparent">
+                TravelHub
+              </h1>
+              <p className="text-[10px] md:text-xs text-muted-foreground">{t('header.tagline')}</p>
             </div>
           </div>
 
           {/* Desktop Navigation */}
           <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>
+              {/* Explore Menu */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="bg-transparent">
                   <MapPin className="h-4 w-4 mr-2" />
                   {t('nav.explore')}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <div className="grid w-80 p-4 gap-3">
-                    <NavigationMenuLink 
-                      className="flex items-center gap-2 p-2 hover:bg-accent rounded-md cursor-pointer"
-                      onClick={() => navigate('/route-planner')}
-                    >
-                      <Route className="h-4 w-4 text-primary" />
-                      <div>
-                        <p className="font-medium">Route Planner</p>
-                        <p className="text-sm text-muted-foreground">Plan your perfect journey</p>
-                      </div>
-                    </NavigationMenuLink>
-                    <NavigationMenuLink 
-                      className="flex items-center gap-2 p-2 hover:bg-accent rounded-md cursor-pointer"
-                      onClick={() => navigate('/explore')}
-                    >
-                      <Search className="h-4 w-4 text-secondary" />
-                      <div>
-                        <p className="font-medium">Destinations</p>
-                        <p className="text-sm text-muted-foreground">Discover amazing places</p>
-                      </div>
-                    </NavigationMenuLink>
+                  <div className="w-[280px] sm:w-[320px] p-4 rounded-md bg-popover border shadow-md">
+                    <div className="grid gap-3">
+                      <NavigationMenuLink 
+                        className="flex items-center gap-2 p-3 hover:bg-accent rounded-md cursor-pointer transition-all duration-200 group"
+                        href="/route-planner"
+                        onClick={(e) => { e.preventDefault(); navigate('/route-planner'); }}
+                      >
+                        <Route className="h-4 w-4 text-primary group-hover:scale-110 transition-transform" />
+                        <div className="flex flex-col gap-0.5">
+                          <p className="font-medium">{t('nav.routePlanner')}</p>
+                          <p className="text-sm text-muted-foreground">{t('nav.routePlannerDesc')}</p>
+                        </div>
+                      </NavigationMenuLink>
+                      <NavigationMenuLink 
+                        className="flex items-center gap-2 p-3 hover:bg-accent rounded-md cursor-pointer transition-all duration-200 group"
+                        href="/explore"
+                        onClick={(e) => { e.preventDefault(); navigate('/explore'); }}
+                      >
+                        <Search className="h-4 w-4 text-secondary group-hover:scale-110 transition-transform" />
+                        <div className="flex flex-col gap-0.5">
+                          <p className="font-medium">{t('nav.destinations')}</p>
+                          <p className="text-sm text-muted-foreground">{t('nav.destinationsDesc')}</p>
+                        </div>
+                      </NavigationMenuLink>
+                    </div>
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
+              {/* Book Menu */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="bg-transparent">
                   <Calendar className="h-4 w-4 mr-2" />
                   {t('nav.book')}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <div className="grid w-80 p-4 gap-3">
-                    <NavigationMenuLink 
-                      className="flex items-center gap-2 p-2 hover:bg-accent rounded-md cursor-pointer"
-                      onClick={() => navigate('/book')}
-                    >
-                      <Plane className="h-4 w-4 text-primary" />
-                      <div>
-                        <p className="font-medium">{t('book.flights')}</p>
-                        <p className="text-sm text-muted-foreground">Find the best deals</p>
-                      </div>
-                    </NavigationMenuLink>
-                    <NavigationMenuLink 
-                      className="flex items-center gap-2 p-2 hover:bg-accent rounded-md cursor-pointer"
-                      onClick={() => navigate('/book')}
-                    >
-                      <Calendar className="h-4 w-4 text-secondary" />
-                      <div>
-                        <p className="font-medium">{t('book.hotels')}</p>
-                        <p className="text-sm text-muted-foreground">Book your stay</p>
-                      </div>
-                    </NavigationMenuLink>
+                  <div className="w-[280px] sm:w-[320px] p-4 rounded-md bg-popover border shadow-md">
+                    <div className="grid gap-3">
+                      <NavigationMenuLink 
+                        className="flex items-center gap-2 p-3 hover:bg-accent rounded-md cursor-pointer transition-all duration-200 group"
+                        href="/book"
+                        onClick={(e) => { e.preventDefault(); navigate('/book'); }}
+                      >
+                        <Plane className="h-4 w-4 text-primary group-hover:scale-110 transition-transform" />
+                        <div className="flex flex-col gap-0.5">
+                          <p className="font-medium">{t('book.flights')}</p>
+                          <p className="text-sm text-muted-foreground">{t('book.flightsDesc')}</p>
+                        </div>
+                      </NavigationMenuLink>
+                      <NavigationMenuLink 
+                        className="flex items-center gap-2 p-3 hover:bg-accent rounded-md cursor-pointer transition-all duration-200 group"
+                        href="/book"
+                        onClick={(e) => { e.preventDefault(); navigate('/book'); }}
+                      >
+                        <Calendar className="h-4 w-4 text-secondary group-hover:scale-110 transition-transform" />
+                        <div className="flex flex-col gap-0.5">
+                          <p className="font-medium">{t('book.hotels')}</p>
+                          <p className="text-sm text-muted-foreground">{t('book.hotelsDesc')}</p>
+                        </div>
+                      </NavigationMenuLink>
+                    </div>
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
+              {/* Community Link */}
               <NavigationMenuItem>
                 <NavigationMenuLink 
-                  className="flex items-center gap-2 px-3 py-2 cursor-pointer hover:bg-accent rounded-md"
-                  onClick={() => navigate('/community')}
+                  className="flex items-center gap-2 px-3 py-2 cursor-pointer hover:bg-accent rounded-md group"
+                  href="/community"
+                  onClick={(e) => { e.preventDefault(); navigate('/community'); }}
                 >
-                  <Users className="h-4 w-4" />
+                  <Users className="h-4 w-4 group-hover:scale-110 transition-transform" />
                   {t('nav.community')}
                 </NavigationMenuLink>
               </NavigationMenuItem>
@@ -147,42 +160,35 @@ export const Header = () => {
           </NavigationMenu>
 
           {/* Right Side Actions */}
-          <div className="flex items-center gap-2">
-            {/* Search (Desktop) */}
+          <div className="flex items-center gap-3">
             <Button 
               variant="ghost" 
-              size="icon" 
-              className="hidden md:flex"
+              size="icon"
               onClick={() => setIsSearchOpen(!isSearchOpen)}
+              className="hover:bg-accent"
+              aria-label={t('nav.search')}
             >
               <Search className="h-5 w-5" />
             </Button>
 
-            {/* Notifications */}
             <NotificationCenter />
-
-            {/* Language Selector */}
-            <LanguageSelector />
-
-            {/* Theme Toggle */}
+            <div className="hidden md:flex"><LanguageSelector /></div>
             <ThemeToggle />
+            <div className="hidden md:flex"><UserMenu /></div>
 
-            {/* User Menu */}
-            <UserMenu />
-
-            {/* Mobile Menu Button */}
             <Button
               variant="ghost"
               size="icon"
               className="md:hidden"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
             >
               <Menu className="h-5 w-5" />
             </Button>
           </div>
         </div>
 
-        {/* Search Bar Overlay */}
+        {/* Search Overlay */}
         {isSearchOpen && (
           <div className="relative">
             <div className="absolute top-0 left-0 right-0 bg-card border-b border-border p-4 shadow-lg">
@@ -206,25 +212,18 @@ export const Header = () => {
                 <Button 
                   variant="ghost" 
                   size="icon"
-                  onClick={() => {
-                    setIsSearchOpen(false);
-                    setSearchQuery('');
-                  }}
+                  onClick={() => { setIsSearchOpen(false); setSearchQuery(''); }}
                 >
                   <X className="h-4 w-4" />
                 </Button>
               </div>
             </div>
-            
-            {/* Search Results */}
+
             {searchQuery && (
-              <div className="container mx-auto px-4 relative">
+              <div className="container mx-auto relative">
                 <SearchResults 
                   query={searchQuery} 
-                  onClose={() => {
-                    setIsSearchOpen(false);
-                    setSearchQuery('');
-                  }} 
+                  onClose={() => { setIsSearchOpen(false); setSearchQuery(''); }} 
                 />
               </div>
             )}
@@ -233,57 +232,29 @@ export const Header = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-border py-4">
-            <div className="space-y-2">
-              <Button 
-                variant="ghost" 
-                className="w-full justify-start"
-                onClick={() => navigate('/route-planner')}
-              >
-                <Route className="h-4 w-4 mr-2" />
-                Route Planner
-              </Button>
-              <Button 
-                variant="ghost" 
-                className="w-full justify-start"
-                onClick={() => navigate('/explore')}
-              >
-                <MapPin className="h-4 w-4 mr-2" />
-                Destinations
-              </Button>
-              <Button 
-                variant="ghost" 
-                className="w-full justify-start"
-                onClick={() => navigate('/book')}
-              >
-                <Plane className="h-4 w-4 mr-2" />
-                Flights
-              </Button>
-              <Button 
-                variant="ghost" 
-                className="w-full justify-start"
-                onClick={() => navigate('/book')}
-              >
-                <Calendar className="h-4 w-4 mr-2" />
-                Hotels
-              </Button>
-              <Button 
-                variant="ghost" 
-                className="w-full justify-start"
-                onClick={() => navigate('/community')}
-              >
-                <Users className="h-4 w-4 mr-2" />
-                {t('nav.community')}
-              </Button>
-              <Button 
-                variant="ghost" 
-                className="w-full justify-start"
-                onClick={() => setIsSearchOpen(!isSearchOpen)}
-              >
-                <Search className="h-4 w-4 mr-2" />
-                {t('nav.search')}
-              </Button>
-            </div>
+          <div className="md:hidden border-t border-border py-4 space-y-2">
+            <div className="px-4 pb-3 border-b border-border"><LanguageSelector /></div>
+            <Button variant="ghost" className="w-full justify-start" onClick={() => navigate('/route-planner')}>
+              <Route className="h-4 w-4 mr-2" /> {t('nav.routePlanner')}
+            </Button>
+            <Button variant="ghost" className="w-full justify-start" onClick={() => navigate('/explore')}>
+              <MapPin className="h-4 w-4 mr-2" /> {t('nav.destinations')}
+            </Button>
+            <Button variant="ghost" className="w-full justify-start" onClick={() => navigate('/book')}>
+              <Plane className="h-4 w-4 mr-2" /> {t('book.flights')}
+            </Button>
+            <Button variant="ghost" className="w-full justify-start" onClick={() => navigate('/book')}>
+              <Calendar className="h-4 w-4 mr-2" /> {t('book.hotels')}
+            </Button>
+            <Button variant="ghost" className="w-full justify-start" onClick={() => navigate('/community')}>
+              <Users className="h-4 w-4 mr-2" /> {t('nav.community')}
+            </Button>
+            <Button variant="ghost" className="w-full justify-start" onClick={() => navigate('/profile')}>
+              <UserIcon className="h-4 w-4 mr-2" /> {t('nav.profile')}
+            </Button>
+            <Button variant="ghost" className="w-full justify-start" onClick={() => setIsSearchOpen(!isSearchOpen)}>
+              <Search className="h-4 w-4 mr-2" /> {t('nav.search')}
+            </Button>
           </div>
         )}
       </div>

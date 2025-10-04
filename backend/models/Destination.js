@@ -98,6 +98,11 @@ const destinationSchema = new mongoose.Schema({
     trim: true,
     maxlength: [50, 'City name cannot be more than 50 characters'],
   },
+  englishName: {
+    type: String,
+    trim: true,
+    maxlength: [100, 'English name cannot be more than 100 characters'],
+  },
   category: {
     type: String,
     required: [true, 'Please provide destination category'],

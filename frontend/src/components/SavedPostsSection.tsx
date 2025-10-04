@@ -7,6 +7,8 @@ import { Bookmark } from 'lucide-react';
 import PostCard from './PostCard';
 import userService from '@/services/userService';
 import { Post } from '@/services/postService';
+import { useTranslation } from 'react-i18next';
+
 
 const SavedPostsSection: React.FC = () => {
   const [savedPosts, setSavedPosts] = useState<Post[]>([]);
@@ -47,7 +49,7 @@ const SavedPostsSection: React.FC = () => {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Saved Posts</CardTitle>
+          <CardTitle>t("Saved Posts")</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           {[...Array(3)].map((_, i) => (
@@ -66,7 +68,7 @@ const SavedPostsSection: React.FC = () => {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
-          Saved Posts
+          t("Saved Posts")
           <Badge variant="secondary">{savedPosts.length}</Badge>
         </CardTitle>
       </CardHeader>
@@ -74,8 +76,8 @@ const SavedPostsSection: React.FC = () => {
         {savedPosts.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             <Bookmark className="h-12 w-12 mx-auto mb-4 opacity-50" />
-            <p>You haven't saved any posts yet.</p>
-            <p className="text-sm">Save posts you want to read later by clicking the bookmark icon!</p>
+            <p>t("You haven't saved any posts yet.")</p>
+            <p className="text-sm">t("Save posts you want to read later by clicking the bookmark icon!")</p>
           </div>
         ) : (
           <div className="space-y-4">

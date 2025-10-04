@@ -9,6 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Camera, MapPin, Hash, X, Upload } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import communityService from '@/services/communityService';
+import { useTranslation } from 'react-i18next';
 
 interface ShareStoryModalProps {
   children: React.ReactNode;
@@ -27,16 +28,17 @@ export const ShareStoryModal = ({ children, onPostCreated }: ShareStoryModalProp
   
   const { toast } = useToast();
   const { user, isAuthenticated } = useAuth();
+  const { t } = useTranslation();
 
   const validateForm = () => {
     const newErrors: typeof errors = {};
     
     if (!content.trim()) {
-      newErrors.content = 'Please share your story content';
+      newErrors.content = t('shareStory.errors.contentRequired');
     } else if (content.trim().length < 10) {
-      newErrors.content = 'Story content must be at least 10 characters';
+      newErrors.content = t('shareStory.errors.contentMin', { count: 10 });
     } else if (content.trim().length > 2000) {
-      newErrors.content = 'Story content must be less than 2000 characters';
+      newErrors.content = t('shareStory.errors.contentMax', { count: 2000 });
     }
     
     setErrors(newErrors);
@@ -65,16 +67,14 @@ export const ShareStoryModal = ({ children, onPostCreated }: ShareStoryModalProp
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
-      // In a real app, you would upload these to a cloud service
-      // For now, we'll create object URLs for preview
       const newImages = Array.from(files).map(file => URL.createObjectURL(file));
-      setImages([...images, ...newImages].slice(0, 4)); // Max 4 images
+      setImages([...images, ...newImages].slice(0, 4));
     }
   };
 
   const handleRemoveImage = (imageToRemove: string) => {
     setImages(images.filter(img => img !== imageToRemove));
-    URL.revokeObjectURL(imageToRemove); // Clean up object URL
+    URL.revokeObjectURL(imageToRemove);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -82,8 +82,8 @@ export const ShareStoryModal = ({ children, onPostCreated }: ShareStoryModalProp
     
     if (!isAuthenticated) {
       toast({
-        title: "Authentication Required",
-        description: "Please sign in to share your story.",
+        title: t('shareStory.toast.authRequired.title'),
+        description: t('shareStory.toast.authRequired.description'),
         variant: "destructive"
       });
       return;
@@ -97,14 +97,6 @@ export const ShareStoryModal = ({ children, onPostCreated }: ShareStoryModalProp
     setErrors({});
 
     try {
-      console.log('📝 Creating new post:', {
-        content: content.trim(),
-        location: location.trim(),
-        tags,
-        imageCount: images.length,
-        author: user ? `${user.firstName} ${user.lastName}`.trim() : 'Unknown'
-      });
-
       const postData = {
         content: content.trim(),
         location: location.trim() || undefined,
@@ -114,14 +106,11 @@ export const ShareStoryModal = ({ children, onPostCreated }: ShareStoryModalProp
 
       await communityService.createPost(postData);
 
-      console.log('✅ Post created successfully');
-
       toast({
-        title: "Story Shared!",
-        description: "Your travel story has been shared with the community.",
+        title: t('shareStory.toast.success.title'),
+        description: t('shareStory.toast.success.description'),
       });
 
-      // Reset form
       setContent('');
       setLocation('');
       setTags([]);
@@ -129,15 +118,12 @@ export const ShareStoryModal = ({ children, onPostCreated }: ShareStoryModalProp
       setImages([]);
       setOpen(false);
 
-      // Notify parent component
       onPostCreated?.();
 
     } catch (error: any) {
-      console.error('❌ Failed to create post:', error.message);
-      
       toast({
-        title: "Failed to Share Story",
-        description: error.message || "Something went wrong. Please try again.",
+        title: t('shareStory.toast.error.title'),
+        description: error.message || t('shareStory.toast.error.description'),
         variant: "destructive"
       });
     } finally {
@@ -147,7 +133,6 @@ export const ShareStoryModal = ({ children, onPostCreated }: ShareStoryModalProp
 
   const handleClose = () => {
     setOpen(false);
-    // Clean up any object URLs
     images.forEach(img => URL.revokeObjectURL(img));
     setImages([]);
   };
@@ -159,18 +144,16 @@ export const ShareStoryModal = ({ children, onPostCreated }: ShareStoryModalProp
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Share Your Travel Story</DialogTitle>
-          <DialogDescription>
-            Share your amazing travel experiences with the community
-          </DialogDescription>
+          <DialogTitle>{t('shareStory.title')}</DialogTitle>
+          <DialogDescription>{t('shareStory.description')}</DialogDescription>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="content">Your Story *</Label>
+            <Label htmlFor="content">{t('shareStory.fields.content')} *</Label>
             <Textarea
               id="content"
-              placeholder="Tell us about your amazing travel experience..."
+              placeholder={t('shareStory.placeholders.content')}
               value={content}
               onChange={(e) => setContent(e.target.value)}
               className={`min-h-[120px] ${errors.content ? "border-red-500" : ""}`}
@@ -183,12 +166,12 @@ export const ShareStoryModal = ({ children, onPostCreated }: ShareStoryModalProp
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="location">Location</Label>
+            <Label htmlFor="location">{t('shareStory.fields.location')}</Label>
             <div className="relative">
               <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
                 id="location"
-                placeholder="Where did this happen?"
+                placeholder={t('shareStory.placeholders.location')}
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 className="pl-10"
@@ -197,12 +180,12 @@ export const ShareStoryModal = ({ children, onPostCreated }: ShareStoryModalProp
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="tags">Tags</Label>
+            <Label htmlFor="tags">{t('shareStory.fields.tags')}</Label>
             <div className="relative">
               <Hash className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
                 id="tags"
-                placeholder="Add tags (press Enter or comma to add)"
+                placeholder={t('shareStory.placeholders.tags')}
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 onKeyPress={handleKeyPress}
@@ -225,7 +208,7 @@ export const ShareStoryModal = ({ children, onPostCreated }: ShareStoryModalProp
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="images">Images (Max 4)</Label>
+            <Label htmlFor="images">{t('shareStory.fields.images')}</Label>
             <div className="flex items-center gap-2">
               <Input
                 id="images"
@@ -243,10 +226,10 @@ export const ShareStoryModal = ({ children, onPostCreated }: ShareStoryModalProp
                 className="flex items-center gap-2"
               >
                 <Upload className="h-4 w-4" />
-                Upload Images
+                {t('shareStory.buttons.upload')}
               </Button>
               <span className="text-sm text-muted-foreground">
-                {images.length}/4 images
+                {images.length}/4 {t('shareStory.labels.images')}
               </span>
             </div>
             
@@ -256,7 +239,7 @@ export const ShareStoryModal = ({ children, onPostCreated }: ShareStoryModalProp
                   <div key={index} className="relative">
                     <img
                       src={image}
-                      alt={`Upload ${index + 1}`}
+                      alt={`${t('shareStory.labels.uploadedImage')} ${index + 1}`}
                       className="w-full h-24 object-cover rounded-md"
                     />
                     <Button
@@ -276,10 +259,10 @@ export const ShareStoryModal = ({ children, onPostCreated }: ShareStoryModalProp
 
           <div className="flex justify-end gap-2 pt-4">
             <Button type="button" variant="outline" onClick={handleClose}>
-              Cancel
+              {t('shareStory.buttons.cancel')}
             </Button>
             <Button type="submit" disabled={isLoading}>
-              {isLoading ? "Sharing..." : "Share Story"}
+              {isLoading ? t('shareStory.buttons.sharing') : t('shareStory.buttons.share')}
             </Button>
           </div>
         </form>

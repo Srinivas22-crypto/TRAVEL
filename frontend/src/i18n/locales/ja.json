@@ -1,10 +1,21 @@
 {
+  "chatbot": {
+    "placeholder": "メッセージを入力...",
+    "send": "送信",
+    "welcome": "こんにちは！私はあなたの旅行アシスタントです。今日はどのようにお手伝いしましょうか？",
+    "minimizeAria": "チャットを最小化",
+    "openAria": "チャットを開く",
+    "title": "旅行アシスタント"
+  },
   "nav": {
     "explore": "探索",
     "book": "予約",
     "community": "コミュニティ",
     "search": "検索",
     "payment": "支払い"
+  },
+  "header": {
+    "tagline": "あなたの旅はここから始まる"
   },
   "home": {
     "title": "次の冒険を発見しよう",
@@ -22,15 +33,186 @@
     "title": "目的地を探索",
     "subtitle": "世界中の素晴らしい場所を発見",
     "searchPlaceholder": "目的地を検索...",
+    "searchPlaceholderEnhanced": "目的地を検索 (例: 東京, パリ, ビーチ, 文化...)",
     "filters": "フィルター",
-    "sortBy": "並び��え"
+    "sortBy": "並び替え",
+    "searchingFor": "検索中:",
+    "sortByOptions": {
+      "rating": "評価が高い順",
+      "priceLow": "価格: 安い順",
+      "priceHigh": "価格: 高い順",
+      "reviews": "レビューが多い順"
+    },
+    "browseByCategory": "カテゴリ別に閲覧",
+    "filteredBySearch": "検索による絞り込み",
+    "allDestinations": "すべての目的地",
+    "destinations": "目的地",
+    "destination": "目的地",
+    "found": "件見つかりました",
+    "place": "場所",
+    "places": "場所",
+    "review": "レビュー",
+    "reviews": "レビュー",
+    "perPerson": "一人当たり",
+    "places_one": "{{count}} 件の場所",
+    "places_other": "{{count}} 件の場所",
+    "reviews_one": "{{count}} 件のレビュー",
+    "reviews_other": "{{count}} 件のレビュー",
+    "destinationsFound_one": "{{count}} 件の目的地が見つかりました",
+    "destinationsFound_other": "{{count}} 件の目的地が見つかりました",
+    "noDestinationsFound": "条件に一致する目的地が見つかりませんでした。",
+    "clearFilters": "フィルターをクリア",
+    "exploreTools": "探索ツール",
+    "categories": {
+      "all": "すべて",
+      "adventure": "冒険",
+      "beach": "ビーチ",
+      "culture": "文化",
+      "food": "食事",
+      "nature": "自然",
+      "city": "都市"
+    },
+    "destinationsData": {
+      "paris": {
+        "name": "パリ, フランス",
+        "description": "光の都が象徴的なランドマークとロマンチックな雰囲気であなたを待っています。"
+      },
+      "tokyo": {
+        "name": "東京, 日本",
+        "description": "伝統文化と現代の革新が完璧に融合した体験を。"
+      },
+      "newYork": {
+        "name": "ニューヨーク, アメリカ",
+        "description": "眠らない街が無限の可能性と体験を提供します。"
+      },
+      "bali": {
+        "name": "バリ, インドネシア",
+        "description": "素晴らしいビーチと豊かな文化遺産を持つ熱帯の楽園。"
+      },
+      "swissAlps": {
+        "name": "スイスアルプス, スイス",
+        "description": "息をのむような山の景色と世界クラスのスキーアドベンチャー。"
+      },
+      "tuscany": {
+        "name": "トスカーナ, イタリア",
+        "description": "なだらかな丘、ブドウ畑、そして本物のイタリア料理。"
+      },
+      "costaRica": {
+        "name": "コスタリカ",
+        "description": "豊かな生物多様性と素晴らしい自然景観。"
+      },
+      "santorini": {
+        "name": "サントリーニ, ギリシャ",
+        "description": "象徴的な白い建物と壮大な夕日。"
+      },
+      "goa": {
+        "name": "ゴア, インド",
+        "description": "インドの沿岸の楽園で、美しいビーチ、ポルトガル建築、活気あるナイトライフ。"
+      },
+      "dubai": {
+        "name": "ドバイ, アラブ首長国連邦",
+        "description": "中東での高級ショッピング、超近代的な建築、砂漠の冒険。"
+      },
+      "iceland": {
+        "name": "アイスランド",
+        "description": "素晴らしい滝、間欠泉、オーロラのある火と氷の国。"
+      },
+      "barcelona": {
+        "name": "バルセロナ, スペイン",
+        "description": "ガウディの建築傑作、活気ある文化、地中海のビーチ。"
+      }
+    },
+    "tools": {
+      "routePlanner": {
+        "title": "ルートプランナー",
+        "description": "インテリジェントなルートプランナーで完璧な旅を計画",
+        "cta": "計画を始める"
+      },
+      "destinationFinder": {
+        "title": "目的地ファインダー",
+        "description": "世界中の隠れた名所や人気のアトラクションを発見",
+        "cta": "今すぐ探索"
+      }
+    }
+  },
+  "destinationDetail": {
+    "loading": "目的地を読み込み中...",
+    "backToExplore": "探索に戻る",
+    "about": {
+      "title": "この目的地について"
+    },
+    "highlights": {
+      "title": "ハイライト"
+    },
+    "quickFacts": {
+      "title": "基本情報",
+      "bestTime": "ベストシーズン",
+      "language": "言語",
+      "currency": "通貨",
+      "timezone": "タイムゾーン"
+    },
+    "weather": {
+      "title": "現在の天気",
+      "humidity": "湿度"
+    },
+    "activities": {
+      "title": "人気のアクティビティ",
+      "book": "アクティビティを予約",
+      "booked": "予約済み"
+    },
+    "cta": {
+      "title": "探索する準備はできましたか？",
+      "subtitle": "今日、{{name}}への旅行を予約しましょう！",
+      "bookNow": "今すぐ予約 - ${{price}}"
+    },
+    "notFound": {
+      "title": "目的地が見つかりません",
+      "description": "お探しの目的地は存在しません。",
+      "cta": "探索に戻る"
+    },
+    "activityBooked": "アクティビティが予約されました！",
+    "activityBookedDescription": "{{name}}を${{price}}で正常に予約しました",
+    "activityAlreadyBooked": "既に予約済み",
+    "activityAlreadyBookedDescription": "あなたは既に{{name}}を予約しています",
+    "bookingFailed": "予約に失敗しました",
+    "bookingFailedDescription": "アクティビティの予約に失敗しました。もう一度お試しください。"
   },
   "book": {
     "title": "旅行を予約",
     "subtitle": "フライト、ホテル、体験を見つけて予約",
     "flights": "フライト",
     "hotels": "ホテル",
-    "experiences": "体験"
+    "experiences": "体験",
+    "from": "出発地",
+    "to": "目的地",
+    "departureDate": "出発日",
+    "returnDate": "帰国日",
+    "passengers": "乗客",
+    "destination": "目的地",
+    "checkIn": "チェックイン",
+    "checkOut": "チェックアウト",
+    "guests": "宿泊客",
+    "pickupLocation": "乗車場所",
+    "pickupDate": "乗車日",
+    "dropoffDate": "降車日",
+    "searchFlights": "フライトを検索",
+    "searchHotels": "ホテルを検索",
+    "searchCars": "レンタカーを検索",
+    "placeholders": {
+      "departureCit": "出発都市",
+      "destinationCity": "目的都市",
+      "pickADate": "日付を選択",
+      "selectAdults": "大人1名",
+      "whereGoing": "どこへ行きますか？",
+      "guestsRooms": "宿泊客2名、1部屋",
+      "pickupLocation": "乗車場所"
+    },
+    "errors": {
+      "searchFailed": "検索に失敗しました",
+      "flightsError": "フライトの検索に失敗しました。もう一度お試しください。",
+      "hotelsError": "ホテルの検索に失敗しました。もう一度お試しください。",
+      "carsError": "レンタカーの検索に失敗しました。もう一度お試しください。"
+    }
   },
   "community": {
     "title": "旅行コミュニティ",
@@ -50,20 +232,41 @@
     "alreadyHaveAccount": "既にアカウントをお持ちですか？",
     "signInHere": "こちらからサインイン",
     "dontHaveAccount": "アカウントをお持ちでないですか？",
-    "registerHere": "こちらから登録",
+    "registerHere": "登録はこちら",
     "forgotPassword": "パスワードを忘れましたか？",
     "rememberMe": "ログイン状態を保持",
     "welcomeBack": "TravelHubへようこそ",
     "createAccountSubtitle": "TravelHubに参加して旅を始めましょう",
-    "acceptTerms": "���は",
+    "acceptTerms": "私は",
     "termsAndConditions": "利用規約",
     "signingIn": "サインイン中...",
     "creatingAccount": "アカウント作成中...",
     "signInSuccess": "おかえりなさい！",
+    "signInSuccessDesc": "正常にサインインしました。",
+    "signInFailed": "サインインに失敗しました",
+    "signInFailedDesc": "メールアドレスまたはパスワードが無効です。もう一度お試しください。",
     "accountCreated": "アカウントが作成されました！",
     "accountCreatedDesc": "TravelHubへようこそ。サインインできます。",
+    "registrationFailed": "登録に失敗しました",
+    "registrationFailedDesc": "アカウントの作成に失敗しました。もう一度お試しください。",
     "passwordsNoMatch": "パスワードが一致しません。",
-    "acceptTermsError": "利用規約に同意してください。"
+    "acceptTermsError": "利用規約に同意してください。",
+    "emailPlaceholder": "john@example.com",
+    "firstNamePlaceholder": "太郎",
+    "lastNamePlaceholder": "山田",
+    "errors": {
+      "emailRequired": "メールアドレスは必須です",
+      "emailInvalid": "有効なメールアドレスを入力してください",
+      "passwordRequired": "パスワードは必須です",
+      "passwordLength": "パスワードは6文字以上である必要があります",
+      "passwordComplexity": "パスワードには大文字、小文字、数字をそれぞれ1つ以上含める必要があります",
+      "confirmPasswordRequired": "パスワードを確認してください",
+      "firstNameRequired": "名は必須です",
+      "firstNameLength": "名は2文字以上である必要があります",
+      "lastNameRequired": "姓は必須です",
+      "lastNameLength": "姓は2文字以上である必要があります",
+      "termsRequired": "利用規約に同意する必要があります"
+    }
   },
   "profile": {
     "settings": "プロフィール設定",
@@ -150,8 +353,172 @@
     "subtitle": "あなたの興味に応じて整理された旅行体験を発見"
   },
   "destinations": {
-    "title": "人気の目的地",
-    "subtitle": "旅行者が選んだ世界で最も素晴らしい場所を探索"
+    "london": {
+      "name": "ロンドン, イギリス",
+      "description": "歴史と現代性が融合する都市、ロンドンは、王室の遺産、世界クラスの博物館、多様な文化、革新的な建築のユニークなブレンドを提供します。テムズ川沿いのこの世界的な大都市の魅力を体験してください。"
+    },
+    "paris": {
+      "name": "パリ",
+      "country": "フランス",
+      "description": "光の都パリは、象徴的な建造物、世界クラスの美術館、魅力的なカフェ、そしてロマンチックな雰囲気であなたを魅了します。歴史的な建築と現代の洗練さが完璧に調和し、芸術、文化、美食に満ちた忘れられない体験を提供します。",
+      "highlights": [
+        "エッフェル塔 - パリのシンボルである象徴的な鉄骨構造の塔",
+        "ルーブル美術館 - モナ・リザを擁する世界最大の美術館",
+        "ノートルダム大聖堂 - シテ島にある傑作ゴシック建築",
+        "シャンゼリゼ通り - ショッピングとダイニングで有名な大通り",
+        "モンマルトル - サクレクール寺院のある芸術地区"
+      ],
+      "quickFacts": {
+        "bestTime": "4月から6月、9月から10月",
+        "language": "フランス語",
+        "currency": "ユーロ (EUR)",
+        "timezone": "中央ヨーロッパ時間 (CET)"
+      },
+      "weather": {
+        "condition": "晴れ時々曇り"
+      },
+      "activities": {
+        "riverCruise": {
+          "name": "セーヌ川クルーズ",
+          "duration": "1時間",
+          "description": "象徴的な建造物を眺めながらのセーヌ川でのボートツアー"
+        },
+        "louvre": {
+          "name": "ルーブル美術館ツアー",
+          "duration": "3時間",
+          "description": "世界最大の美術館を優先入場でガイド付きツアー"
+        }
+      }
+    },
+    "tokyo": {
+      "highlights": [
+        "渋谷スクランブル交差点 - 世界で最も忙しい交差点",
+        "浅草寺 - 東京最古の仏教寺院",
+        "東京スカイツリー - 壮大な眺望を誇る日本一高い構造物",
+        "築地市場 - 世界的に有名な魚市場と食の聖地",
+        "原宿 - 若者文化とファッションの中心地"
+      ],
+      "quickFacts": {
+        "bestTime": "3月から5月、9月から11月",
+        "language": "日本語",
+        "currency": "日本円 (¥)",
+        "timezone": "日本標準時 (JST)"
+      },
+      "weather": {
+        "condition": "晴れ",
+        "humidity": "湿度"
+      },
+      "activities": [
+        {
+          "name": "寿司作り教室",
+          "duration": "3時間",
+          "description": "プロのシェフから本格的な寿司の作り方を学ぶ"
+        },
+        {
+          "name": "東京シティツアー",
+          "duration": "8時間",
+          "description": "主要な観光スポットや隠れた名所を巡る一日ツアー"
+        },
+        {
+          "name": "伝統的な茶道体験",
+          "duration": "1.5時間",
+          "description": "伝統的な環境で本格的な日本の茶道を体験"
+        },
+        {
+          "name": "ロボットレストランショー",
+          "duration": "1時間",
+          "description": "ロボットとネオンライトによるユニークなエンターテイメント体験"
+        }
+      ]
+    },
+    "newYork": {
+      "name": "ニューヨーク市, アメリカ",
+      "country": "アメリカ合衆国",
+      "description": "眠らない街、ニューヨーク市は、アート、文化、ファッション、金融の世界的なハブです。象徴的な超高層ビルから多様な地区まで、無限の可能性を秘めた比類のない都市体験を提供します。",
+      "highlights": [
+        "自由の女神 - 自由と民主主義の象徴",
+        "タイムズスクエア - 世界の交差点",
+        "セントラルパーク - マンハッタンの中心にある都会のオアシス",
+        "エンパイアステートビル - 象徴的なアールデコ様式の超高層ビル",
+        "ブロードウェイショー - 世界クラスの劇場とエンターテイメント"
+      ],
+      "quickFacts": {
+        "bestTime": "4月から6月、9月から11月",
+        "language": "英語",
+        "currency": "米ドル ($)",
+        "timezone": "東部標準時 (EST)"
+      },
+      "weather": {
+        "condition": "晴れ",
+        "humidity": "湿度"
+      },
+      "activities": [
+        {
+          "name": "ブロードウェイショー体験",
+          "duration": "3時間",
+          "description": "バックステージツアー付きのブロードウェイミュージカルのプレミアム席"
+        },
+        {
+          "name": "自由の女神ツアー",
+          "duration": "4時間",
+          "description": "リバティ島とエリス島へのフェリーツアー"
+        },
+        {
+          "name": "セントラルパーク自転車ツアー",
+          "duration": "2時間",
+          "description": "セントラルパークのハイライトを巡るガイド付き自転車ツアー"
+        },
+        {
+          "name": "NYCフードツアー",
+          "duration": "3時間",
+          "description": "NYCの各地区で多様な料理を味わう"
+        }
+      ]
+    },
+    "bali": {
+      "name": "バリ, インドネシア",
+      "country": "インドネシア",
+      "description": "素晴らしいビーチ、緑豊かな棚田、古代寺院、豊かな文化遺産を持つ熱帯の楽園。バリは、世界クラスのサーフィンからスピリチュアルなリトリートまで、リラクゼーションと冒険の完璧な融合を提供します。",
+      "highlights": [
+        "タナロット寺院 - 岩の上に建つ象徴的な海の寺院",
+        "ウブドの棚田 - ユネスコ世界遺産の棚田",
+        "バトゥール山 - 日の出ハイキングに最適な活火山",
+        "スミニャックビーチ - 素晴らしいサーフィンができるトレンディなビーチ",
+        "モンキーフォレストサンクチュアリ - 遊び心のあるマカクがいる聖なる森"
+      ],
+      "quickFacts": {
+        "bestTime": "4月から10月",
+        "language": "インドネシア語, バリ語",
+        "currency": "インドネシアルピア (IDR)",
+        "timezone": "中部インドネシア時間 (WITA)"
+      },
+      "weather": {
+        "condition": "晴れ",
+        "humidity": "湿度"
+      },
+      "activities": [
+        {
+          "name": "バトゥール山日の出ハイキング",
+          "duration": "5時間",
+          "description": "息をのむような火山の日の出を見るための山頂へのトレッキング"
+        },
+        {
+          "name": "文化体験ツアー",
+          "duration": "4時間",
+          "description": "伝統的な村を訪れ、バリの文化について学ぶ"
+        },
+        {
+          "name": "サーフィンレッスン",
+          "duration": "3時間",
+          "description": "スミニャックビーチでのプロのサーフィン指導"
+        },
+        {
+          "name": "スパリトリート",
+          "duration": "2時間",
+          "description": "伝統的なバリ式マッサージとウェルネストリートメント"
+        }
+      ]
+    }
   },
   "routePlanner": {
     "title": "ルートプランナー",

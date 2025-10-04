@@ -21,6 +21,7 @@ import {
   Upload,
   Image as ImageIcon
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface CreatePostModalProps {
   children: React.ReactNode;
@@ -35,6 +36,7 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
   userAvatar = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e",
   userName = "You"
 }) => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState('');
   const [location, setLocation] = useState('');
@@ -66,8 +68,8 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
     
     if (!content.trim()) {
       toast({
-        title: "Content required",
-        description: "Please write something to share with the community.",
+        title: t("createPost.errors.contentRequiredTitle"),
+        description: t("createPost.errors.contentRequiredDesc"),
         variant: "destructive"
       });
       return;
@@ -88,8 +90,8 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
         },
         content: content.trim(),
         image: imagePreview || undefined,
-        location: location.trim() || 'Unknown Location',
-        timestamp: 'Just now',
+        location: location.trim() || t("createPost.unknownLocation"),
+        timestamp: t("createPost.justNow"),
         likes: 0,
         comments: 0,
         shares: 0,
@@ -107,14 +109,14 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
       setIsOpen(false);
 
       toast({
-        title: "Post created!",
-        description: "Your travel experience has been shared with the community.",
+        title: t("createPost.success.title"),
+        description: t("createPost.success.description"),
       });
 
     } catch (error) {
       toast({
-        title: "Failed to create post",
-        description: "Something went wrong. Please try again.",
+        title: t("createPost.errors.failedTitle"),
+        description: t("createPost.errors.failedDesc"),
         variant: "destructive"
       });
     } finally {
@@ -137,10 +139,10 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Camera className="h-5 w-5" />
-            Share Your Travel Experience
+            {t("createPost.title")}
           </DialogTitle>
           <DialogDescription>
-            Tell the community about your latest adventure
+            {t("createPost.description")}
           </DialogDescription>
         </DialogHeader>
 
@@ -153,16 +155,16 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
             </Avatar>
             <div>
               <p className="font-semibold">{userName}</p>
-              <p className="text-sm text-muted-foreground">Sharing to community</p>
+              <p className="text-sm text-muted-foreground">{t("createPost.sharingToCommunity")}</p>
             </div>
           </div>
 
           {/* Content */}
           <div className="space-y-2">
-            <Label htmlFor="content">What's your travel story?</Label>
+            <Label htmlFor="content">{t("createPost.storyLabel")}</Label>
             <Textarea
               id="content"
-              placeholder="Share your amazing travel experience, tips, or discoveries..."
+              placeholder={t("createPost.storyPlaceholder")}
               value={content}
               onChange={(e) => setContent(e.target.value)}
               className="min-h-[120px] resize-none"
@@ -175,7 +177,7 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
 
           {/* Image Upload */}
           <div className="space-y-2">
-            <Label>Add Photo</Label>
+            <Label>{t("createPost.addPhoto")}</Label>
             {imagePreview ? (
               <div className="relative">
                 <img
@@ -202,7 +204,7 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
                     className="cursor-pointer inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
                   >
                     <Upload className="h-4 w-4" />
-                    Upload Image
+                    {t("createPost.uploadImage")}
                   </Label>
                   <Input
                     id="image-upload"
@@ -212,7 +214,7 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
                     className="hidden"
                   />
                   <p className="text-xs text-muted-foreground mt-2">
-                    PNG, JPG, GIF up to 10MB
+                    {t("createPost.fileInfo")}
                   </p>
                 </div>
               </div>
@@ -223,11 +225,11 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
           <div className="space-y-2">
             <Label htmlFor="location" className="flex items-center gap-2">
               <MapPin className="h-4 w-4" />
-              Location
+              {t("createPost.location")}
             </Label>
             <Input
               id="location"
-              placeholder="Where was this taken? (e.g., Paris, France)"
+              placeholder={t("createPost.locationPlaceholder")}
               value={location}
               onChange={(e) => setLocation(e.target.value)}
             />
@@ -237,16 +239,16 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
           <div className="space-y-2">
             <Label htmlFor="tags" className="flex items-center gap-2">
               <Hash className="h-4 w-4" />
-              Tags
+              {t("createPost.tags")}
             </Label>
             <Input
               id="tags"
-              placeholder="adventure, beach, foodie, culture (separate with commas)"
+              placeholder={t("createPost.tagsPlaceholder")}
               value={tags}
               onChange={(e) => setTags(e.target.value)}
             />
             <p className="text-xs text-muted-foreground">
-              Add relevant tags to help others discover your post
+              {t("createPost.tagsInfo")}
             </p>
           </div>
 
@@ -258,14 +260,14 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
               onClick={handleClose}
               disabled={isSubmitting}
             >
-              Cancel
+              {t("createPost.cancel")}
             </Button>
             <Button
               type="submit"
               className="bg-gradient-hero hover:opacity-90"
               disabled={isSubmitting || !content.trim()}
             >
-              {isSubmitting ? 'Sharing...' : 'Share Experience'}
+              {isSubmitting ? t("createPost.sharing") : t("createPost.share")}
             </Button>
           </div>
         </form>

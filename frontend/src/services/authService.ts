@@ -39,7 +39,17 @@ class AuthService {
       
       return response.data;
     } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Registration failed');
+        const status = error.response?.status;
+      const message = error.response?.data?.message;
+
+      if (status === 400 && /exists/i.test(message || '')) {
+        throw new Error('User already exists with this email');
+      }
+      if (status === 429) {
+        throw new Error('Too many registration attempts. Please try again later.');
+      }
+
+      throw new Error(message || 'Registration failed');
     }
   }
 
@@ -56,7 +66,17 @@ class AuthService {
       
       return response.data;
     } catch (error: any) {
-      throw new Error(error.response?.data?.message || 'Login failed');
+      const status = error.response?.status;
+      const message = error.response?.data?.message;
+
+      if (status === 401) {
+        throw new Error('Invalid email or password');
+      }
+      if (status === 429) {
+        throw new Error('Too many login attempts. Please try again later.');
+      }
+
+      throw new Error(message || 'Login failed');
     }
   }
 
@@ -69,8 +89,7 @@ class AuthService {
       console.error('Logout API call failed:', error);
     } finally {
       // Always clear local storage
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      this.clearUserData();
     }
   }
 

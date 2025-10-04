@@ -1,4 +1,12 @@
 {
+  "chatbot": {
+    "placeholder": "Écrivez votre message...",
+    "send": "Envoyer",
+    "welcome": "Bonjour ! Je suis votre assistant de voyage. Comment puis-je vous aider aujourd'hui ?",
+    "minimizeAria": "Réduire le chat",
+    "openAria": "Ouvrir le chat",
+    "title": "Assistant de Voyage"
+  },
   "nav": {
     "explore": "Explorer",
     "book": "Réserver",
@@ -6,9 +14,12 @@
     "search": "Rechercher",
     "payment": "Paiement"
   },
+  "header": {
+    "tagline": "Votre Voyage Commence Ici"
+  },
   "home": {
     "title": "Découvrez Votre Prochaine Aventure",
-    "subtitle": "Explorez des destinations incroyables, réservez des expériences uniques et connectez-vous avec des voyageurs du monde entier.",
+    "subtitle": "Explorez des destinations incroyables, réservez des expériences inoubliables et connectez-vous avec des voyageurs du monde entier.",
     "cta": "Commencez Votre Voyage",
     "quickActions": "Actions Rapides",
     "featured": "Destinations Vedettes",
@@ -22,8 +33,369 @@
     "title": "Explorer les Destinations",
     "subtitle": "Découvrez des lieux incroyables à travers le monde",
     "searchPlaceholder": "Rechercher des destinations...",
+    "searchPlaceholderEnhanced": "Rechercher des destinations (ex., Tokyo, Paris, Plage, Culture...)",
     "filters": "Filtres",
-    "sortBy": "Trier par"
+    "sortBy": "Trier par",
+    "searchingFor": "Recherche pour :",
+    "sortByOptions": {
+      "rating": "Mieux Notés",
+      "priceLow": "Prix : Croissant",
+      "priceHigh": "Prix : Décroissant",
+      "reviews": "Plus Commentés"
+    },
+    "browseByCategory": "Parcourir par Catégorie",
+    "filteredBySearch": "Filtré par recherche",
+    "allDestinations": "Toutes les Destinations",
+    "destinations": "Destinations",
+    "destination": "Destination",
+    "found": "trouvé",
+    "place": "lieu",
+    "places": "lieux",
+    "review": "avis",
+    "reviews": "avis",
+    "perPerson": "par personne",
+    "places_one": "{{count}} lieu",
+    "places_other": "{{count}} lieux",
+    "reviews_one": "{{count}} avis",
+    "reviews_other": "{{count}} avis",
+    "destinationsFound_one": "{{count}} destination trouvée",
+    "destinationsFound_other": "{{count}} destinations trouvées",
+    "noDestinationsFound": "Aucune destination trouvée correspondant à vos critères.",
+    "clearFilters": "Effacer les Filtres",
+    "exploreTools": "Outils d'Exploration",
+    "categories": {
+      "all": "Tous",
+      "adventure": "Aventure",
+      "beach": "Plage",
+      "culture": "Culture",
+      "food": "Gastronomie",
+      "nature": "Nature",
+      "city": "Ville"
+    },
+    "destinationsData": {
+      "paris": {
+        "name": "Paris, France",
+        "description": "La Ville Lumière vous attend avec ses monuments emblématiques et son atmosphère romantique."
+      },
+      "tokyo": {
+        "name": "Tokyo, Japon",
+        "description": "Découvrez le mélange parfait entre culture traditionnelle et innovation moderne."
+      },
+      "newYork": {
+        "name": "New York, États-Unis",
+        "description": "La ville qui ne dort jamais offre des possibilités et expériences infinies."
+      },
+      "bali": {
+        "name": "Bali, Indonésie",
+        "description": "Paradis tropical avec des plages magnifiques et un riche patrimoine culturel."
+      },
+      "swissAlps": {
+        "name": "Alpes Suisses, Suisse",
+        "description": "Vues montagneuses à couper le souffle et aventures de ski de classe mondiale."
+      },
+      "tuscany": {
+        "name": "Toscane, Italie",
+        "description": "Collines ondulantes, vignobles et cuisine italienne authentique."
+      },
+      "costaRica": {
+        "name": "Costa Rica",
+        "description": "Riche biodiversité et paysages naturels époustouflants."
+      },
+      "santorini": {
+        "name": "Santorin, Grèce",
+        "description": "Bâtiments blancs emblématiques et couchers de soleil spectaculaires."
+      },
+      "goa": {
+        "name": "Goa, Inde",
+        "description": "Belles plages, architecture portugaise et vie nocturne animée dans le paradis côtier de l'Inde."
+      },
+      "dubai": {
+        "name": "Dubaï, EAU",
+        "description": "Shopping de luxe, architecture ultramoderne et aventures dans le désert au Moyen-Orient."
+      },
+      "iceland": {
+        "name": "Islande",
+        "description": "Terre de feu et de glace avec des cascades époustouflantes, des geysers et des aurores boréales."
+      },
+      "barcelona": {
+        "name": "Barcelone, Espagne",
+        "description": "Chefs-d'œuvre architecturaux de Gaudí, culture vibrante et plages méditerranéennes."
+      }
+    },
+    "tools": {
+      "routePlanner": {
+        "title": "Planificateur d'Itinéraire",
+        "description": "Planifiez votre voyage parfait avec notre planificateur intelligent d'itinéraires",
+        "cta": "Commencer à Planifier"
+      },
+      "destinationFinder": {
+        "title": "Chercheur de Destinations",
+        "description": "Découvrez des joyaux cachés et des attractions populaires dans le monde entier",
+        "cta": "Explorer Maintenant"
+      }
+    }
+  },
+  "destinationDetail": {
+    "loading": "Chargement de la destination...",
+    "backToExplore": "Retour à Explorer",
+    "about": {
+      "title": "À propos de cette destination"
+    },
+    "highlights": {
+      "title": "Points Forts"
+    },
+    "quickFacts": {
+      "title": "Infos Pratiques",
+      "bestTime": "Meilleure Période pour Visiter",
+      "language": "Langue",
+      "currency": "Monnaie",
+      "timezone": "Fuseau Horaire"
+    },
+    "weather": {
+      "title": "Météo Actuelle",
+      "humidity": "Humidité"
+    },
+    "activities": {
+      "title": "Activités Populaires",
+      "book": "Réserver l'Activité",
+      "booked": "Réservé"
+    },
+    "cta": {
+      "title": "Prêt à explorer ?",
+      "subtitle": "Réservez votre voyage à {{name}} aujourd'hui !",
+      "bookNow": "Réserver Maintenant - {{price}}$"
+    },
+    "notFound": {
+      "title": "Destination Non Trouvée",
+      "description": "La destination que vous recherchez n'existe pas.",
+      "cta": "Retour à Explorer"
+    },
+    "activityBooked": "Activité Réservée !",
+    "activityBookedDescription": "{{name}} réservé avec succès pour {{price}}$",
+    "activityAlreadyBooked": "Déjà Réservé",
+    "activityAlreadyBookedDescription": "Vous avez déjà réservé {{name}}",
+    "bookingFailed": "Échec de la Réservation",
+    "bookingFailedDescription": "Échec de la réservation de l'activité. Veuillez réessayer."
+  },
+  "destinations": {
+    "paris": {
+      "name": "Paris",
+      "country": "France",
+      "description": "La Ville Lumière vous attend avec ses monuments emblématiques, ses musées de classe mondiale, ses cafés charmants et son atmosphère romantique. Paris mélange parfaitement l'architecture historique avec la sophistication moderne, offrant aux visiteurs une expérience inoubliable remplie d'art, de culture et de délices culinaires.",
+      "highlights": [
+        "Tour Eiffel - Tour en treillis de fer emblématique et symbole de Paris",
+        "Musée du Louvre - Le plus grand musée d'art au monde avec la Joconde",
+        "Cathédrale Notre-Dame - Chef-d'œuvre gothique sur l'Île de la Cité",
+        "Champs-Élysées - Avenue célèbre pour le shopping et la restauration",
+        "Montmartre - Quartier artistique avec la Basilique du Sacré-Cœur"
+      ],
+      "quickFacts": {
+        "bestTime": "Avril à Juin, Septembre à Octobre",
+        "language": "Français",
+        "currency": "Euro (EUR)",
+        "timezone": "Heure d'Europe Centrale (CET)"
+      },
+      "weather": {
+        "condition": "Partiellement Nuageux"
+      },
+      "activities": [
+        {
+          "name": "Croisière sur la Seine",
+          "duration": "1 heure",
+          "description": "Croisière romantique en bateau sur la Seine avec vues sur les monuments emblématiques"
+        },
+        {
+          "name": "Visite du Musée du Louvre",
+          "duration": "3 heures",
+          "description": "Visite guidée coupe-file du musée le plus célèbre au monde"
+        },
+        {
+          "name": "Expérience Tour Eiffel",
+          "duration": "2 heures",
+          "description": "Visitez tous les niveaux de la Tour Eiffel avec des vues imprenables sur la ville"
+        },
+        {
+          "name": "Visite à Pied de Montmartre",
+          "duration": "2.5 heures",
+          "description": "Explorez le cœur artistique de Paris avec un guide local"
+        }
+      ]
+    },
+    "tokyo": {
+      "name": "Tokyo, Japon",
+      "country": "Japon",
+      "description": "Découvrez le mélange parfait entre culture traditionnelle et innovation moderne dans la capitale animée du Japon. Tokyo offre tout, des temples anciens et jardins sereins à la technologie de pointe, une cuisine incroyable et une vie nocturne vibrante.",
+      "highlights": [
+        "Temple Senso-ji - Le plus ancien temple bouddhiste de Tokyo à Asakusa",
+        "Carrefour de Shibuya - Le passage piéton le plus fréquenté au monde",
+        "Tokyo Skytree - La plus haute structure du Japon avec des vues panoramiques",
+        "Marché Extérieur de Tsukiji - Paradis des fruits de mer frais et de la street food",
+        "Sanctuaire Meiji - Sanctuaire shinto paisible au cœur de la ville"
+      ],
+      "quickFacts": {
+        "bestTime": "Mars à Mai, Septembre à Novembre",
+        "language": "Japonais",
+        "currency": "Yen Japonais (JPY)",
+        "timezone": "Heure Standard du Japon (JST)"
+      },
+      "weather": {
+        "condition": "Dégagé"
+      },
+      "activities": [
+        {
+          "name": "Cours de Préparation de Sushi",
+          "duration": "3 heures",
+          "description": "Apprenez à faire des sushis authentiques avec un chef professionnel"
+        },
+        {
+          "name": "Visite de la Ville de Tokyo",
+          "duration": "8 heures",
+          "description": "Visite d'une journée complète couvrant les principales attractions et joyaux cachés"
+        },
+        {
+          "name": "Cérémonie du Thé Traditionnelle",
+          "duration": "1.5 heures",
+          "description": "Découvrez l'authentique cérémonie du thé japonaise dans un cadre traditionnel"
+        },
+        {
+          "name": "Spectacle du Restaurant Robot",
+          "duration": "1 heure",
+          "description": "Expérience de divertissement unique avec des robots et des lumières néon"
+        }
+      ]
+    },
+    "newYork": {
+      "name": "New York, États-Unis",
+      "country": "États-Unis",
+      "description": "New York, la ville qui ne dort jamais, est un centre mondial de l'art, de la culture, de la mode et de la finance. Des gratte-ciel emblématiques aux quartiers diversifiés, elle offre une expérience urbaine inégalée avec des possibilités infinies.",
+      "highlights": [
+        "Statue de la Liberté - Symbole de liberté et de démocratie",
+        "Times Square - Le carrefour du monde",
+        "Central Park - Oasis urbaine au cœur de Manhattan",
+        "Empire State Building - Gratte-ciel Art déco emblématique",
+        "Spectacles de Broadway - Théâtre et divertissement de classe mondiale"
+      ],
+      "quickFacts": {
+        "bestTime": "Avril à juin, septembre à novembre",
+        "language": "Anglais",
+        "currency": "Dollar américain ($)",
+        "timezone": "Heure de l'Est (EST)"
+      },
+      "weather": {
+        "condition": "Ensoleillé",
+        "humidity": "Humidité"
+      },
+      "activities": [
+        {
+          "name": "Expérience Broadway",
+          "duration": "3 heures",
+          "description": "Places premium pour une comédie musicale de Broadway avec visite des coulisses"
+        },
+        {
+          "name": "Visite de la Statue de la Liberté",
+          "duration": "4 heures",
+          "description": "Visite en ferry de Liberty Island et Ellis Island"
+        },
+        {
+          "name": "Tour à vélo de Central Park",
+          "duration": "2 heures",
+          "description": "Visite guidée à vélo des points forts de Central Park"
+        },
+        {
+          "name": "Tour gastronomique de NYC",
+          "duration": "3 heures",
+          "description": "Dégustez diverses cuisines dans les quartiers de NYC"
+        }
+      ]
+    },
+    "bali": {
+      "name": "Bali, Indonésie",
+      "country": "Indonésie",
+      "description": "Paradis tropical avec des plages magnifiques, des rizières en terrasses luxuriantes, des temples anciens et un riche patrimoine culturel. Bali offre le mélange parfait de détente et d'aventure, du surf de classe mondiale aux retraites spirituelles.",
+      "highlights": [
+        "Temple de Tanah Lot - Temple marin emblématique sur une formation rocheuse",
+        "Rizières en terrasses d'Ubud - Rizières classées au patrimoine mondial de l'UNESCO",
+        "Mont Batur - Volcan actif parfait pour les randonnées au lever du soleil",
+        "Plage de Seminyak - Plage branchée avec un excellent surf",
+        "Sanctuaire de la forêt des singes - Forêt sacrée avec des macaques joueurs"
+      ],
+      "quickFacts": {
+        "bestTime": "Avril à octobre",
+        "language": "Indonésien, balinais",
+        "currency": "Roupie indonésienne (IDR)",
+        "timezone": "Heure du centre de l'Indonésie (WITA)"
+      },
+      "weather": {
+        "condition": "Ensoleillé",
+        "humidity": "Humidité"
+      },
+      "activities": [
+        {
+          "name": "Randonnée au lever du soleil sur le mont Batur",
+          "duration": "5 heures",
+          "description": "Trek jusqu'au sommet pour des vues volcaniques spectaculaires au lever du soleil"
+        },
+        {
+          "name": "Tour d'expérience culturelle",
+          "duration": "4 heures",
+          "description": "Visitez des villages traditionnels et découvrez la culture balinaise"
+        },
+        {
+          "name": "Leçon de surf",
+          "duration": "3 heures",
+          "description": "Instruction de surf professionnelle à la plage de Seminyak"
+        },
+        {
+          "name": "Retraite spa",
+          "duration": "2 heures",
+          "description": "Massage balinais traditionnel et soins de bien-être"
+        }
+      ]
+    },
+    "swissAlps": {
+      "name": "Alpes suisses, Suisse",
+      "country": "Suisse",
+      "description": "Des vues imprenables sur les montagnes et des aventures de ski de classe mondiale vous attendent dans les Alpes suisses. Découvrez des paysages alpins immaculés, de charmants villages de montagne et des activités de plein air toute l'année.",
+      "highlights": [
+        "Cervin - Pic emblématique en forme de pyramide",
+        "Jungfraujoch - Sommet de l'Europe avec glaciers et neige",
+        "Lac Léman - Magnifique lac alpin avec des vignobles",
+        "Village de Zermatt - Station de montagne sans voiture",
+        "Chutes du Rhin - La cascade la plus puissante d'Europe"
+      ],
+      "quickFacts": {
+        "bestTime": "Décembre à mars (ski), juin à septembre (randonnée)",
+        "language": "Allemand, Français, Italien",
+        "currency": "Franc suisse (CHF)",
+        "timezone": "Heure d'Europe centrale (CET)"
+      },
+      "weather": {
+        "condition": "Neige",
+        "humidity": "Humidité"
+      },
+      "activities": [
+        {
+          "name": "Visite du glacier du Jungfraujoch",
+          "duration": "8 heures",
+          "description": "Voyage en train jusqu'à la plus haute gare d'Europe"
+        },
+        {
+          "name": "Aventure de ski",
+          "duration": "6 heures",
+          "description": "Cours de ski professionnels et descentes en montagne"
+        },
+        {
+          "name": "Randonnée alpine",
+          "duration": "5 heures",
+          "description": "Randonnées panoramiques à travers les sentiers de montagne suisses"
+        },
+        {
+          "name": "Cours de fabrication de chocolat",
+          "duration": "3 heures",
+          "description": "Apprenez à faire du chocolat suisse dans une chocolaterie traditionnelle"
+        }
+      ]
+    }
   },
   "book": {
     "title": "Réservez Votre Voyage",
@@ -41,11 +413,11 @@
   "auth": {
     "signIn": "Se Connecter",
     "signUp": "Créer un Compte",
-    "email": "Email",
+    "email": "Adresse E-mail",
     "password": "Mot de Passe",
     "confirmPassword": "Confirmer le Mot de Passe",
     "firstName": "Prénom",
-    "lastName": "Nom",
+    "lastName": "Nom de Famille",
     "backToHome": "← Retour à l'accueil",
     "alreadyHaveAccount": "Vous avez déjà un compte ?",
     "signInHere": "Connectez-vous ici",
@@ -53,17 +425,38 @@
     "registerHere": "Inscrivez-vous ici",
     "forgotPassword": "Mot de passe oublié ?",
     "rememberMe": "Se souvenir de moi",
-    "welcomeBack": "Bienvenue sur TravelHub",
+    "welcomeBack": "Bon retour sur TravelHub",
     "createAccountSubtitle": "Rejoignez TravelHub et commencez votre voyage",
     "acceptTerms": "J'accepte les",
     "termsAndConditions": "termes et conditions",
-    "signingIn": "Connexion...",
+    "signingIn": "Connexion en cours...",
     "creatingAccount": "Création du compte...",
     "signInSuccess": "Bon retour !",
+    "signInSuccessDesc": "Vous vous êtes connecté avec succès.",
+    "signInFailed": "Échec de la Connexion",
+    "signInFailedDesc": "E-mail ou mot de passe invalide. Veuillez réessayer.",
     "accountCreated": "Compte créé !",
     "accountCreatedDesc": "Bienvenue sur TravelHub. Vous pouvez maintenant vous connecter.",
+    "registrationFailed": "Échec de l'Inscription",
+    "registrationFailedDesc": "Échec de la création du compte. Veuillez réessayer.",
     "passwordsNoMatch": "Les mots de passe ne correspondent pas.",
-    "acceptTermsError": "Veuillez accepter les termes et conditions."
+    "acceptTermsError": "Veuillez accepter les termes et conditions.",
+    "emailPlaceholder": "jean@exemple.com",
+    "firstNamePlaceholder": "Jean",
+    "lastNamePlaceholder": "Dupont",
+    "errors": {
+      "emailRequired": "L'adresse e-mail est requise",
+      "emailInvalid": "Veuillez saisir une adresse e-mail valide",
+      "passwordRequired": "Le mot de passe est requis",
+      "passwordLength": "Le mot de passe doit contenir au moins 6 caractères",
+      "passwordComplexity": "Le mot de passe doit contenir au moins une lettre majuscule, une minuscule et un chiffre",
+      "confirmPasswordRequired": "Veuillez confirmer votre mot de passe",
+      "firstNameRequired": "Le prénom est requis",
+      "firstNameLength": "Le prénom doit contenir au moins 2 caractères",
+      "lastNameRequired": "Le nom de famille est requis",
+      "lastNameLength": "Le nom de famille doit contenir au moins 2 caractères",
+      "termsRequired": "Vous devez accepter les termes et conditions"
+    }
   },
   "profile": {
     "settings": "Paramètres du Profil",
@@ -74,33 +467,33 @@
     "manageAccount": "Gérez les paramètres et préférences de votre compte",
     "updatePersonalDetails": "Mettez à jour vos détails personnels et informations de profil",
     "firstName": "Prénom",
-    "lastName": "Nom",
-    "email": "Adresse Email",
+    "lastName": "Nom de Famille",
+    "email": "Adresse E-mail",
     "phone": "Numéro de Téléphone",
     "location": "Localisation",
     "bio": "Biographie",
     "bioPlaceholder": "Parlez-nous de vous...",
-    "saveChanges": "Sauvegarder les Modifications",
+    "saveChanges": "Enregistrer les Modifications",
     "notificationPreferences": "Préférences de Notification",
     "chooseNotifications": "Choisissez comment vous souhaitez être notifié des mises à jour",
-    "emailNotifications": "Notifications Email",
-    "emailNotificationsDesc": "Recevoir des notifications par email",
+    "emailNotifications": "Notifications par E-mail",
+    "emailNotificationsDesc": "Recevoir des notifications par e-mail",
     "pushNotifications": "Notifications Push",
     "pushNotificationsDesc": "Recevoir des notifications push dans votre navigateur",
     "travelUpdates": "Mises à Jour de Voyage",
     "travelUpdatesDesc": "Être notifié des retards de vol, changements de porte, etc.",
     "marketingCommunications": "Communications Marketing",
     "marketingCommunicationsDesc": "Recevoir des offres promotionnelles et des offres de voyage",
-    "savePreferences": "Sauvegarder les Préférences",
+    "savePreferences": "Enregistrer les Préférences",
     "privacySettings": "Paramètres de Confidentialité",
-    "controlPrivacy": "Contrôlez qui peut voir vos informations et activités",
+    "controlPrivacy": "Contrôlez qui peut voir vos informations et votre activité",
     "publicProfile": "Profil Public",
     "publicProfileDesc": "Rendre votre profil visible aux autres utilisateurs",
     "showTravelHistory": "Afficher l'Historique de Voyage",
     "showTravelHistoryDesc": "Afficher vos voyages passés sur votre profil",
     "allowMessages": "Autoriser les Messages",
     "allowMessagesDesc": "Permettre aux autres utilisateurs de vous envoyer des messages directs",
-    "saveSettings": "Sauvegarder les Paramètres",
+    "saveSettings": "Enregistrer les Paramètres",
     "billingSubscription": "Facturation et Abonnement",
     "manageBilling": "Gérez votre abonnement et informations de facturation",
     "freePlan": "Plan Gratuit",
@@ -133,9 +526,9 @@
     "taxes": "Taxes",
     "total": "Total",
     "processPayment": "Traiter le Paiement",
-    "processing": "Traitement...",
+    "processing": "Traitement en cours...",
     "paymentSuccess": "Paiement Réussi !",
-    "paymentFailed": "Paiement Échoué",
+    "paymentFailed": "Échec du Paiement",
     "securePayment": "Paiement Sécurisé",
     "encryptedConnection": "Vos informations de paiement sont cryptées et sécurisées"
   },
@@ -147,19 +540,15 @@
   },
   "categories": {
     "title": "Parcourir par Catégorie",
-    "subtitle": "Découvrez des expériences de voyage organisées selon vos intérêts"
-  },
-  "destinations": {
-    "title": "Destinations Populaires",
-    "subtitle": "Explorez les lieux les plus incroyables du monde choisis par les voyageurs"
+    "subtitle": "Découvrez des expériences de voyage organisées par vos intérêts"
   },
   "routePlanner": {
     "title": "Planificateur d'Itinéraire",
     "subtitle": "Planifiez votre voyage parfait avec plusieurs arrêts et modes de transport",
     "planYourRoute": "Planifiez Votre Itinéraire",
-    "planDescription": "Entrez votre point de départ, destination et tous les arrêts en cours de route",
+    "planDescription": "Entrez votre point de départ, destination et tous les arrêts en chemin",
     "routeName": "Nom de l'Itinéraire",
-    "routeNamePlaceholder": "Mon Voyage Fantastique",
+    "routeNamePlaceholder": "Mon Voyage Incroyable",
     "startLocation": "Lieu de Départ",
     "startLocationPlaceholder": "Entrez la ville ou l'adresse de départ",
     "destination": "Destination",
@@ -176,35 +565,38 @@
     "estimatedTime": "Temps Estimé",
     "distance": "Distance",
     "routeSummary": "Résumé de l'Itinéraire",
-    "saveRoute": "Sauvegarder l'Itinéraire",
-    "saving": "Sauvegarde...",
+    "saveRoute": "Enregistrer l'Itinéraire",
+    "saving": "Enregistrement...",
     "routeMap": "Carte de l'Itinéraire",
     "mapWillShow": "La carte interactive affichera votre itinéraire planifié",
-    "mapReady": "Carte prête - cliquez sur 'Planifier Mon Itinéraire' pour voir votre route",
+    "mapReady": "La carte est prête - cliquez sur 'Planifier Mon Itinéraire' pour voir votre itinéraire",
     "planRouteToSeeMap": "Entrez le lieu de départ et la destination pour voir la carte interactive",
-    "savedRoutes": "Itinéraires Sauvegardés",
+    "savedRoutes": "Itinéraires Enregistrés",
     "tips": "Conseils de Planification",
     "tip1": "Ajoutez jusqu'à 5 arrêts pour créer un itinéraire détaillé",
     "tip2": "Différents modes de transport montrent différents itinéraires et temps",
-    "tip3": "Sauvegardez vos itinéraires pour y accéder plus tard depuis n'importe quel appareil",
-    "tip4": "Vos données de formulaire sont automatiquement sauvegardées pendant que vous tapez",
-    "tip5": "Regardez la carte se mettre à jour en temps réel lorsque vous ajoutez des lieux",
+    "tip3": "Enregistrez vos itinéraires pour y accéder plus tard depuis n'importe quel appareil",
+    "tip4": "Les données de votre formulaire sont automatiquement sauvegardées pendant que vous tapez",
+    "tip5": "Regardez la carte se mettre à jour en temps réel pendant que vous ajoutez des lieux",
     "reset": "Réinitialiser",
     "formReset": "Le formulaire a été réinitialisé avec succès",
-    "dataRestored": "Vos données d'itinéraire précédentes ont été restaurées",
+    "dataRestored": "Les données de votre itinéraire précédent ont été restaurées",
     "fillRequiredFields": "Veuillez remplir le lieu de départ et la destination",
     "routePlanned": "Itinéraire planifié avec succès !",
     "planningError": "Erreur lors de la planification de l'itinéraire. Veuillez réessayer.",
-    "loginRequired": "Veuillez vous connecter pour sauvegarder les itinéraires",
+    "loginRequired": "Veuillez vous connecter pour enregistrer les itinéraires",
     "enterRouteName": "Veuillez entrer un nom pour votre itinéraire",
-    "routeSaved": "Itinéraire sauvegardé avec succès !",
-    "savingError": "Erreur lors de la sauvegarde de l'itinéraire. Veuillez réessayer.",
+    "routeSaved": "Itinéraire enregistré avec succès !",
+    "savingError": "Erreur lors de l'enregistrement de l'itinéraire. Veuillez réessayer.",
     "routeLoaded": "Itinéraire chargé avec succès !"
+  },
+  "routes": {
+    "destinations": "destinations"
   },
   "common": {
     "loading": "Chargement...",
-    "save": "Sauvegarder",
-    "saving": "Sauvegarde...",
+    "save": "Enregistrer",
+    "saving": "Enregistrement...",
     "cancel": "Annuler",
     "edit": "Modifier",
     "delete": "Supprimer",
@@ -215,6 +607,7 @@
     "submit": "Soumettre",
     "confirm": "Confirmer",
     "explore": "Explorer",
-    "bookNow": "Réserver Maintenant"
+    "bookNow": "Réserver Maintenant",
+    "clearAll": "Tout effacer"
   }
 }

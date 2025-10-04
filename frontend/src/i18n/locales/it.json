@@ -51,5 +51,46 @@
     "edit": "Modifica",
     "delete": "Elimina",
     "close": "Chiudi"
+    },
+  "destinations": {
+    "paris": {
+      "name": "Parigi",
+      "country": "Francia",
+      "description": "La Città della Luce ti aspetta con i suoi monumenti iconici, musei di livello mondiale, caffè affascinanti e atmosfera romantica. Parigi fonde perfettamente l'architettura storica con la sofisticatezza moderna, offrendo ai visitatori un'esperienza indimenticabile ricca di arte, cultura e delizie culinarie.",
+      "highlights": [
+        "Torre Eiffel - Iconica torre in ferro battuto e simbolo di Parigi",
+        "Museo del Louvre - Il più grande museo d'arte del mondo con la Gioconda",
+        "Cattedrale di Notre-Dame - Capolavoro gotico sull'Île de la Cité",
+        "Champs-Élysées - Famoso viale per lo shopping e la ristorazione",
+        "Montmartre - Quartiere artistico con la Basilica del Sacré-Cœur"
+      ],
+      "quickFacts": {
+        "bestTime": "Da aprile a giugno, da settembre a ottobre",
+        "language": "Francese",
+        "currency": "Euro (EUR)",
+        "timezone": "Ora dell'Europa Centrale (CET)"
+      },
+      "weather": {
+        "condition": "Parzialmente nuvoloso"
+      }
+    },
+    "tuscany": {
+      "name": "Toscana",
+      "country": "Italia",
+      "description": "Colline ondulate, vigneti e autentica cucina italiana definiscono questa incantevole regione. La Toscana offre arte rinascimentale, città medievali, vini di fama mondiale e alcuni dei paesaggi più belli del mondo.",
+      "highlights": [
+        "Duomo di Firenze - Spettacolare architettura rinascimentale",
+        "Regione del Chianti - Vigneti e degustazioni di fama mondiale",
+        "Torre pendente di Pisa - Iconico campanile inclinato",
+        "Centro storico di Siena - Città medievale con architettura gotica",
+        "Val d'Orcia - Paesaggio Patrimonio dell'UNESCO"
+      ],
+      "quickFacts": {
+        "bestTime": "Da aprile a giugno, da settembre a ottobre",
+        "language": "Italiano",
+        "currency": "Euro (EUR)",
+        "timezone": "Ora dell'Europa Centrale (CET)"
+      }
+    }
   }
 }

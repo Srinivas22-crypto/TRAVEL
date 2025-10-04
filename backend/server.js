@@ -1,10 +1,13 @@
+import dotenv from 'dotenv';
+// Load environment variables before other imports
+dotenv.config();
+
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
-import dotenv from 'dotenv';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
@@ -22,6 +25,7 @@ import bookingRoutes from './routes/bookings.js';
 import postRoutes from './routes/posts.js';
 import paymentRoutes from './routes/payments.js';
 import tripRoutes from './routes/trips.js';
+import chatRoutes from './routes/chat.js';
 
 // Load environment variables
 dotenv.config();
@@ -117,6 +121,7 @@ app.get('/health', (req, res) => {
 
 // API routes
 app.use('/api/auth', authLimiter, authRoutes);
+app.use('/api/chat', chatRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/destinations', destinationRoutes);
 app.use('/api/flights', flightRoutes);

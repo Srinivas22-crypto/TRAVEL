@@ -41,6 +41,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import type { AccountStats } from '@/services/authService';
 
 const ProfileSettings = () => {
@@ -88,6 +89,9 @@ const ProfileSettings = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showDeletePassword, setShowDeletePassword] = useState(false);
   const [isLoadingStats, setIsLoadingStats] = useState(false);
+
+  // Responsive Settings Navigation
+  const [settingsTab, setSettingsTab] = useState<'personal' | 'notifications' | 'privacy' | 'account' | 'billing'>('personal');
 
   // Notification Settings
   const [notifications, setNotifications] = useState({
@@ -216,7 +220,7 @@ const ProfileSettings = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 text-center md:text-left">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold mb-4 bg-gradient-hero bg-clip-text text-transparent">
@@ -227,8 +231,24 @@ const ProfileSettings = () => {
             </p>
           </div>
 
-          <Tabs defaultValue="personal" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-5">
+          {/* Mobile dropdown for Settings Sections */}
+          <div className="md:hidden mb-4">
+            <Select value={settingsTab} onValueChange={(v) => setSettingsTab(v as any)}>
+              <SelectTrigger className="w-full bg-card border-border rounded-md">
+                <SelectValue placeholder="Settings Sections" />
+              </SelectTrigger>
+              <SelectContent className="bg-card border-border text-sm">
+                <SelectItem value="personal">Personal Information</SelectItem>
+                <SelectItem value="notifications">Notifications</SelectItem>
+                <SelectItem value="privacy">Privacy</SelectItem>
+                <SelectItem value="account">Account</SelectItem>
+                <SelectItem value="billing">Billing</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <Tabs value={settingsTab} onValueChange={(v) => setSettingsTab(v as any)} className="space-y-6">
+            <TabsList className="hidden md:grid w-full grid-cols-5">
               <TabsTrigger value="personal" className="flex items-center gap-2">
                 <User className="h-4 w-4" />
                 {t('profile.personalInfo')}

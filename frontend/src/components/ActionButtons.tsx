@@ -18,6 +18,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
+import { useTranslation } from 'react-i18next';
 
 interface ActionButtonsProps {
   itemId?: number | string;
@@ -45,14 +46,13 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
   const [isFavorited, setIsFavorited] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const { toast } = useToast();
+  const { t } = useTranslation();
 
-  // Get current page URL if not provided
   const currentUrl = itemUrl || window.location.href;
 
   const handleFavoriteToggle = () => {
     setIsFavorited(!isFavorited);
     
-    // Store in localStorage for persistence
     const favorites = JSON.parse(localStorage.getItem('travel_favorites') || '[]');
     
     if (!isFavorited) {
@@ -65,8 +65,8 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
       localStorage.setItem('travel_favorites', JSON.stringify(favorites));
       
       toast({
-        title: "❤️ Added to Favourites",
-        description: `${itemTitle} has been added to your favourites`,
+        title: t("favourites.addedTitle"),
+        description: t("favourites.addedDescription", { itemTitle }),
         duration: 3000,
       });
     } else {
@@ -74,8 +74,8 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
       localStorage.setItem('travel_favorites', JSON.stringify(updatedFavorites));
       
       toast({
-        title: "💔 Removed from Favourites",
-        description: `${itemTitle} has been removed from your favourites`,
+        title: t("favourites.removedTitle"),
+        description: t("favourites.removedDescription", { itemTitle }),
         duration: 3000,
       });
     }
@@ -85,10 +85,10 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
     setIsBookmarked(!isBookmarked);
     
     toast({
-      title: isBookmarked ? "Bookmark Removed" : "Bookmarked!",
+      title: isBookmarked ? t("bookmark.removedTitle") : t("bookmark.addedTitle"),
       description: isBookmarked 
-        ? "Removed from your bookmarks" 
-        : "Saved to your bookmarks",
+        ? t("bookmark.removedDescription")
+        : t("bookmark.addedDescription"),
       duration: 2000,
     });
   };
@@ -97,12 +97,11 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
     try {
       await navigator.clipboard.writeText(currentUrl);
       toast({
-        title: "🔗 Link copied!",
-        description: "The link has been copied to your clipboard",
+        title: t("share.linkCopiedTitle"),
+        description: t("share.linkCopiedDescription"),
         duration: 2000,
       });
     } catch (error) {
-      // Fallback for older browsers
       const textArea = document.createElement('textarea');
       textArea.value = currentUrl;
       document.body.appendChild(textArea);
@@ -111,8 +110,8 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
       document.body.removeChild(textArea);
       
       toast({
-        title: "🔗 Link copied!",
-        description: "The link has been copied to your clipboard",
+        title: t("share.linkCopiedTitle"),
+        description: t("share.linkCopiedDescription"),
         duration: 2000,
       });
     }
@@ -132,11 +131,10 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
         shareUrl = `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`;
         break;
       case 'instagram':
-        // Instagram doesn't support direct URL sharing, so we'll copy the link
         copyToClipboard();
         toast({
-          title: "Instagram Sharing",
-          description: "Link copied! You can paste it in your Instagram story or bio",
+          title: t("share.instagramTitle"),
+          description: t("share.instagramDescription"),
           duration: 3000,
         });
         return;
@@ -147,13 +145,12 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
     window.open(shareUrl, '_blank', 'width=600,height=400');
     
     toast({
-      title: "Shared!",
-      description: `Shared to ${platform.charAt(0).toUpperCase() + platform.slice(1)}`,
+      title: t("share.sharedTitle"),
+      description: t("share.sharedDescription", { platform }),
       duration: 2000,
     });
   };
 
-  // Check localStorage on component mount
   React.useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem('travel_favorites') || '[]');
     const isFav = favorites.some((fav: any) => fav.id === itemId);
@@ -174,7 +171,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
           }`}
         >
           <Heart className={`h-4 w-4 mr-2 ${isFavorited ? 'fill-current' : ''}`} />
-          {isFavorited ? 'Favourited' : 'Add to Favourites'}
+          {isFavorited ? t("favourites.favourited") : t("favourites.add")}
         </Button>
       )}
 
@@ -187,31 +184,31 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
               className="hover:text-blue-500 hover:border-blue-500 transition-colors"
             >
               <Share2 className="h-4 w-4 mr-2" />
-              Share
+              {t("share.shareButton")}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
             <DropdownMenuItem onClick={copyToClipboard}>
               <Copy className="h-4 w-4 mr-2" />
-              Copy Link
+              {t("share.copyLink")}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => shareToSocial('facebook')}>
               <Facebook className="h-4 w-4 mr-2" />
-              Share on Facebook
+              {t("share.facebook")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => shareToSocial('twitter')}>
               <Twitter className="h-4 w-4 mr-2" />
-              Share on Twitter
+              {t("share.twitter")}
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => shareToSocial('instagram')}>
               <Instagram className="h-4 w-4 mr-2" />
-              Share on Instagram
+              {t("share.instagram")}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => window.open(currentUrl, '_blank')}>
               <ExternalLink className="h-4 w-4 mr-2" />
-              Open in New Tab
+              {t("share.openInNewTab")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -229,7 +226,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({
           }`}
         >
           <Bookmark className={`h-4 w-4 mr-2 ${isBookmarked ? 'fill-current' : ''}`} />
-          {isBookmarked ? 'Bookmarked' : 'Bookmark'}
+          {isBookmarked ? t("bookmark.bookmarked") : t("bookmark.add")}
         </Button>
       )}
     </div>

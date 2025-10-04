@@ -12,20 +12,22 @@ const PopularDestinations = () => {
   const navigate = useNavigate();
 
   const handleDestinationClick = (destination: any) => {
-    // Convert destination name to URL-friendly format
-    const destinationName = destination.name.toLowerCase()
+    const nameForSlug = destination.englishName || destination.name;
+    const slug = nameForSlug.toLowerCase()
       .replace(/[^a-z0-9\s]/g, '') // Remove special characters
       .replace(/\s+/g, '-') // Replace spaces with hyphens
       .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
       .trim();
-    
-    navigate(`/destination/${destinationName}`);
+
+    const routeSegment = 'destinations'; // For now, use English
+    navigate(`/${'en'}/${routeSegment}/${destination.id}-${slug}`);
   };
 
   const destinations = [
     {
       id: 1,
       name: "Santorini, Greece",
+      englishName: "Santorini, Greece",
       country: "Greece",
       rating: 4.9,
       reviews: 2847,
@@ -37,6 +39,7 @@ const PopularDestinations = () => {
     {
       id: 2,
       name: "Kyoto, Japan",
+      englishName: "Kyoto, Japan",
       country: "Japan",
       rating: 4.8,
       reviews: 1923,
@@ -48,6 +51,7 @@ const PopularDestinations = () => {
     {
       id: 3,
       name: "Machu Picchu, Peru",
+      englishName: "Machu Picchu, Peru",
       country: "Peru",
       rating: 4.9,
       reviews: 3156,
@@ -59,6 +63,7 @@ const PopularDestinations = () => {
     {
       id: 4,
       name: "Maldives",
+      englishName: "Maldives",
       country: "Maldives",
       rating: 4.7,
       reviews: 1234,
@@ -70,6 +75,7 @@ const PopularDestinations = () => {
     {
       id: 5,
       name: "Iceland",
+      englishName: "Iceland",
       country: "Iceland",
       rating: 4.8,
       reviews: 2567,
@@ -81,6 +87,7 @@ const PopularDestinations = () => {
     {
       id: 6,
       name: "Safari Kenya",
+      englishName: "Safari Kenya",
       country: "Kenya",
       rating: 4.9,
       reviews: 1876,

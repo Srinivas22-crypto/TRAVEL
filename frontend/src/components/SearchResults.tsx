@@ -3,6 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { useTransition } from 'react';
 import { 
   MapPin, 
   Calendar, 
@@ -126,7 +127,7 @@ export const SearchResults = ({ query, onClose }: SearchResultsProps) => {
       <div className="absolute top-full left-0 right-0 bg-card border border-border rounded-b-lg shadow-lg z-50">
         <div className="p-6 text-center text-muted-foreground">
           <Clock className="h-8 w-8 mx-auto mb-2 opacity-50" />
-          <p>Type at least 3 characters to start searching...</p>
+          <p>t("Type at least 3 characters to start searching...")</p>
         </div>
       </div>
     );
@@ -137,16 +138,16 @@ export const SearchResults = ({ query, onClose }: SearchResultsProps) => {
       {loading ? (
         <div className="p-6 text-center">
           <div className="animate-spin h-6 w-6 border-2 border-primary border-t-transparent rounded-full mx-auto mb-2"></div>
-          <p className="text-muted-foreground">Searching...</p>
+          <p className="text-muted-foreground">t("Searching...")</p>
         </div>
       ) : results.length > 0 ? (
         <div className="p-2">
           <div className="flex items-center justify-between p-3 border-b border-border">
             <p className="text-sm text-muted-foreground">
-              Found {results.length} result{results.length !== 1 ? 's' : ''} for "{query}"
+              t('Found {results.length} result{results.length !== 1 ? 's' : ''} for "{query}"')
             </p>
             <Button variant="ghost" size="sm" onClick={onClose}>
-              Close
+              t("Close")
             </Button>
           </div>
           
@@ -217,15 +218,15 @@ export const SearchResults = ({ query, onClose }: SearchResultsProps) => {
           
           <div className="p-3 text-center">
             <Button variant="outline" size="sm" className="w-full">
-              View All Results
+              t("View All Results")
             </Button>
           </div>
         </div>
       ) : (
         <div className="p-6 text-center text-muted-foreground">
           <MapPin className="h-8 w-8 mx-auto mb-2 opacity-50" />
-          <p>No results found for "{query}"</p>
-          <p className="text-xs mt-1">Try searching for destinations, hotels, or flights</p>
+          <p>t("No results found for "{query}"")</p>
+          <p className="text-xs mt-1">t("Try searching for destinations, hotels, or flights")</p>
         </div>
       )}
     </div>

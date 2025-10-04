@@ -4,7 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Heart, MessageCircle, Share2, MapPin, Camera, Users, Plus } from 'lucide-react';
+import { Heart, MessageCircle, Share2, MapPin, Camera, Users, Plus, CameraOff } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const mockPosts = [
   {
@@ -61,15 +62,16 @@ const mockPosts = [
 ];
 
 export const CommunityFeed = () => {
+  const { t } = useTranslation();
   const [newPost, setNewPost] = useState('');
   const [posts, setPosts] = useState(mockPosts);
   const [selectedTab, setSelectedTab] = useState('all');
 
   const tabs = [
-    { id: 'all', label: 'All Posts', icon: Users },
-    { id: 'stories', label: 'Stories', icon: MessageCircle },
-    { id: 'tips', label: 'Tips', icon: Heart },
-    { id: 'photos', label: 'Photos', icon: Camera },
+    { id: 'all', label: t('communityFeed.tabs.all'), icon: Users },
+    { id: 'stories', label: t('communityFeed.tabs.stories'), icon: MessageCircle },
+    { id: 'tips', label: t('communityFeed.tabs.tips'), icon: Heart },
+    { id: 'photos', label: t('communityFeed.tabs.photos'), icon: Camera },
   ];
 
   const handleCreatePost = () => {
@@ -78,15 +80,15 @@ export const CommunityFeed = () => {
     const post = {
       id: posts.length + 1,
       user: {
-        name: 'You',
+        name: t('communityFeed.you'),
         avatar: '',
         verified: false,
-        location: 'Current Location',
+        location: t('communityFeed.currentLocation'),
       },
       content: newPost,
       images: [],
-      location: 'Your Location',
-      timestamp: 'just now',
+      location: t('communityFeed.yourLocation'),
+      timestamp: t('communityFeed.justNow'),
       likes: 0,
       comments: 0,
       tags: ['travel'],
@@ -147,17 +149,17 @@ export const CommunityFeed = () => {
           <div className="flex items-center gap-3">
             <Avatar>
               <AvatarImage src="" />
-              <AvatarFallback>You</AvatarFallback>
+              <AvatarFallback>{t('communityFeed.you')}</AvatarFallback>
             </Avatar>
             <div>
-              <h3 className="font-semibold">Share Your Experience</h3>
-              <p className="text-sm opacity-90">Tell the community about your travels</p>
+              <h3 className="font-semibold">{t('communityFeed.shareExperience')}</h3>
+              <p className="text-sm opacity-90">{t('communityFeed.tellCommunity')}</p>
             </div>
           </div>
         </CardHeader>
         <CardContent className="p-4">
           <Textarea
-            placeholder="Share your travel story, tip, or experience..."
+            placeholder={t('communityFeed.textareaPlaceholder')}
             value={newPost}
             onChange={(e) => setNewPost(e.target.value)}
             className="min-h-[100px] mb-4"
@@ -166,16 +168,16 @@ export const CommunityFeed = () => {
             <div className="flex gap-2">
               <Button variant="outline" size="sm">
                 <Camera className="h-4 w-4 mr-2" />
-                Add Photos
+                {t('communityFeed.addPhotos')}
               </Button>
               <Button variant="outline" size="sm">
                 <MapPin className="h-4 w-4 mr-2" />
-                Add Location
+                {t('communityFeed.addLocation')}
               </Button>
             </div>
             <Button onClick={handleCreatePost} variant="hero" size="sm">
               <Plus className="h-4 w-4 mr-2" />
-              Share
+              {t('communityFeed.share')}
             </Button>
           </div>
         </CardContent>
@@ -199,14 +201,14 @@ export const CommunityFeed = () => {
                       <Badge variant="success" className="h-5 px-2 text-xs">✓</Badge>
                     )}
                   </div>
-                  <p className="text-sm text-muted-foreground">{post.user.location}</p>
-                  <p className="text-xs text-muted-foreground">{post.timestamp}</p>
+                  <p className="text-sm text-muted-foreground">{t('communityFeed.location', { location: post.user.location })}</p>
+                  <p className="text-xs text-muted-foreground">{t('communityFeed.timestamp', { timestamp: post.timestamp })}</p>
                 </div>
                 <Badge 
                   variant={post.type === 'tip' ? 'warning' : post.type === 'photo' ? 'success' : 'default'}
                   className="capitalize"
                 >
-                  {post.type}
+                  {t(`communityFeed.postTypes.${post.type}`)}
                 </Badge>
               </div>
 
@@ -218,30 +220,22 @@ export const CommunityFeed = () => {
                 {post.location && (
                   <div className="flex items-center gap-1 text-sm text-muted-foreground mb-3">
                     <MapPin className="h-4 w-4" />
-                    <span>{post.location}</span>
+                    <span>{t('communityFeed.location', { location: post.location })}</span>
                   </div>
                 )}
 
                 {/* Images */}
-                {post.id === 1 ? (
-                  <img 
-                    src="/a7c3ac4f-bc30-4b7f-9b7b-066aa3115a8b.png" 
-                    alt="Tokyo food scene" 
-                    className="w-full h-64 object-cover rounded-xl mt-3" 
-                  />
-                ) : (
-                  post.images.length > 0 && (
-                    <div className="grid grid-cols-2 gap-2 mb-3">
-                      {post.images.map((image, index) => (
-                        <img
-                          key={index}
-                          src={image}
-                          alt={`Post image ${index + 1}`}
-                          className="w-full h-48 object-cover rounded-xl"
-                        />
-                      ))}
-                    </div>
-                  )
+                {post.images.length > 0 && (
+                  <div className="grid grid-cols-2 gap-2 mb-3">
+                    {post.images.map((image, index) => (
+                      <img
+                        key={index}
+                        src={image}
+                        alt={t('communityFeed.postImageAlt', { index: index + 1 })}
+                        className="w-full h-48 object-cover rounded-xl"
+                      />
+                    ))}
+                  </div>
                 )}
 
                 {/* Tags */}
@@ -280,7 +274,7 @@ export const CommunityFeed = () => {
                     className="flex items-center gap-2 text-muted-foreground hover:text-secondary"
                   >
                     <Share2 className="h-4 w-4" />
-                    Share
+                    {t('communityFeed.share')}
                   </Button>
                 </div>
               </div>

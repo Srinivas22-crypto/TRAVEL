@@ -60,16 +60,12 @@ router.post('/register', authRateLimit, async (req, res) => {
       });
     }
 
-    // Hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    // Create user
+    // Create user (password will be hashed by User model pre-save hook)
     const user = await User.create({
       firstName,
       lastName,
       email: email.toLowerCase(),
-      password: hashedPassword,
+      password, // Do not hash here to avoid double hashing
     });
 
     // Generate token
@@ -81,6 +77,7 @@ router.post('/register', authRateLimit, async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      role: user.role,
       profileImage: user.profileImage,
       bio: user.bio,
       createdAt: user.createdAt
@@ -144,6 +141,7 @@ router.post('/login', authRateLimit, async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      role: user.role,
       profileImage: user.profileImage,
       bio: user.bio,
       createdAt: user.createdAt
@@ -184,6 +182,7 @@ router.get('/me', protect, async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      role: user.role,
       profileImage: user.profileImage,
       bio: user.bio,
       createdAt: user.createdAt
@@ -253,6 +252,7 @@ router.put('/updatedetails', protect, async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      role: user.role,
       profileImage: user.profileImage,
       bio: user.bio,
       createdAt: user.createdAt
@@ -434,7 +434,7 @@ router.get('/account/stats', protect, async (req, res) => {
       accountAge: Math.floor((Date.now() - memberSince.getTime()) / (1000 * 60 * 60 * 24)) // days
     };
 
-    console.log(`��� Account stats retrieved:`, stats);
+    console.log(`📈 Account stats retrieved:`, stats);
 
     // Set cache control headers to prevent caching issues
     res.set({

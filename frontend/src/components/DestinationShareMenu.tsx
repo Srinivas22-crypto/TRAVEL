@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,6 +15,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 interface DestinationShareMenuProps {
   url: string;
@@ -22,9 +23,11 @@ interface DestinationShareMenuProps {
 }
 
 const DestinationShareMenu: FC<DestinationShareMenuProps> = ({ url, title = "" }) => {
+  const { t } = useTranslation();
+
   const handleCopyLink = () => {
     navigator.clipboard.writeText(url);
-    toast.success("Link copied!");
+    toast.success(t("destinationShare.linkCopied"));
   };
 
   const handleShareFacebook = () => {
@@ -42,7 +45,7 @@ const DestinationShareMenu: FC<DestinationShareMenuProps> = ({ url, title = "" }
   };
 
   const handleShareInstagram = () => {
-    toast.info("Sharing on Instagram is not supported via web.");
+    toast.info(t("destinationShare.instagramNotSupported"));
   };
 
   const handleOpenInNewTab = () => {
@@ -63,23 +66,23 @@ const DestinationShareMenu: FC<DestinationShareMenuProps> = ({ url, title = "" }
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={handleCopyLink}>
           <Copy className="mr-2 h-4 w-4" />
-          <span>Copy Link</span>
+          <span>{t("destinationShare.copyLink")}</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handleShareFacebook}>
           <Facebook className="mr-2 h-4 w-4" />
-          <span>Share on Facebook</span>
+          <span>{t("destinationShare.shareFacebook")}</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handleShareTwitter}>
           <Twitter className="mr-2 h-4 w-4" />
-          <span>Share on Twitter</span>
+          <span>{t("destinationShare.shareTwitter")}</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handleShareInstagram}>
           <Instagram className="mr-2 h-4 w-4" />
-          <span>Share on Instagram</span>
+          <span>{t("destinationShare.shareInstagram")}</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handleOpenInNewTab}>
           <ExternalLink className="mr-2 h-4 w-4" />
-          <span>Open in New Tab</span>
+          <span>{t("destinationShare.openNewTab")}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

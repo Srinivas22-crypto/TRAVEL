@@ -1,10 +1,30 @@
 {
+  "chatbot": {
+   "title": "Travel Assistant",
+    "welcome": "Hello! I'm your travel assistant. How can I help you plan your trip today?",
+    "placeholder": "Type your message...",
+    "send": "Send",
+    "openAria": "Open chatbot",
+    "minimizeAria": "Minimize chatbot",
+    "errors": {
+      "apiKey": "The AI service is not properly configured. Please try again later.",
+      "rateLimit": "The AI service is currently busy. Please wait a moment and try again.",
+      "network": "Unable to connect to the AI service. Please check your internet connection.",
+      "http": "The AI service is temporarily unavailable. Please try again later.",
+      "generic": "Something went wrong. Please try again later.",
+      "unexpected": "Something unexpected went wrong. Please try again later."
+    }
+  },
+  "fallbackLng": "en",
   "nav": {
     "explore": "Explore",
     "book": "Book",
     "community": "Community",
     "search": "Search",
     "payment": "Payment"
+  },
+  "header": {
+    "tagline": "Your Journey Starts Here"
   },
   "home": {
     "title": "Discover Your Next Adventure",
@@ -22,26 +42,758 @@
     "title": "Explore Destinations",
     "subtitle": "Discover amazing places around the world",
     "searchPlaceholder": "Search destinations...",
+    "searchPlaceholderEnhanced": "Search destinations (e.g., Tokyo, Paris, Beach, Culture...)",
     "filters": "Filters",
-    "sortBy": "Sort by"
+    "sortBy": "Sort by",
+    "searchingFor": "Searching for:",
+    "sortByOptions": {
+      "rating": "Highest Rated",
+      "priceLow": "Price: Low to High",
+      "priceHigh": "Price: High to Low",
+      "reviews": "Most Reviewed"
+    },
+    "browseByCategory": "Browse by Category",
+    "filteredBySearch": "Filtered by search",
+    "allDestinations": "All Destinations",
+    "destinations": "Destinations",
+    "destination": "Destination",
+    "found": "found",
+    "place": "place",
+    "places": "places",
+    "review": "review",
+    "reviews": "reviews",
+    "perPerson": "per person",
+    "places_one": "{{count}} place",
+    "places_other": "{{count}} places",
+    "reviews_one": "{{count}} review",
+    "reviews_other": "{{count}} reviews",
+    "destinationsFound_one": "{{count}} destination found",
+    "destinationsFound_other": "{{count}} destinations found",
+    "noDestinationsFound": "No destinations found matching your criteria.",
+    "clearFilters": "Clear Filters",
+    "exploreTools": "Explore Tools",
+    "categories": {
+      "all": "All",
+      "adventure": "Adventure",
+      "beach": "Beach",
+      "culture": "Culture",
+      "food": "Food",
+      "nature": "Nature",
+      "city": "City"
+    },
+    "destinationsData": {
+      "paris": {
+        "name": "Paris, France",
+        "description": "The City of Light awaits with its iconic landmarks and romantic atmosphere."
+      },
+      "tokyo": {
+        "name": "Tokyo, Japan",
+        "description": "Experience the perfect blend of traditional culture and modern innovation."
+      },
+      "newYork": {
+        "name": "New York, USA",
+        "description": "The city that never sleeps offers endless possibilities and experiences."
+      },
+      "bali": {
+        "name": "Bali, Indonesia",
+        "description": "Tropical paradise with stunning beaches and rich cultural heritage."
+      },
+      "swissAlps": {
+        "name": "Swiss Alps, Switzerland",
+        "description": "Breathtaking mountain views and world-class skiing adventures."
+      },
+      "tuscany": {
+        "name": "Tuscany, Italy",
+        "description": "Rolling hills, vineyards, and authentic Italian cuisine."
+      },
+      "costaRica": {
+        "name": "Costa Rica",
+        "description": "Rich biodiversity and stunning natural landscapes."
+      },
+      "santorini": {
+        "name": "Santorini, Greece",
+        "description": "Iconic white buildings and spectacular sunsets."
+      },
+      "goa": {
+        "name": "Goa, India",
+        "description": "Beautiful beaches, Portuguese architecture, and vibrant nightlife in India's coastal paradise."
+      },
+      "dubai": {
+        "name": "Dubai, UAE",
+        "description": "Luxury shopping, ultramodern architecture, and desert adventures in the Middle East."
+      },
+      "iceland": {
+        "name": "Iceland",
+        "description": "Land of fire and ice with stunning waterfalls, geysers, and northern lights."
+      },
+      "barcelona": {
+        "name": "Barcelona, Spain",
+        "description": "Gaudi's architectural masterpieces, vibrant culture, and Mediterranean beaches."
+      }
+    },
+    "tools": {
+      "routePlanner": {
+        "title": "Route Planner",
+        "description": "Plan your perfect journey with our intelligent route planner",
+        "cta": "Start Planning"
+      },
+      "destinationFinder": {
+        "title": "Destination Finder",
+        "description": "Discover hidden gems and popular attractions worldwide",
+        "cta": "Explore Now"
+      }
+    }
+  },
+  "destinationDetail": {
+    "loading": "Loading destination...",
+    "backToExplore": "Back to Explore",
+    "about": {
+      "title": "About this destination"
+    },
+    "highlights": {
+      "title": "Highlights"
+    },
+    "quickFacts": {
+      "title": "Quick Facts",
+      "bestTime": "Best Time to Visit",
+      "language": "Language",
+      "currency": "Currency",
+      "timezone": "Time Zone"
+    },
+    "weather": {
+      "title": "Current Weather",
+      "humidity": "Humidity"
+    },
+    "activities": {
+      "title": "Popular Activities",
+      "book": "Book Activity",
+      "booked": "Booked"
+    },
+    "cta": {
+      "title": "Ready to explore?",
+      "subtitle": "Book your trip to {{name}} today!",
+      "bookNow": "Book Now - ${{price}}"
+    },
+    "notFound": {
+      "title": "Destination Not Found",
+      "description": "The destination you're looking for doesn't exist.",
+      "cta": "Back to Explore"
+    },
+    "activityBooked": "Activity Booked!",
+    "activityBookedDescription": "Successfully booked {{name}} for ${{price}}",
+    "activityAlreadyBooked": "Already Booked",
+    "activityAlreadyBookedDescription": "You have already booked {{name}}",
+    "bookingFailed": "Booking Failed",
+    "bookingFailedDescription": "Failed to book activity. Please try again."
+  },
+  "destinations": {
+    "paris": {
+      "name": "Paris, France",
+      "country": "France",
+      "description": "The City of Light awaits with its iconic landmarks, world-class museums, charming cafés, and romantic atmosphere. Paris seamlessly blends historic architecture with modern sophistication, offering visitors an unforgettable experience filled with art, culture, and culinary delights.",
+      "highlights": [
+        "Eiffel Tower - Iconic iron lattice tower and symbol of Paris",
+        "Louvre Museum - World's largest art museum with the Mona Lisa",
+        "Notre-Dame Cathedral - Gothic masterpiece on Île de la Cité",
+        "Champs-Élysées - Famous avenue for shopping and dining",
+        "Montmartre - Artistic district with Sacré-Cœur Basilica"
+      ],
+      "quickFacts": {
+        "bestTime": "April to June, September to October",
+        "language": "French",
+        "currency": "Euro (EUR)",
+        "timezone": "Central European Time (CET)"
+      },
+      "weather": {
+        "condition": "Partly Cloudy"
+      },
+      "activities": [
+        {
+          "name": "Seine River Cruise",
+          "duration": "1 hour",
+          "description": "Romantic boat cruise along the Seine with views of iconic landmarks"
+        },
+        {
+          "name": "Louvre Museum Tour",
+          "duration": "3 hours",
+          "description": "Skip-the-line guided tour of the world's most famous museum"
+        },
+        {
+          "name": "Eiffel Tower Experience",
+          "duration": "2 hours",
+          "description": "Visit all levels of the Eiffel Tower with stunning city views"
+        },
+        {
+          "name": "Montmartre Walking Tour",
+          "duration": "2.5 hours",
+          "description": "Explore the artistic heart of Paris with local guide"
+        }
+      ]
+    },
+    "tokyo": {
+      "name": "Tokyo, Japan",
+      "country": "Japan",
+      "description": "Experience the perfect blend of traditional culture and modern innovation in Japan's bustling capital. Tokyo offers everything from ancient temples and serene gardens to cutting-edge technology, incredible cuisine, and vibrant nightlife.",
+      "highlights": [
+        "Senso-ji Temple - Tokyo's oldest Buddhist temple in Asakusa",
+        "Shibuya Crossing - World's busiest pedestrian crossing",
+        "Tokyo Skytree - Tallest structure in Japan with panoramic views",
+        "Tsukiji Outer Market - Fresh seafood and street food paradise",
+        "Meiji Shrine - Peaceful Shinto shrine in the heart of the city"
+      ],
+      "quickFacts": {
+        "bestTime": "March to May, September to November",
+        "language": "Japanese",
+        "currency": "Japanese Yen (JPY)",
+        "timezone": "Japan Standard Time (JST)"
+      },
+      "weather": {
+        "condition": "Clear"
+      },
+      "activities": [
+        {
+          "name": "Sushi Making Class",
+          "duration": "3 hours",
+          "description": "Learn to make authentic sushi from a professional chef"
+        },
+        {
+          "name": "Tokyo City Tour",
+          "duration": "8 hours",
+          "description": "Full day tour covering major attractions and hidden gems"
+        },
+        {
+          "name": "Traditional Tea Ceremony",
+          "duration": "1.5 hours",
+          "description": "Experience authentic Japanese tea ceremony in traditional setting"
+        },
+        {
+          "name": "Robot Restaurant Show",
+          "duration": "1 hour",
+          "description": "Unique entertainment experience with robots and neon lights"
+        }
+      ]
+    },
+    "newYork": {
+      "name": "New York City, USA",
+      "country": "United States",
+      "description": "New York City, the city that never sleeps, is a global hub of art, culture, fashion, and finance. From iconic skyscrapers to diverse neighborhoods, it offers an unmatched urban experience with endless possibilities.",
+      "highlights": [
+        "Statue of Liberty - Symbol of freedom and democracy",
+        "Times Square - The crossroads of the world",
+        "Central Park - Urban oasis in the heart of Manhattan",
+        "Empire State Building - Iconic Art Deco skyscraper",
+        "Broadway Shows - World-class theater and entertainment"
+      ],
+      "quickFacts": {
+        "bestTime": "April to June, September to November",
+        "language": "English",
+        "currency": "US Dollar ($)",
+        "timezone": "Eastern Standard Time (EST)"
+      },
+      "weather": {
+        "condition": "Sunny"
+      },
+      "activities": [
+        {
+          "name": "Broadway Show Experience",
+          "duration": "3 hours",
+          "description": "Premium seats for a Broadway musical with backstage tour"
+        },
+        {
+          "name": "Statue of Liberty Tour",
+          "duration": "4 hours",
+          "description": "Ferry tour to Liberty Island and Ellis Island"
+        },
+        {
+          "name": "Central Park Bike Tour",
+          "duration": "2 hours",
+          "description": "Guided bicycle tour of Central Park highlights"
+        },
+        {
+          "name": "NYC Food Tour",
+          "duration": "3 hours",
+          "description": "Taste diverse cuisines across NYC neighborhoods"
+        }
+      ]
+    },
+    "bali": {
+      "name": "Bali, Indonesia",
+      "country": "Indonesia",
+      "description": "Tropical paradise with stunning beaches, lush rice terraces, ancient temples, and rich cultural heritage. Bali offers the perfect blend of relaxation and adventure, from world-class surfing to spiritual retreats.",
+      "highlights": [
+        "Tanah Lot Temple - Iconic sea temple on a rock formation",
+        "Ubud Rice Terraces - UNESCO World Heritage rice paddies",
+        "Mount Batur - Active volcano perfect for sunrise hikes",
+        "Seminyak Beach - Trendy beach with great surfing",
+        "Monkey Forest Sanctuary - Sacred forest with playful macaques"
+      ],
+      "quickFacts": {
+        "bestTime": "April to October",
+        "language": "Indonesian, Balinese",
+        "currency": "Indonesian Rupiah (IDR)",
+        "timezone": "Central Indonesia Time (WITA)"
+      },
+      "weather": {
+        "condition": "Sunny"
+      },
+      "activities": [
+        {
+          "name": "Mount Batur Sunrise Hike",
+          "duration": "5 hours",
+          "description": "Trek to the summit for breathtaking volcanic sunrise views"
+        },
+        {
+          "name": "Cultural Experience Tour",
+          "duration": "4 hours",
+          "description": "Visit traditional villages and learn about Balinese culture"
+        },
+        {
+          "name": "Surfing Lesson",
+          "duration": "3 hours",
+          "description": "Professional surfing instruction at Seminyak Beach"
+        },
+        {
+          "name": "Spa Retreat",
+          "duration": "2 hours",
+          "description": "Traditional Balinese massage and wellness treatments"
+        }
+      ]
+    },
+    "swissAlps": {
+      "name": "Swiss Alps, Switzerland",
+      "country": "Switzerland",
+      "description": "Breathtaking mountain views and world-class skiing adventures await in the Swiss Alps. Experience pristine alpine landscapes, charming mountain villages, and outdoor activities year-round.",
+      "highlights": [
+        "Matterhorn - Iconic pyramid-shaped mountain peak",
+        "Jungfraujoch - Top of Europe with glaciers and snow",
+        "Lake Geneva - Beautiful alpine lake with vineyards",
+        "Zermatt Village - Car-free mountain resort town",
+        "Rhine Falls - Europe's most powerful waterfall"
+      ],
+      "quickFacts": {
+        "bestTime": "December to March (skiing), June to September (hiking)",
+        "language": "German, French, Italian",
+        "currency": "Swiss Franc (CHF)",
+        "timezone": "Central European Time (CET)"
+      },
+      "weather": {
+        "condition": "Snow"
+      },
+      "activities": [
+        {
+          "name": "Jungfraujoch Glacier Tour",
+          "duration": "8 hours",
+          "description": "Train journey to Europe's highest railway station"
+        },
+        {
+          "name": "Skiing Adventure",
+          "duration": "6 hours",
+          "description": "Professional skiing lessons and mountain runs"
+        },
+        {
+          "name": "Alpine Hiking Tour",
+          "duration": "5 hours",
+          "description": "Scenic hikes through Swiss mountain trails"
+        },
+        {
+          "name": "Chocolate Making Class",
+          "duration": "3 hours",
+          "description": "Learn to make Swiss chocolate in a traditional factory"
+        }
+      ]
+    },
+    "tuscany": {
+      "name": "Tuscany, Italy",
+      "country": "Italy",
+      "description": "Rolling hills, vineyards, and authentic Italian cuisine define this enchanting region. Tuscany offers Renaissance art, medieval towns, world-renowned wines, and some of the most beautiful countryside in the world.",
+      "highlights": [
+        "Florence Cathedral - Stunning Renaissance architecture",
+        "Chianti Wine Region - World-famous vineyards and tastings",
+        "Pisa's Leaning Tower - Iconic tilted bell tower",
+        "Siena Historic Center - Medieval city with Gothic architecture",
+        "Val d'Orcia - UNESCO World Heritage landscape"
+      ],
+      "quickFacts": {
+        "bestTime": "April to June, September to October",
+        "language": "Italian",
+        "currency": "Euro (EUR)",
+        "timezone": "Central European Time (CET)"
+      },
+      "weather": {
+        "condition": "Sunny"
+      },
+      "activities": [
+        {
+          "name": "Chianti Wine Tour",
+          "duration": "8 hours",
+          "description": "Visit traditional wineries and taste world-class Chianti wines"
+        },
+        {
+          "name": "Cooking Class",
+          "duration": "4 hours",
+          "description": "Learn to cook authentic Tuscan dishes with local chef"
+        },
+        {
+          "name": "Florence Art Tour",
+          "duration": "3 hours",
+          "description": "Explore Renaissance masterpieces in the Uffizi Gallery"
+        },
+        {
+          "name": "Countryside Bike Tour",
+          "duration": "5 hours",
+          "description": "Cycle through picturesque Tuscan hills and villages"
+        }
+      ]
+    },
+    "london": {
+      "name": "London, UK",
+      "country": "United Kingdom",
+      "description": "London, a city where history meets modernity, offers a unique blend of royal heritage, world-class museums, diverse culture, and innovative architecture. Experience the charm of this global metropolis along the River Thames.",
+      "highlights": [
+        "Big Ben & Houses of Parliament",
+        "Tower of London",
+        "Buckingham Palace",
+        "British Museum",
+        "London Eye"
+      ],
+      "quickFacts": {
+        "bestTime": "May to September",
+        "language": "English",
+        "currency": "British Pound (£)",
+        "timezone": "GMT/BST"
+      },
+      "weather": {
+        "condition": "Cloudy"
+      },
+      "activities": [
+        {
+          "name": "Royal Palace Tour",
+          "duration": "3 hours",
+          "description": "Visit Buckingham Palace and learn about royal history"
+        },
+        {
+          "name": "Museum Day Pass",
+          "duration": "6 hours",
+          "description": "Access to major London museums and galleries"
+        },
+        {
+          "name": "Thames River Cruise",
+          "duration": "2 hours",
+          "description": "Scenic boat cruise along the River Thames"
+        },
+        {
+          "name": "Street Food Market Tour",
+          "duration": "3 hours",
+          "description": "Explore London's diverse food markets and cuisines"
+        }
+      ]
+    },
+    "costaRica": {
+      "name": "Costa Rica",
+      "country": "Costa Rica",
+      "description": "Rich biodiversity and stunning natural landscapes make Costa Rica a paradise for nature lovers. From pristine beaches to lush rainforests, this Central American gem offers incredible wildlife and adventure activities.",
+      "highlights": [
+        "Manuel Antonio National Park - Beaches and wildlife",
+        "Arenal Volcano - Active volcano with hot springs",
+        "Monteverde Cloud Forest - Unique ecosystem with zip-lining",
+        "Tortuguero National Park - Sea turtle nesting site",
+        "Tamarindo Beach - World-class surfing destination"
+      ],
+      "quickFacts": {
+        "bestTime": "December to April",
+        "language": "Spanish",
+        "currency": "Costa Rican Colón (CRC)",
+        "timezone": "Central Standard Time (CST)"
+      },
+      "weather": {
+        "condition": "Tropical"
+      },
+      "activities": [
+        {
+          "name": "Zip-lining Adventure",
+          "duration": "3 hours",
+          "description": "Soar through the canopy on thrilling zip-line courses"
+        },
+        {
+          "name": "Wildlife Safari",
+          "duration": "6 hours",
+          "description": "Spot sloths, monkeys, and exotic birds in their natural habitat"
+        },
+        {
+          "name": "Volcano Hike",
+          "duration": "4 hours",
+          "description": "Hike around active Arenal Volcano with stunning views"
+        },
+        {
+          "name": "White Water Rafting",
+          "duration": "5 hours",
+          "description": "Navigate exciting rapids through tropical rainforest"
+        }
+      ]
+    },
+    "santorini": {
+      "name": "Santorini, Greece",
+      "country": "Greece",
+      "description": "Iconic white buildings and spectacular sunsets make Santorini one of the world's most romantic destinations. This volcanic island offers stunning caldera views, unique beaches, and exceptional wines.",
+      "highlights": [
+        "Oia Village - Famous for spectacular sunsets",
+        "Red Beach - Unique red volcanic sand beach",
+        "Akrotiri Archaeological Site - Ancient Minoan city",
+        "Fira Town - Capital with stunning caldera views",
+        "Santo Wines Winery - Volcanic soil wine tasting"
+      ],
+      "quickFacts": {
+        "bestTime": "April to October",
+        "language": "Greek",
+        "currency": "Euro (EUR)",
+        "timezone": "Eastern European Time (EET)"
+      },
+      "weather": {
+        "condition": "Sunny"
+      },
+      "activities": [
+        {
+          "name": "Sunset Sailing Tour",
+          "duration": "5 hours",
+          "description": "Sail around the caldera with dinner and sunset views"
+        },
+        {
+          "name": "Wine Tasting Tour",
+          "duration": "4 hours",
+          "description": "Taste unique volcanic wines at traditional wineries"
+        },
+        {
+          "name": "Volcano Excursion",
+          "duration": "3 hours",
+          "description": "Boat trip to active volcanic islands in the caldera"
+        },
+        {
+          "name": "Photography Tour",
+          "duration": "4 hours",
+          "description": "Capture the most Instagram-worthy spots with professional guide"
+        }
+      ]
+    },
+    "iceland": {
+      "name": "Iceland",
+      "country": "Iceland",
+      "description": "Land of fire and ice with stunning waterfalls, geysers, and northern lights. Iceland offers dramatic landscapes, from glacial lagoons to volcanic fields, making it a photographer's paradise and nature lover's dream destination.",
+      "highlights": [
+        "Blue Lagoon - Geothermal spa with milky blue waters",
+        "Golden Circle - Geysir, Gullfoss waterfall, and Þingvellir National Park",
+        "Northern Lights - Aurora borealis viewing from September to March",
+        "Jökulsárlón Glacier Lagoon - Icebergs floating in glacial lake",
+        "Reynisfjara Black Sand Beach - Dramatic volcanic beach with basalt columns"
+      ],
+      "quickFacts": {
+        "bestTime": "June to August (summer), September to March (Northern Lights)",
+        "language": "Icelandic",
+        "currency": "Icelandic Króna (ISK)",
+        "timezone": "Greenwich Mean Time (GMT)"
+      },
+      "weather": {
+        "condition": "Partly Cloudy"
+      },
+      "activities": [
+        {
+          "name": "Northern Lights Tour",
+          "duration": "4 hours",
+          "description": "Hunt for the magical aurora borealis with expert guides"
+        },
+        {
+          "name": "Golden Circle Tour",
+          "duration": "8 hours",
+          "description": "Visit Iceland's most famous natural attractions in one day"
+        },
+        {
+          "name": "Blue Lagoon Experience",
+          "duration": "3 hours",
+          "description": "Relax in the famous geothermal spa with silica mud masks"
+        },
+        {
+          "name": "Glacier Hiking",
+          "duration": "6 hours",
+          "description": "Explore ancient glaciers with crampons and ice axes"
+        }
+      ]
+    },
+    "barcelona": {
+      "name": "Barcelona, Spain",
+      "country": "Spain",
+      "description": "Gaudi's architectural masterpieces, vibrant culture, and Mediterranean beaches make Barcelona a perfect blend of art, history, and modern life. From the Gothic Quarter to Park Güell, every corner tells a story.",
+      "highlights": [
+        "Sagrada Familia - Gaudi's unfinished masterpiece basilica",
+        "Park Güell - Colorful mosaic park with city views",
+        "Las Ramblas - Famous pedestrian street with street performers",
+        "Gothic Quarter - Medieval streets and historic architecture",
+        "Casa Batlló - Modernist building with unique facade"
+      ],
+      "quickFacts": {
+        "bestTime": "May to June, September to October",
+        "language": "Spanish, Catalan",
+        "currency": "Euro (EUR)",
+        "timezone": "Central European Time (CET)"
+      },
+      "weather": {
+        "condition": "Sunny"
+      },
+      "activities": [
+        {
+          "name": "Sagrada Familia Tour",
+          "duration": "2 hours",
+          "description": "Skip-the-line tour of Gaudi's architectural masterpiece"
+        },
+        {
+          "name": "Tapas Walking Tour",
+          "duration": "3 hours",
+          "description": "Taste authentic Spanish tapas in local neighborhoods"
+        },
+        {
+          "name": "Flamenco Show",
+          "duration": "1.5 hours",
+          "description": "Experience passionate flamenco dancing and music"
+        },
+        {
+          "name": "Gothic Quarter Walking Tour",
+          "duration": "2.5 hours",
+          "description": "Explore medieval streets and hidden squares"
+        }
+      ]
+    },
+    "dubai": {
+      "name": "Dubai, UAE",
+      "country": "United Arab Emirates",
+      "description": "Luxury shopping, ultramodern architecture, and desert adventures in the Middle East. Dubai offers world-class attractions, from the tallest building to artificial islands, blending tradition with futuristic innovation.",
+      "highlights": [
+        "Burj Khalifa - World's tallest building with observation decks",
+        "Dubai Mall - Massive shopping center with aquarium and ice rink",
+        "Palm Jumeirah - Artificial island with luxury resorts",
+        "Dubai Marina - Stunning waterfront with skyscrapers",
+        "Gold Souk - Traditional market for gold and jewelry"
+      ],
+      "quickFacts": {
+        "bestTime": "November to March",
+        "language": "Arabic, English",
+        "currency": "UAE Dirham (AED)",
+        "timezone": "Gulf Standard Time (GST)"
+      },
+      "weather": {
+        "condition": "Clear"
+      },
+      "activities": [
+        {
+          "name": "Burj Khalifa Experience",
+          "duration": "2 hours",
+          "description": "Visit the world's tallest building and observation deck"
+        },
+        {
+          "name": "Desert Safari",
+          "duration": "6 hours",
+          "description": "Dune bashing, camel riding, and traditional Bedouin dinner"
+        },
+        {
+          "name": "Dubai Marina Cruise",
+          "duration": "2 hours",
+          "description": "Luxury yacht cruise with stunning skyline views"
+        },
+        {
+          "name": "Shopping Tour",
+          "duration": "4 hours",
+          "description": "Explore traditional souks and modern shopping malls"
+        }
+      ]
+    },
+    "goa": {
+      "name": "Goa, India",
+      "country": "India",
+      "description": "Beautiful beaches, Portuguese architecture, and vibrant nightlife in India's coastal paradise. Goa offers a unique blend of Indian and Portuguese cultures, with stunning beaches and laid-back atmosphere.",
+      "highlights": [
+        "Baga Beach - Popular beach with water sports and nightlife",
+        "Old Goa Churches - UNESCO World Heritage Portuguese churches",
+        "Anjuna Flea Market - Vibrant market with local crafts and food",
+        "Dudhsagar Falls - Spectacular four-tiered waterfall",
+        "Spice Plantations - Aromatic tours through cardamom and pepper farms"
+      ],
+      "quickFacts": {
+        "bestTime": "November to February",
+        "language": "Hindi, English, Konkani",
+        "currency": "Indian Rupee (INR)",
+        "timezone": "India Standard Time (IST)"
+      },
+      "weather": {
+        "condition": "Sunny"
+      },
+      "activities": [
+        {
+          "name": "Beach Hopping Tour",
+          "duration": "8 hours",
+          "description": "Visit multiple beaches from Baga to Palolem with lunch"
+        },
+        {
+          "name": "Spice Plantation Tour",
+          "duration": "4 hours",
+          "description": "Learn about spice cultivation with traditional Goan lunch"
+        },
+        {
+          "name": "Water Sports Package",
+          "duration": "3 hours",
+          "description": "Parasailing, jet skiing, and banana boat rides"
+        },
+        {
+          "name": "Old Goa Heritage Tour",
+          "duration": "3 hours",
+          "description": "Explore Portuguese colonial architecture and churches"
+        }
+      ]
+    }
   },
   "book": {
     "title": "Book Your Journey",
     "subtitle": "Find and book flights, hotels, and experiences",
     "flights": "Flights",
     "hotels": "Hotels",
-    "experiences": "Experiences"
+    "experiences": "Experiences",
+    "from": "From",
+    "to": "To",
+    "departureDate": "Departure Date",
+    "returnDate": "Return Date",
+    "passengers": "Passengers",
+    "destination": "Destination",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "guests": "Guests",
+    "pickupLocation": "Pick-up Location",
+    "pickupDate": "Pick-up Date",
+    "dropoffDate": "Drop-off Date",
+    "searchFlights": "Search Flights",
+    "searchHotels": "Search Hotels",
+    "searchCars": "Search Cars",
+    "placeholders": {
+      "departureCit": "Departure city",
+      "destinationCity": "Destination city",
+      "pickADate": "Pick a date",
+      "selectAdults": "1 Adult",
+      "whereGoing": "Where are you going?",
+      "guestsRooms": "2 guests, 1 room",
+      "pickupLocation": "Pick-up location"
+    },
+    "errors": {
+      "searchFailed": "Search Failed",
+      "flightsError": "Failed to search flights. Please try again.",
+      "hotelsError": "Failed to search hotels. Please try again.",
+      "carsError": "Failed to search cars. Please try again."
+    }
   },
   "community": {
-    "title": "Travel Community",
-    "subtitle": "Connect with fellow travelers and share your experiences",
+    "title": "Traveler Community",
+    "subtitle": "Connect with other travelers and share your experiences",
     "shareStory": "Share Your Story",
     "recentPosts": "Recent Posts"
   },
   "auth": {
     "signIn": "Sign In",
-    "signUp": "Create Account",
-    "email": "Email",
+    "signUp": "Sign Up",
+    "email": "Email Address",
     "password": "Password",
     "confirmPassword": "Confirm Password",
     "firstName": "First Name",
@@ -55,15 +807,36 @@
     "rememberMe": "Remember me",
     "welcomeBack": "Welcome back to TravelHub",
     "createAccountSubtitle": "Join TravelHub and start your journey",
-    "acceptTerms": "I accept the",
+    "acceptTerms": "I agree to the",
     "termsAndConditions": "terms and conditions",
     "signingIn": "Signing in...",
     "creatingAccount": "Creating account...",
     "signInSuccess": "Welcome back!",
+    "signInSuccessDesc": "You have successfully signed in.",
+    "signInFailed": "Sign In Failed",
+    "signInFailedDesc": "Invalid email or password. Please try again.",
     "accountCreated": "Account created!",
     "accountCreatedDesc": "Welcome to TravelHub. You can now sign in.",
+    "registrationFailed": "Registration Failed",
+    "registrationFailedDesc": "Failed to create account. Please try again.",
     "passwordsNoMatch": "Passwords do not match.",
-    "acceptTermsError": "Please accept the terms and conditions."
+    "acceptTermsError": "Please accept the terms and conditions.",
+    "emailPlaceholder": "john@example.com",
+    "firstNamePlaceholder": "John",
+    "lastNamePlaceholder": "Doe",
+    "errors": {
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email address",
+      "passwordRequired": "Password is required",
+      "passwordLength": "Password must be at least 6 characters",
+      "passwordComplexity": "Password must contain at least one uppercase, one lowercase, and one number",
+      "confirmPasswordRequired": "Please confirm your password",
+      "firstNameRequired": "First name is required",
+      "firstNameLength": "First name must be at least 2 characters",
+      "lastNameRequired": "Last name is required",
+      "lastNameLength": "Last name must be at least 2 characters",
+      "termsRequired": "You must accept the terms and conditions"
+    }
   },
   "profile": {
     "settings": "Profile Settings",
@@ -99,7 +872,7 @@
     "showTravelHistory": "Show Travel History",
     "showTravelHistoryDesc": "Display your past trips on your profile",
     "allowMessages": "Allow Messages",
-    "allowMessagesDesc": "Let other users send you direct messages",
+    "allowMessagesDesc": "Allow other users to send you direct messages",
     "saveSettings": "Save Settings",
     "billingSubscription": "Billing & Subscription",
     "manageBilling": "Manage your subscription and billing information",
@@ -142,25 +915,21 @@
   "notFound": {
     "title": "404",
     "subtitle": "Oops! Page not found",
-    "message": "The page you're looking for doesn't exist.",
-    "backToHome": "Return to Home"
+    "message": "The page you are looking for does not exist.",
+    "backToHome": "Back to Home"
   },
   "categories": {
     "title": "Browse by Category",
-    "subtitle": "Discover travel experiences organized by your interests"
-  },
-  "destinations": {
-    "title": "Popular Destinations",
-    "subtitle": "Explore the world's most amazing places chosen by travelers"
+    "subtitle": "Discover travel experiences curated by your interests"
   },
   "routePlanner": {
     "title": "Route Planner",
-    "subtitle": "Plan your perfect journey with multiple stops and travel modes",
+    "subtitle": "Plan your perfect trip with multiple stops and travel modes",
     "planYourRoute": "Plan Your Route",
     "planDescription": "Enter your starting point, destination, and any stops along the way",
     "routeName": "Route Name",
-    "routeNamePlaceholder": "My Amazing Trip",
-    "startLocation": "Starting Location",
+    "routeNamePlaceholder": "My Awesome Trip",
+    "startLocation": "Start Location",
     "startLocationPlaceholder": "Enter starting city or address",
     "destination": "Destination",
     "destinationPlaceholder": "Enter destination city or address",
@@ -171,7 +940,7 @@
     "car": "Car",
     "flight": "Flight",
     "planMyRoute": "Plan My Route",
-    "planning": "Planning Route...",
+    "planning": "Planning route...",
     "routeDetails": "Route Details",
     "estimatedTime": "Estimated Time",
     "distance": "Distance",
@@ -181,7 +950,7 @@
     "routeMap": "Route Map",
     "mapWillShow": "Interactive map will display your planned route",
     "mapReady": "Map is ready - click 'Plan My Route' to see your route",
-    "planRouteToSeeMap": "Enter starting location and destination to see the interactive map",
+    "planRouteToSeeMap": "Enter start and destination to see the interactive map",
     "savedRoutes": "Saved Routes",
     "tips": "Planning Tips",
     "tip1": "Add up to 5 stops to create a detailed itinerary",
@@ -190,16 +959,19 @@
     "tip4": "Your form data is automatically saved as you type",
     "tip5": "Watch the map update in real-time as you add locations",
     "reset": "Reset",
-    "formReset": "Form has been reset successfully",
+    "formReset": "Form was successfully reset",
     "dataRestored": "Your previous route data has been restored",
-    "fillRequiredFields": "Please fill in starting location and destination",
+    "fillRequiredFields": "Please fill in the start and destination location",
     "routePlanned": "Route planned successfully!",
     "planningError": "Error planning route. Please try again.",
-    "loginRequired": "Please sign in to save routes",
+    "loginRequired": "Please log in to save routes",
     "enterRouteName": "Please enter a name for your route",
     "routeSaved": "Route saved successfully!",
     "savingError": "Error saving route. Please try again.",
     "routeLoaded": "Route loaded successfully!"
+  },
+  "routes": {
+    "destinations": "destinations"
   },
   "common": {
     "loading": "Loading...",
@@ -215,6 +987,398 @@
     "submit": "Submit",
     "confirm": "Confirm",
     "explore": "Explore",
-    "bookNow": "Book Now"
+    "bookNow": "Book Now",
+    "clearAll": "Clear All"
+  },
+  "shareStory": {
+    "title": "Share Your Travel Story",
+    "description": "Share your amazing travel experiences with the community",
+    "fields": {
+      "content": "Your Story",
+      "location": "Location",
+      "tags": "Tags",
+      "images": "Images"
+    },
+    "placeholders": {
+      "content": "Tell us about your amazing travel experience...",
+      "location": "Where did this happen?",
+      "tags": "Add tags (press Enter or comma to add)"
+    },
+    "buttons": {
+      "upload": "Upload Images",
+      "cancel": "Cancel",
+      "share": "Share Story",
+      "sharing": "Sharing..."
+    },
+    "labels": {
+      "images": "images",
+      "uploadedImage": "Upload"
+    },
+    "errors": {
+      "contentRequired": "Please share your story content",
+      "contentMin": "Story content must be at least {{count}} characters",
+      "contentMax": "Story content must be less than {{count}} characters"
+    },
+    "toast": {
+      "authRequired": {
+        "title": "Authentication Required",
+        "description": "Please sign in to share your story."
+      },
+      "success": {
+        "title": "Story Shared!",
+        "description": "Your travel story has been shared with the community."
+      },
+      "error": {
+        "title": "Failed to Share Story",
+        "description": "Something went wrong. Please try again."
+      }
+    }
+  },
+  "postOptions": {
+    "interested": "Interested",
+    "notInterested": "Not Interested",
+    "report": "Report",
+    "markInterested": "Mark as Interested",
+    "markNotInterested": "Mark as Not Interested",
+    "markInterestedDesc": "We'll use this to show you more similar content in your feed.",
+    "markNotInterestedDesc": "We'll use this to show you less similar content in your feed.",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "reportPost": "Report Post",
+    "reportDescription": "Help us understand what's wrong with this post. Your report is anonymous.",
+    "reason": "Reason for reporting",
+    "customDetails": "Please provide details",
+    "describeIssue": "Describe the issue...",
+    "reporting": "Reporting...",
+    "spam": "Spam or misleading content",
+    "inappropriate": "Inappropriate or offensive content",
+    "harassment": "Harassment or bullying",
+    "falseInfo": "False information",
+    "copyright": "Copyright violation",
+    "other": "Other",
+    "markedInterested": "Marked as interested",
+    "markedNotInterested": "Marked as not interested",
+    "showMore": "We'll show you more content like this",
+    "showLess": "We'll show you less content like this",
+    "error": "Error",
+    "markInterestedError": "Failed to mark as interested",
+    "markNotInterestedError": "Failed to mark as not interested",
+    "selectReasonTitle": "Please select a reason",
+    "selectReasonDesc": "You must select a reason for reporting this post",
+    "provideDetailsTitle": "Please provide details",
+    "provideDetailsDesc": "Please provide details for your report",
+    "reportedTitle": "Post reported",
+    "reportedDesc": "Thank you for your report. We'll review it shortly.",
+    "reportError": "Failed to report post"
+  },
+  "post": {
+    "signInRequired": "Please sign in",
+    "likeSignIn": "You need to be signed in to like posts",
+    "likedTitle": "Post liked!",
+    "likedDescription": "You liked this post",
+    "likeError": "Failed to update like status",
+    "saveSignIn": "You need to be signed in to save posts",
+    "savedTitle": "Post saved!",
+    "savedDescription": "Post added to your saved posts",
+    "removedSavedTitle": "Removed from saved posts",
+    "removedSavedDescription": "Post removed from your saved posts",
+    "saveError": "Failed to update save status",
+    "error": "Error",
+    "linkCopiedTitle": "Link copied!",
+    "linkCopiedDescription": "Post link copied to clipboard",
+    "shareError": "Failed to share post",
+    "justNow": "Just now",
+    "ago": "ago",
+    "unknown": "Unknown",
+    "user": "User",
+    "unsave": "Unsave post",
+    "save": "Save post",
+    "preferencesUpdated": "Preferences updated",
+    "showMore": "We'll show you more content like this",
+    "showLess": "We'll show you less content like this",
+    "comments": "Comments",
+    "imageAlt": "Post image"
+  },
+  "notifications": {
+    "toggle": "Toggle notifications",
+    "title": "Notifications",
+    "markAllRead": "Mark all read",
+    "close": "Close",
+    "empty": "No notifications",
+    "remove": "Remove notification"
+  },
+  "features": {
+    "poweredByAI": "Powered by AI",
+    "headerLine1": "Everything You Need for",
+    "headerLine2": "Perfect Travel Planning",
+    "headerDescription": "From intelligent route planning to community-driven insights, we've built the ultimate travel management platform for modern explorers.",
+    "routePlanner": {
+      "title": "Interactive Route Planner",
+      "description": "Plan your perfect journey with real-time traffic, waypoints, and alternative route suggestions.",
+      "badge": "Live Traffic"
+    },
+    "community": {
+      "title": "Travel Community",
+      "description": "Share stories, tips, and photos with fellow travelers. Join discussions and get insider advice.",
+      "badge": "Social"
+    },
+    "aiAssistant": {
+      "title": "AI Travel Assistant",
+      "description": "Get instant help with bookings, FAQs, and personalized travel recommendations.",
+      "badge": "AI Powered"
+    },
+    "notifications": {
+      "title": "Smart Notifications",
+      "description": "Real-time alerts for bookings, cancellations, reminders, and exclusive travel offers.",
+      "badge": "Real-time"
+    },
+    "multiLang": {
+      "title": "Multi-Language Support",
+      "description": "Access the platform in your preferred language with comprehensive translation support.",
+      "badge": "8 Languages"
+    },
+    "darkMode": {
+      "title": "Dark Mode",
+      "description": "Switch between light and dark themes for comfortable viewing in any lighting condition.",
+      "badge": "Customizable"
+    },
+    "ctaTitle": "Ready to Start Your Journey?",
+    "ctaDescription": "Join millions of travelers who trust TravelHub for their adventures. Plan smarter, travel better, and create unforgettable memories.",
+    "ctaStartButton": "Start Planning Now",
+    "ctaDemoButton": "Watch Demo"
+  },
+  "stats": {
+    "activeTravelers": "Active Travelers",
+    "routesPlanned": "Routes Planned",
+    "storiesShared": "Stories Shared",
+    "countriesCovered": "Countries Covered"
+  },
+  "error": {
+    "defaultTitle": "Something went wrong",
+    "defaultMessage": "An unexpected error occurred. Please try again.",
+    "tryAgain": "Try Again",
+    "goHome": "Go Home"
+  },
+  "share": {
+    "shareButton": "Share",
+    "copyLink": "Copy Link",
+    "copySuccess": "Link copied!",
+    "facebook": "Share on Facebook",
+    "twitter": "Share on Twitter",
+    "instagram": "Share on Instagram",
+    "instagramNotSupported": "Sharing on Instagram is not supported via web.",
+    "openInNewTab": "Open in New Tab"
+  },
+  "createPost": {
+    "title": "Share Your Travel Experience",
+    "description": "Tell the community about your latest adventure",
+    "sharingToCommunity": "Sharing to community",
+    "storyLabel": "What's your travel story?",
+    "storyPlaceholder": "Share your amazing travel experience, tips, or discoveries...",
+    "addPhoto": "Add Photo",
+    "uploadImage": "Upload Image",
+    "fileInfo": "PNG, JPG, GIF up to 10MB",
+    "location": "Location",
+    "locationPlaceholder": "Where was this taken? (e.g., Paris, France)",
+    "tags": "Tags",
+    "tagsPlaceholder": "adventure, beach, foodie, culture (separate with commas)",
+    "tagsInfo": "Add relevant tags to help others discover your post",
+    "cancel": "Cancel",
+    "share": "Share Experience",
+    "sharing": "Sharing...",
+    "unknownLocation": "Unknown Location",
+    "justNow": "Just now",
+    "success": {
+      "title": "Post created!",
+      "description": "Your travel experience has been shared with the community."
+    },
+    "errors": {
+      "contentRequiredTitle": "Content required",
+      "contentRequiredDesc": "Please write something to share with the community.",
+      "failedTitle": "Failed to create post",
+      "failedDesc": "Something went wrong. Please try again."
+    }
+  },
+  "favourites": {
+    "add": "Add to Favourites",
+    "favourited": "Favourited",
+    "addedTitle": "❤️ Added to Favourites",
+    "addedDescription": "{{itemTitle}} has been added to your favourites",
+    "removedTitle": "💔 Removed from Favourites",
+    "removedDescription": "{{itemTitle}} has been removed from your favourites"
+  },
+  "bookmark": {
+    "add": "Bookmark",
+    "bookmarked": "Bookmarked",
+    "addedTitle": "Bookmarked!",
+    "addedDescription": "Saved to your bookmarks",
+    "removedTitle": "Bookmark Removed",
+    "removedDescription": "Removed from your bookmarks"
+  },
+  "share": {
+    "shareButton": "Share",
+    "copyLink": "Copy Link",
+    "facebook": "Share on Facebook",
+    "twitter": "Share on Twitter",
+    "instagram": "Share on Instagram",
+    "openInNewTab": "Open in New Tab",
+    "linkCopiedTitle": "🔗 Link copied!",
+    "linkCopiedDescription": "The link has been copied to your clipboard",
+    "instagramTitle": "Instagram Sharing",
+    "instagramDescription": "Link copied! You can paste it in your Instagram story or bio",
+    "sharedTitle": "Shared!",
+    "sharedDescription": "Shared to {{platform}}"
+  },
+  "userMenu": {
+    "user": "User",
+    "profile": "Profile",
+    "profileSettings": "Profile Settings",
+    "logout": "Logout",
+    "loggingOut": "Logging out...",
+    "signIn": "Sign In",
+    "register": "Register",
+    "toast": {
+      "logoutSuccess": {
+        "title": "Logged out successfully",
+        "description": "You have been logged out of your account."
+      },
+      "logoutError": {
+        "title": "Logout failed",
+        "description": "There was an error logging you out. Please try again."
+      }
+    }
+  },
+  "errorBoundary": {
+    "title": "Something went wrong",
+    "description": "We're sorry, but something unexpected happened. Please try refreshing the page.",
+    "errorDetails": "Error Details:",
+    "stackTrace": "Stack Trace",
+    "tryAgain": "Try Again",
+    "refreshPage": "Refresh Page"
+  },
+  "destinationShare": {
+    "copyLink": "Copy Link",
+    "shareFacebook": "Share on Facebook",
+    "shareTwitter": "Share on Twitter",
+    "shareInstagram": "Share on Instagram",
+    "openNewTab": "Open in New Tab",
+    "linkCopied": "Link copied!",
+    "instagramNotSupported": "Sharing on Instagram is not supported via web."
+  },
+  "globalLoading": {
+    "loading": "Loading..."
+  },
+  "communityFeed": {
+    "tabs": {
+      "all": "All Posts",
+      "stories": "Stories",
+      "tips": "Tips",
+      "photos": "Photos"
+    },
+    "you": "You",
+    "currentLocation": "Current Location",
+    "yourLocation": "Your Location",
+    "justNow": "Just now",
+    "shareExperience": "Share Your Experience",
+    "tellCommunity": "Tell the community about your travels",
+    "textareaPlaceholder": "Share your travel story, tip, or experience...",
+    "addPhotos": "Add Photos",
+    "addLocation": "Add Location",
+    "share": "Share",
+    "location": "{{location}}",
+    "timestamp": "{{timestamp}}",
+    "postTypes": {
+      "story": "Story",
+      "tip": "Tip",
+      "photo": "Photo"
+    },
+    "postImageAlt": "Post image {{index}}"
+  },
+  "error": "Error",
+  "failed_update_like": "Failed to update like status",
+  "reply_added": "Reply added",
+  "reply_success": "Your reply has been posted successfully",
+  "failed_add_reply": "Failed to add reply",
+  "comment_updated": "Comment updated",
+  "comment_update_success": "Your comment has been updated successfully",
+  "failed_update_comment": "Failed to update comment",
+  "comment_deleted": "Comment deleted",
+  "comment_delete_success": "Your comment has been deleted successfully",
+  "failed_delete_comment": "Failed to delete comment",
+  "edit": "Edit",
+  "delete": "Delete",
+  "edit_comment": "Edit your comment...",
+  "update": "Update",
+  "cancel": "Cancel",
+  "updating": "Updating...",
+  "reply": "Reply",
+  "write_reply": "Write a reply...",
+  "delete_comment": "Delete Comment",
+  "delete_comment_confirmation": "Are you sure you want to delete this comment? This action cannot be undone.",
+  "comment_added": "Comment added",
+  "comment_post_success": "Your comment has been posted successfully",
+  "failed_add_comment": "Failed to add comment",
+  "comments_count": "{{count}} Comments",
+  "write_comment": "Write a comment...",
+  "posting": "Posting...",
+  "post_comment": "Post Comment",
+  "no_comments": "No comments yet. Be the first to comment!",
+  "my_comments": "My Comments",
+  "no_comments_yet": "You haven't made any comments yet.",
+  "start_engaging": "Start engaging with posts to see your comments here!",
+  "error": "Error",
+  "failed_load_comments": "Failed to load your comments",
+  "comment_updated": "Comment updated",
+  "comment_update_success": "Your comment has been updated successfully",
+  "failed_update_comment": "Failed to update comment",
+  "comment_deleted": "Comment deleted",
+  "comment_delete_success": "Your comment has been deleted successfully",
+  "failed_delete_comment": "Failed to delete comment",
+  "just_now": "Just now",
+  "hours_ago": "{{count}}h ago",
+  "days_ago": "{{count}}d ago",
+  "reply_to_comment": "Reply to comment",
+  "comment_on_post": "Comment on post",
+  "saving": "Saving...",
+  "save": "Save",
+  "cancel": "Cancel",
+  "edited": "edited",
+  "delete_comment": "Delete Comment",
+  "delete_comment_confirmation": "Are you sure you want to delete this comment? This action cannot be undone.",
+  "delete": "Delete",
+  "authRedirectUpdate": {
+    "title": "🏠 Authentication Redirect Update",
+    "description": "Users now redirect to home page after successful sign in/registration",
+    "successMessage": "Authentication Flow Updated Successfully!",
+    "successDescription": "Both sign in and registration now redirect users to the home page (/home) after successful authentication, providing a better user experience.",
+    "updatedFlow": "Updated Authentication Flow",
+    "signIn": "Sign In",
+    "register": "Register",
+    "success": "Success",
+    "authentication": "Authentication",
+    "homePage": "Home Page",
+    "accountCreated": "Account Created",
+    "autoSignIn": "Auto Sign In",
+    "readyForTesting": "Ready for Testing!",
+    "readyDescription": "The authentication flow now provides a seamless user experience with consistent navigation to the home page after successful sign in or registration.",
+    "testSignIn": "Test Sign In Flow",
+    "testRegister": "Test Registration Flow"
+  },
+  "community": {
+    "title": "Travel Community",
+    "subtitle": "Connect with fellow travelers, share your experiences, and discover amazing destinations together",
+    "createPost": "Create Post",
+    "trendingTopics": "Trending Topics",
+    "statsTitle": "Community Stats",
+    "activeTravelers": "Active Travelers",
+    "sharedExperiences": "Shared Experiences",
+    "countriesVisited": "Countries Visited",
+    "quickActions": "Quick Actions",
+    "shareExperience": "Share Experience",
+    "trendingPosts": "Trending Posts"
+  },
+  "post": {
+    "createdTitle": "Post created!",
+    "createdDescription": "Your travel experience has been shared with the community."
   }
 }

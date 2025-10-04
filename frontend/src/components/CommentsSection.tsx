@@ -1,33 +1,14 @@
+// CommentsSection.tsx
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import {
-  Heart,
-  MessageCircle,
-  Send,
-  Edit,
-  Trash2,
-  MoreHorizontal,
-} from 'lucide-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+import { Heart, MessageCircle, Send, Edit, Trash2, MoreHorizontal } from 'lucide-react';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import postService, { Comment, Reply } from '@/services/postService';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -83,8 +64,12 @@ const CommentItem: React.FC<CommentItemProps> = ({
   onDelete,
   currentUserId,
 }) => {
+  const { t } = useTranslation();
+
   const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(Array.isArray(comment.likes) ? comment.likes.length : 0);
+  const [likeCount, setLikeCount] = useState(
+    Array.isArray(comment.likes) ? comment.likes.length : 0
+  );
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [replyContent, setReplyContent] = useState('');
   const [isEditing, setIsEditing] = useState(false);
@@ -96,14 +81,18 @@ const CommentItem: React.FC<CommentItemProps> = ({
   const { toast } = useToast();
 
   useEffect(() => {
-    setIsLiked(currentUserId && Array.isArray(comment.likes) ? comment.likes.includes(currentUserId) : false);
+    setIsLiked(
+      currentUserId && Array.isArray(comment.likes)
+        ? comment.likes.includes(currentUserId)
+        : false
+    );
   }, [comment.likes, currentUserId]);
 
   const handleLike = async () => {
     try {
       if (isLiked) {
         await postService.unlikeComment(postId, comment._id);
-        setLikeCount(prev => prev - 1);
+        setLikeCount((prev: number) => prev - 1);
       } else {
         await postService.likeComment(postId, comment._id);
         setLikeCount(prev => prev + 1);
@@ -111,9 +100,9 @@ const CommentItem: React.FC<CommentItemProps> = ({
       setIsLiked(!isLiked);
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to update like status",
-        variant: "destructive",
+        title: t('error'),
+        description: t('failed_update_like'),
+        variant: 'destructive',
       });
     }
   };
@@ -128,14 +117,14 @@ const CommentItem: React.FC<CommentItemProps> = ({
       setReplyContent('');
       setShowReplyForm(false);
       toast({
-        title: "Reply added",
-        description: "Your reply has been posted successfully",
+        title: t('reply_added'),
+        description: t('reply_success'),
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to add reply",
-        variant: "destructive",
+        title: t('error'),
+        description: t('failed_add_reply'),
+        variant: 'destructive',
       });
     } finally {
       setIsSubmittingReply(false);
@@ -151,14 +140,14 @@ const CommentItem: React.FC<CommentItemProps> = ({
       onUpdate(response.data);
       setIsEditing(false);
       toast({
-        title: "Comment updated",
-        description: "Your comment has been updated successfully",
+        title: t('comment_updated'),
+        description: t('comment_update_success'),
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to update comment",
-        variant: "destructive",
+        title: t('error'),
+        description: t('failed_update_comment'),
+        variant: 'destructive',
       });
     } finally {
       setIsUpdating(false);
@@ -170,14 +159,14 @@ const CommentItem: React.FC<CommentItemProps> = ({
       await postService.deleteComment(postId, comment._id);
       onDelete(comment._id);
       toast({
-        title: "Comment deleted",
-        description: "Your comment has been deleted successfully",
+        title: t('comment_deleted'),
+        description: t('comment_delete_success'),
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to delete comment",
-        variant: "destructive",
+        title: t('error'),
+        description: t('failed_delete_comment'),
+        variant: 'destructive',
       });
     }
     setShowDeleteDialog(false);
@@ -215,14 +204,14 @@ const CommentItem: React.FC<CommentItemProps> = ({
                   <DropdownMenuContent>
                     <DropdownMenuItem onClick={() => setIsEditing(true)}>
                       <Edit className="h-4 w-4 mr-2" />
-                      Edit
+                      {t('edit')}
                     </DropdownMenuItem>
-                    <DropdownMenuItem 
+                    <DropdownMenuItem
                       onClick={() => setShowDeleteDialog(true)}
                       className="text-destructive"
                     >
                       <Trash2 className="h-4 w-4 mr-2" />
-                      Delete
+                      {t('delete')}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -233,26 +222,26 @@ const CommentItem: React.FC<CommentItemProps> = ({
                 <Textarea
                   value={editContent}
                   onChange={(e) => setEditContent(e.target.value)}
-                  placeholder="Edit your comment..."
+                  placeholder={t('edit_comment')}
                   className="min-h-[60px]"
                 />
                 <div className="flex gap-2">
-                  <Button 
-                    size="sm" 
+                  <Button
+                    size="sm"
                     onClick={handleEdit}
                     disabled={isUpdating || !editContent.trim()}
                   >
-                    {isUpdating ? 'Updating...' : 'Update'}
+                    {isUpdating ? t('updating') : t('update')}
                   </Button>
-                  <Button 
-                    size="sm" 
-                    variant="outline" 
+                  <Button
+                    size="sm"
+                    variant="outline"
                     onClick={() => {
                       setIsEditing(false);
                       setEditContent(comment.content);
                     }}
                   >
-                    Cancel
+                    {t('cancel')}
                   </Button>
                 </div>
               </div>
@@ -260,17 +249,13 @@ const CommentItem: React.FC<CommentItemProps> = ({
               <p>{comment.content}</p>
             )}
           </div>
-          
+
           <div className="flex items-center gap-4 mt-2">
             <Button
               variant="ghost"
               size="sm"
               onClick={handleLike}
-              className={`transition-colors ${
-                isLiked 
-                  ? 'text-red-500 hover:text-red-600' 
-                  : 'text-muted-foreground hover:text-red-500'
-              }`}
+              className={`transition-colors ${isLiked ? 'text-red-500 hover:text-red-600' : 'text-muted-foreground hover:text-red-500'}`}
             >
               <Heart className={`h-4 w-4 mr-1 ${isLiked ? 'fill-current' : ''}`} />
               {likeCount}
@@ -282,7 +267,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
               className="text-muted-foreground hover:text-blue-500"
             >
               <MessageCircle className="h-4 w-4 mr-1" />
-              Reply
+              {t('reply')}
             </Button>
           </div>
 
@@ -292,7 +277,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
                 <Textarea
                   value={replyContent}
                   onChange={(e) => setReplyContent(e.target.value)}
-                  placeholder="Write a reply..."
+                  placeholder={t('write_reply')}
                   className="min-h-[60px]"
                 />
                 <Button
@@ -319,15 +304,18 @@ const CommentItem: React.FC<CommentItemProps> = ({
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Comment</AlertDialogTitle>
+            <AlertDialogTitle>{t('delete_comment')}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this comment? This action cannot be undone.
+              {t('delete_comment_confirmation')}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground">
-              Delete
+            <AlertDialogCancel>{t('cancel')}</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              className="bg-destructive text-destructive-foreground"
+            >
+              {t('delete')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -341,12 +329,12 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
   comments,
   onCommentsUpdate,
 }) => {
+  const { t } = useTranslation();
   const [newComment, setNewComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { user } = useAuth();
   const { toast } = useToast();
 
-  // Ensure comments is always an array
   const safeComments = Array.isArray(comments) ? comments : [];
 
   const handleAddComment = async () => {
@@ -359,14 +347,14 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
       onCommentsUpdate(updatedComments);
       setNewComment('');
       toast({
-        title: "Comment added",
-        description: "Your comment has been posted successfully",
+        title: t('comment_added'),
+        description: t('comment_post_success'),
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to add comment",
-        variant: "destructive",
+        title: t('error'),
+        description: t('failed_add_comment'),
+        variant: 'destructive',
       });
     } finally {
       setIsSubmitting(false);
@@ -388,10 +376,11 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
   return (
     <Card>
       <CardHeader>
-        <h3 className="font-semibold">Comments ({safeComments.length})</h3>
+        <h3 className="font-semibold">
+          {t('comments_count', { count: safeComments.length })}
+        </h3>
       </CardHeader>
       <CardContent className="space-y-4">
-        {/* Add new comment */}
         <div className="flex gap-3">
           <Avatar>
             <AvatarImage src={user?.profileImage} alt={user?.firstName} />
@@ -403,7 +392,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
             <Textarea
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
-              placeholder="Write a comment..."
+              placeholder={t('write_comment')}
               className="min-h-[80px]"
             />
             <Button
@@ -411,12 +400,11 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
               disabled={isSubmitting || !newComment.trim()}
               className="ml-auto"
             >
-              {isSubmitting ? 'Posting...' : 'Post Comment'}
+              {isSubmitting ? t('posting') : t('post_comment')}
             </Button>
           </div>
         </div>
 
-        {/* Comments list */}
         <div className="space-y-4">
           {safeComments.map((comment) => (
             <CommentItem
@@ -432,7 +420,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({
 
         {safeComments.length === 0 && (
           <div className="text-center py-8 text-muted-foreground">
-            No comments yet. Be the first to comment!
+            {t('no_comments')}
           </div>
         )}
       </CardContent>

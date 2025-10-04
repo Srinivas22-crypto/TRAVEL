@@ -25,16 +25,16 @@ export default function SignIn() {
 
     // Email validation
     if (!email) {
-      newErrors.email = 'Email is required';
+      newErrors.email = t('auth.errors.emailRequired');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = t('auth.errors.emailInvalid');
     }
 
     // Password validation
     if (!password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = t('auth.errors.passwordRequired');
     } else if (password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
+      newErrors.password = t('auth.errors.passwordLength');
     }
 
     setErrors(newErrors);
@@ -60,7 +60,7 @@ export default function SignIn() {
 
       toast({
         title: t('auth.signInSuccess'),
-        description: "You have successfully signed in.",
+        description: t('auth.signInSuccessDesc'),
       });
 
       navigate('/home');
@@ -68,8 +68,8 @@ export default function SignIn() {
       console.error('❌ Sign in failed:', error.message);
 
       toast({
-        title: "Sign In Failed",
-        description: error.message || "Invalid email or password. Please try again.",
+        title: t('auth.signInFailed'),
+        description: error.message || t('auth.signInFailedDesc'),
         variant: "destructive"
       });
     } finally {
@@ -103,7 +103,7 @@ export default function SignIn() {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="john@example.com"
+                  placeholder={t('auth.emailPlaceholder')}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className={errors.email ? "border-red-500" : ""}

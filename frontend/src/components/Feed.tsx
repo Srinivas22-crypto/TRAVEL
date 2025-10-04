@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { RefreshCw, Filter } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Post } from '@/services/postService';
+import { useTransition } from 'react';
 
 interface FeedProps {
   posts: Post[];

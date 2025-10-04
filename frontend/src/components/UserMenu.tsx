@@ -17,6 +17,7 @@ import {
   LogOut,
   UserPlus
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 interface UserMenuProps {
   className?: string;
@@ -26,20 +27,21 @@ const UserMenu: React.FC<UserMenuProps> = ({ className = '' }) => {
   const { user, isAuthenticated, logout, isLoading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useTranslation();
 
   const handleLogout = async () => {
     try {
       await logout();
       toast({
-        title: "Logged out successfully",
-        description: "You have been logged out of your account.",
+        title: t('userMenu.toast.logoutSuccess.title'),
+        description: t('userMenu.toast.logoutSuccess.description'),
       });
       navigate('/signin');
     } catch (error) {
       toast({
-        title: "Logout failed",
-        description: "There was an error logging you out. Please try again.",
-        variant: "destructive",
+        title: t('userMenu.toast.logoutError.title'),
+        description: t('userMenu.toast.logoutError.description'),
+        variant: 'destructive',
       });
     }
   };
@@ -57,8 +59,8 @@ const UserMenu: React.FC<UserMenuProps> = ({ className = '' }) => {
   };
 
   const getUserFullName = () => {
-    if (!user) return 'User';
-    return `${user.firstName} ${user.lastName}`.trim() || 'User';
+    if (!user) return t('userMenu.user');
+    return `${user.firstName} ${user.lastName}`.trim() || t('userMenu.user');
   };
 
   return (
@@ -78,25 +80,25 @@ const UserMenu: React.FC<UserMenuProps> = ({ className = '' }) => {
               <p className="text-xs text-muted-foreground">{user?.email || 'user@example.com'}</p>
             </div>
             <DropdownMenuSeparator />
-            
+
             {/* Profile */}
             <DropdownMenuItem 
               onClick={() => navigate('/profile')}
               className="cursor-pointer"
             >
               <User className="mr-2 h-4 w-4" />
-              Profile
+              {t('userMenu.profile')}
             </DropdownMenuItem>
-            
+
             {/* Profile Settings */}
             <DropdownMenuItem 
               onClick={handleProfileSettings}
               className="cursor-pointer"
             >
               <Settings className="mr-2 h-4 w-4" />
-              Profile Settings
+              {t('userMenu.profileSettings')}
             </DropdownMenuItem>
-            
+
             {/* Logout */}
             <DropdownMenuItem 
               onClick={handleLogout}
@@ -104,7 +106,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ className = '' }) => {
               disabled={isLoading}
             >
               <LogOut className="mr-2 h-4 w-4" />
-              {isLoading ? 'Logging out...' : 'Logout'}
+              {isLoading ? t('userMenu.loggingOut') : t('userMenu.logout')}
             </DropdownMenuItem>
           </>
         ) : (
@@ -115,16 +117,16 @@ const UserMenu: React.FC<UserMenuProps> = ({ className = '' }) => {
               className="cursor-pointer"
             >
               <User className="mr-2 h-4 w-4" />
-              Sign In
+              {t('userMenu.signIn')}
             </DropdownMenuItem>
-            
+
             {/* Register */}
             <DropdownMenuItem 
               onClick={handleRegister}
               className="cursor-pointer"
             >
               <UserPlus className="mr-2 h-4 w-4" />
-              Register
+              {t('userMenu.register')}
             </DropdownMenuItem>
           </>
         )}

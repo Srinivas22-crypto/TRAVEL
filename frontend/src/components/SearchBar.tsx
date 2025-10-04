@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+
+
 
 interface SearchBarProps {
   onSearch: (searchTerm: string) => void;
@@ -82,7 +85,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           className="bg-gradient-hero hover:opacity-90 flex-shrink-0"
         >
           <Search className="h-4 w-4 mr-2" />
-          Search
+          t("Search")
         </Button>
       )}
     </form>

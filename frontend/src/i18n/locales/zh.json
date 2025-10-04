@@ -1,9 +1,22 @@
 {
+  "chatbot": {
+    "placeholder": "输入您的消息...",
+    "send": "发送",
+    "welcome": "你好！我是你的旅行助手。今天我能帮你什么？",
+    "minimizeAria": "最小化聊天",
+    "openAria": "打开聊天",
+    "title": "旅行助手"
+  },
+  "fallbackLng": "en",
   "nav": {
     "explore": "探索",
     "book": "预订",
     "community": "社区",
-    "search": "搜索"
+    "search": "搜索",
+    "payment": "支付"
+  },
+  "header": {
+    "tagline": "你的旅程从这里开始"
   },
   "home": {
     "title": "发现您的下一次冒险",
@@ -21,15 +34,185 @@
     "title": "探索目的地",
     "subtitle": "发现世界各地的令人惊叹的地方",
     "searchPlaceholder": "搜索目的地...",
-    "filters": "过滤器",
-    "sortBy": "排序方式"
+    "filters": "筛选",
+    "sortBy": "排序方式",
+    "searchingFor": "正在搜索：",
+    "sortByOptions": {
+      "rating": "评分最高",
+      "priceLow": "价格：从低到高",
+      "priceHigh": "价格：从高到低",
+      "reviews": "评论最多"
+    },
+    "browseByCategory": "按类别浏览",
+    "filteredBySearch": "按搜索筛选",
+    "allDestinations": "所有目的地",
+    "destinations": "目的地",
+    "destination": "目的地",
+    "found": "找到",
+    "place": "个地方",
+    "places": "个地方",
+    "review": "条评论",
+    "reviews": "条评论",
+    "perPerson": "每人",
+    "places_one": "{{count}} 个地方",
+    "places_other": "{{count}} 个地方",
+    "reviews_one": "{{count}} 条评论",
+    "reviews_other": "{{count}} 条评论",
+    "destinationsFound_one": "找到 {{count}} 个目的地",
+    "destinationsFound_other": "找到 {{count}} 个目的地",
+    "noDestinationsFound": "未找到符合您条件的目的地。",
+    "clearFilters": "清除筛选",
+    "exploreTools": "探索工具",
+    "categories": {
+      "all": "全部",
+      "adventure": "冒险",
+      "beach": "海滩",
+      "culture": "文化",
+      "food": "美食",
+      "nature": "自然",
+      "city": "城市"
+    },
+    "destinationsData": {
+      "paris": {
+        "name": "法国巴黎",
+        "description": "光之城以其标志性地标和浪漫氛围等待着您。"
+      },
+      "tokyo": {
+        "name": "日本东京",
+        "description": "体验传统文化与现代创新的完美结合。"
+      },
+      "newYork": {
+        "name": "美国纽约",
+        "description": "不夜城提供无限的可能性和体验。"
+      },
+      "bali": {
+        "name": "印度尼西亚巴厘岛",
+        "description": "拥有迷人海滩和丰富文化遗产的热带天堂。"
+      },
+      "swissAlps": {
+        "name": "瑞士阿尔卑斯山",
+        "description": "令人叹为观止的山景和世界级的滑雪探险。"
+      },
+      "tuscany": {
+        "name": "意大利托斯卡纳",
+        "description": "连绵起伏的丘陵、葡萄园和正宗的意大利美食。"
+      },
+      "costaRica": {
+        "name": "哥斯达黎加",
+        "description": "丰富的生物多样性和迷人的自然景观。"
+      },
+      "santorini": {
+        "name": "希腊圣托里尼",
+        "description": "标志性的白色建筑和壮观的日落。"
+      },
+      "goa": {
+        "name": "印度果阿",
+        "description": "印度沿海天堂的美丽海滩、葡萄牙建筑和充满活力的夜生活。"
+      },
+      "dubai": {
+        "name": "阿联酋迪拜",
+        "description": "中东的豪华购物、超现代建筑和沙漠探险。"
+      },
+      "iceland": {
+        "name": "冰岛",
+        "description": "拥有迷人瀑布、间歇泉和北极光的火与冰之地。"
+      },
+      "barcelona": {
+        "name": "西班牙巴塞罗那",
+        "description": "高迪的建筑杰作、充满活力的文化和地中海海滩。"
+      }
+    },
+    "tools": {
+      "routePlanner": {
+        "title": "路线规划器",
+        "description": "使用我们的智能路线规划器规划您的完美旅程",
+        "cta": "开始规划"
+      },
+      "destinationFinder": {
+        "title": "目的地查找器",
+        "description": "发现全球隐藏的瑰宝和热门景点",
+        "cta": "立即探索"
+      }
+    }
+  },
+  "destinationDetail": {
+    "loading": "正在加载目的地...",
+    "backToExplore": "返回探索",
+    "about": {
+      "title": "关于此目的地"
+    },
+    "highlights": {
+      "title": "亮点"
+    },
+    "quickFacts": {
+      "title": "速览",
+      "bestTime": "最佳游览时间",
+      "language": "语言",
+      "currency": "货币",
+      "timezone": "时区"
+    },
+    "weather": {
+      "title": "当前天气",
+      "humidity": "湿度"
+    },
+    "activities": {
+      "title": "热门活动",
+      "book": "预订活动",
+      "booked": "已预订"
+    },
+    "cta": {
+      "title": "准备好探索了吗？",
+      "subtitle": "今天就预订您的{{name}}之旅！",
+      "bookNow": "立即预订 - ${{price}}"
+    },
+    "notFound": {
+      "title": "未找到目的地",
+      "description": "您要查找的目的地不存在。",
+      "cta": "返回探索"
+    },
+    "activityBooked": "活动已预订！",
+    "activityBookedDescription": "已成功预订{{name}}，价格为${{price}}",
+    "activityAlreadyBooked": "已预订",
+    "activityAlreadyBookedDescription": "您已经预订了{{name}}",
+    "bookingFailed": "预订失败",
+    "bookingFailedDescription": "预订活动失败。请重试。"
   },
   "book": {
     "title": "预订您的旅程",
     "subtitle": "查找和预订航班、酒店和体验",
     "flights": "航班",
     "hotels": "酒店",
-    "experiences": "体验"
+    "experiences": "体验",
+    "from": "从",
+    "to": "到",
+    "departureDate": "出发日期",
+    "returnDate": "返程日期",
+    "passengers": "乘客",
+    "destination": "目的地",
+    "checkIn": "入住",
+    "checkOut": "退房",
+    "guests": "客人",
+    "pickupLocation": "取车地点",
+    "pickupDate": "取车日期",
+    "dropoffDate": "还车日期",
+    "searchFlights": "搜索航班",
+    "searchHotels": "搜索酒店",
+    "searchCars": "搜索汽车",
+    "placeholders": {
+      "departureCit": "出发城市",
+      "destinationCity": "目的城市",
+      "pickADate": "选择日期",
+      "selectAdults": "1位成人",
+      "whereGoing": "您要去哪里？",
+      "guestsRooms": "2位客人, 1间房",
+      "pickupLocation": "取车地点"
+    },
+    "errors": {
+      "searchFailed": "搜索失败",
+      "flightsError": "搜索航班失败。请重试。",
+      "hotelsError": "搜索酒店失败。请重试。",
+      "carsError": "搜索汽车失败。请重试。"
+    }
   },
   "community": {
     "title": "旅行社区",
@@ -37,12 +220,137 @@
     "shareStory": "分享您的故事",
     "recentPosts": "最新帖子"
   },
+  "auth": {
+    "signIn": "登录",
+    "signUp": "注册",
+    "email": "电子邮件地址",
+    "password": "密码",
+    "confirmPassword": "确认密码",
+    "firstName": "名",
+    "lastName": "姓",
+    "backToHome": "← 返回首页",
+    "alreadyHaveAccount": "已经有账户了？",
+    "signInHere": "在此登录",
+    "dontHaveAccount": "还没有账户？",
+    "registerHere": "在此注册",
+    "forgotPassword": "忘记密码？",
+    "rememberMe": "记住我",
+    "welcomeBack": "欢迎回到 TravelHub",
+    "createAccountSubtitle": "加入 TravelHub，开始您的旅程",
+    "acceptTerms": "我同意",
+    "termsAndConditions": "条款和条件",
+    "signingIn": "正在登录...",
+    "creatingAccount": "正在创建账户...",
+    "signInSuccess": "欢迎回来！",
+    "signInSuccessDesc": "您已成功登录。",
+    "signInFailed": "登录失败",
+    "signInFailedDesc": "电子邮件或密码无效。请重试。",
+    "accountCreated": "账户已创建！",
+    "accountCreatedDesc": "欢迎来到 TravelHub。您现在可以登录了。",
+    "registrationFailed": "注册失败",
+    "registrationFailedDesc": "创建账户失败。请重试。",
+    "passwordsNoMatch": "密码不匹配。",
+    "acceptTermsError": "请接受条款和条件。",
+    "emailPlaceholder": "zhang@example.com",
+    "firstNamePlaceholder": "三",
+    "lastNamePlaceholder": "张",
+    "errors": {
+      "emailRequired": "需要电子邮件",
+      "emailInvalid": "请输入有效的电子邮件地址",
+      "passwordRequired": "需要密码",
+      "passwordLength": "密码必须至少为6个字符",
+      "passwordComplexity": "密码必须包含至少一个大写字母、一个小写字母和一个数字",
+      "confirmPasswordRequired": "请确认您的密码",
+      "firstNameRequired": "需要名字",
+      "firstNameLength": "名字必须至少为2个字符",
+      "lastNameRequired": "需要姓氏",
+      "lastNameLength": "姓氏必须至少为2个字符",
+      "termsRequired": "您必须接受条款和条件"
+    }
+  },
   "profile": {
     "settings": "个人资料设置",
     "personalInfo": "个人信息",
     "notifications": "通知",
     "privacy": "隐私",
-    "billing": "账单"
+    "billing": "账单",
+    "manageAccount": "管理您的账户设置和偏好",
+    "updatePersonalDetails": "更新您的个人详细信息和个人资料信息",
+    "firstName": "名",
+    "lastName": "姓",
+    "email": "电子邮件地址",
+    "phone": "电话号码",
+    "location": "地点",
+    "bio": "个人简介",
+    "bioPlaceholder": "介绍一下你自己...",
+    "saveChanges": "保存更改",
+    "notificationPreferences": "通知偏好",
+    "chooseNotifications": "选择您希望如何收到更新通知",
+    "emailNotifications": "电子邮件通知",
+    "emailNotificationsDesc": "通过电子邮件接收通知",
+    "pushNotifications": "推送通知",
+    "pushNotificationsDesc": "在您的浏览器中接收推送通知",
+    "travelUpdates": "旅行更新",
+    "travelUpdatesDesc": "获取有关航班延误、登机口变更等的通知",
+    "marketingCommunications": "营销通讯",
+    "marketingCommunicationsDesc": "接收促销优惠和旅行优惠",
+    "savePreferences": "保存偏好",
+    "privacySettings": "隐私设置",
+    "controlPrivacy": "控制谁可以看到您的信息和活动",
+    "publicProfile": "公开个人资料",
+    "publicProfileDesc": "让其他用户可以看到您的个人资料",
+    "showTravelHistory": "显示旅行历史",
+    "showTravelHistoryDesc": "在您的个人资料上显示您过去的旅行",
+    "allowMessages": "允许消息",
+    "allowMessagesDesc": "允许其他用户向您发送直接消息",
+    "saveSettings": "保存设置",
+    "billingSubscription": "账单和订阅",
+    "manageBilling": "管理您的订阅和账单信息",
+    "freePlan": "免费计划",
+    "freePlanDesc": "基本的旅行计划功能",
+    "currentPlan": "当前计划",
+    "upgradeToPremium": "升级到高级版",
+    "paymentMethods": "支付方式",
+    "addPaymentMethod": "添加支付方式",
+    "verified": "已验证"
+  },
+  "payment": {
+    "title": "支付",
+    "subtitle": "为您的旅行预订提供安全的支付处理",
+    "selectPaymentMethod": "选择支付方式",
+    "creditCard": "信用卡",
+    "paypal": "贝宝",
+    "bankTransfer": "银行转账",
+    "cardNumber": "卡号",
+    "expiryDate": "有效期",
+    "cvv": "CVV",
+    "nameOnCard": "持卡人姓名",
+    "billingAddress": "账单地址",
+    "address": "地址",
+    "city": "城市",
+    "state": "州/省",
+    "zipCode": "邮政编码",
+    "country": "国家",
+    "orderSummary": "订单摘要",
+    "subtotal": "小计",
+    "taxes": "税费",
+    "total": "总计",
+    "processPayment": "处理支付",
+    "processing": "处理中...",
+    "paymentSuccess": "支付成功！",
+    "paymentFailed": "支付失败",
+    "securePayment": "安全支付",
+    "encryptedConnection": "您的支付信息已加密且安全"
+  },
+  "notFound": {
+    "title": "404",
+    "subtitle": "哎呀！页面未找到",
+    "message": "您正在查找的页面不存在。",
+    "backToHome": "返回首页"
+  },
+  "categories": {
+    "title": "按类别浏览",
+    "subtitle": "发现根据您的兴趣策划的旅行体验"
   },
   "common": {
     "loading": "加载中...",
@@ -50,6 +358,637 @@
     "cancel": "取消",
     "edit": "编辑",
     "delete": "删除",
-    "close": "关闭"
+    "close": "关闭",
+    "back": "返回",
+    "next": "下一个",
+    "previous": "上一个",
+    "submit": "提交",
+    "confirm": "确认",
+    "explore": "探索",
+    "bookNow": "立即预订",
+    "clearAll": "全部清除"
+  },
+  "routePlanner": {
+    "title": "路线规划器",
+    "subtitle": "通过多个站点和交通方式规划您的完美旅程",
+    "planYourRoute": "规划您的路线",
+    "planDescription": "输入您的起点、终点和途中的任何站点",
+    "routeName": "路线名称",
+    "routeNamePlaceholder": "我的精彩旅程",
+    "startLocation": "起点",
+    "startLocationPlaceholder": "输入出发城市或地址",
+    "destination": "目的地",
+    "destinationPlaceholder": "输入目的城市或地址",
+    "stop": "站点",
+    "stopPlaceholder": "输入站点位置",
+    "addStop": "添加站点",
+    "travelMode": "交通方式",
+    "car": "汽车",
+    "flight": "飞机",
+    "planMyRoute": "规划我的路线",
+    "planning": "正在规划路线...",
+    "routeDetails": "路线详情",
+    "estimatedTime": "预计时间",
+    "distance": "距离",
+    "routeSummary": "路线摘要",
+    "saveRoute": "保存路线",
+    "saving": "正在保存...",
+    "routeMap": "路线图",
+    "mapWillShow": "交互式地图将显示您规划的路线",
+    "mapReady": "地图已准备好 - 点击“规划我的路线”以查看您的路线",
+    "planRouteToSeeMap": "输入起点和终点以查看交互式地图",
+    "savedRoutes": "已保存的路线",
+    "tips": "规划提示",
+    "tip1": "最多添加5个站点以创建详细的行程",
+    "tip2": "不同的交通方式显示不同的路线和时间",
+    "tip3": "保存您的路线以便稍后从任何设备访问",
+    "tip4": "您的表单数据在您输入时会自动保存",
+    "tip5": "在添加位置时实时观看地图更新",
+    "reset": "重置",
+    "formReset": "表单已成功重置",
+    "dataRestored": "您之前的路线数据已恢复",
+    "fillRequiredFields": "请填写起点和终点位置",
+    "routePlanned": "路线规划成功！",
+    "planningError": "规划路线时出错。请重试。",
+    "loginRequired": "请登录以保存路线",
+    "enterRouteName": "请输入您的路线名称",
+    "routeSaved": "路线保存成功！",
+    "savingError": "保存路线时出错。请重试。",
+    "routeLoaded": "路线加载成功！"
+  },
+  "routes": {
+    "destinations": "目的地"
+  },
+  "destinations": {
+    "paris": {
+      "name": "巴黎",
+      "country": "法国",
+      "description": "光之城巴黎以其标志性建筑、世界级博物馆、迷人咖啡馆和浪漫氛围等待着您。巴黎完美融合了历史建筑与现代sophistication，为游客提供充满艺术、文化和美食的难忘体验。",
+      "highlights": [
+        "埃菲尔铁塔 - 巴黎的标志性铁塔",
+        "卢浮宫 - 拥有蒙娜丽莎的世界最大艺术博物馆",
+        "巴黎圣母院 - 西岱岛上的哥特式杰作",
+        "香榭丽舍大道 - 著名的购物和餐饮大道",
+        "蒙马特 - 拥有圣心大教堂的艺术区"
+      ],
+      "quickFacts": {
+        "bestTime": "四月至六月，九月至十月",
+        "language": "法语",
+        "currency": "欧元 (EUR)",
+        "timezone": "中欧时间 (CET)"
+      },
+      "weather": {
+        "condition": "局部多云"
+      }
+    },
+    "tokyo": {
+      "name": "东京, 日本",
+      "country": "日本",
+      "description": "体验传统文化与现代创新的完美结合，在日本繁华的首都。东京提供从古老寺庙和宁静花园到尖端技术、美味佳肴和充满活力的夜生活的一切。",
+      "highlights": [
+        "浅草寺 - 位于浅草的东京最古老的佛教寺庙",
+        "涩谷十字路口 - 世界上最繁忙的人行横道",
+        "东京晴空塔 - 日本最高的建筑，可欣赏全景",
+        "筑地场外市场 - 新鲜海鲜和街头美食的天堂",
+        "明治神宫 - 位于市中心的宁静神道教神社"
+      ],
+      "quickFacts": {
+        "bestTime": "三月至五月, 九月至十一月",
+        "language": "日语",
+        "currency": "日元 (JPY)",
+        "timezone": "日本标准时间 (JST)"
+      },
+      "weather": {
+        "condition": "晴朗"
+      },
+      "activities": [
+        {
+          "name": "寿司制作课程",
+          "duration": "3小时",
+          "description": "向专业厨师学习制作正宗的寿司"
+        },
+        {
+          "name": "东京城市之旅",
+          "duration": "8小时",
+          "description": "涵盖主要景点和隐藏瑰宝的全日游"
+        },
+        {
+          "name": "传统茶道",
+          "duration": "1.5小时",
+          "description": "在传统环境中体验正宗的日本茶道"
+        },
+        {
+          "name": "机器人餐厅秀",
+          "duration": "1小时",
+          "description": "带有机器人和霓虹灯的独特娱乐体验"
+        }
+      ]
+    },
+    "newYork": {
+      "name": "纽约市, 美国",
+      "country": "美国",
+      "description": "纽约市，这座不夜城，是艺术、文化、时尚和金融的全球中心。从标志性的摩天大楼到多元化的社区，它提供了无与伦比的城市体验和无限的可能性。",
+      "highlights": [
+        "自由女神像 - 自由与民主的象征",
+        "时代广场 - 世界的十字路口",
+        "中央公园 - 曼哈顿中心地带的城市绿洲",
+        "帝国大厦 - 标志性的装饰艺术摩天大楼",
+        "百老汇演出 - 世界级的戏剧和娱乐"
+      ],
+      "quickFacts": {
+        "bestTime": "四月至六月, 九月至十一月",
+        "language": "英语",
+        "currency": "美元 ($)",
+        "timezone": "东部标准时间 (EST)"
+      },
+      "weather": {
+        "condition": "晴"
+      },
+      "activities": [
+        {
+          "name": "百老汇演出体验",
+          "duration": "3小时",
+          "description": "百老汇音乐剧的优质座位及后台参观"
+        },
+        {
+          "name": "自由女神像之旅",
+          "duration": "4小时",
+          "description": "前往自由岛和埃利斯岛的渡轮之旅"
+        },
+        {
+          "name": "中央公园自行车之旅",
+          "duration": "2小时",
+          "description": "中央公园亮点的导览自行车之旅"
+        },
+        {
+          "name": "纽约美食之旅",
+          "duration": "3小时",
+          "description": "品尝纽约市各社区的多元美食"
+        }
+      ]
+    },
+    "bali": {
+      "name": "巴厘岛, 印度尼西亚",
+      "country": "印度尼西亚",
+      "description": "拥有迷人海滩、茂密稻田、古老寺庙和丰富文化遗产的热带天堂。巴厘岛提供了放松与冒险的完美结合，从世界级的冲浪到精神静修。",
+      "highlights": [
+        "海神庙 - 岩石上的标志性海神庙",
+        "乌布稻田 - 联合国教科文组织世界遗产稻田",
+        "巴杜尔火山 - 适合日出徒步的活火山",
+        "水明漾海滩 - 拥有绝佳冲浪的时尚海滩",
+        "猴林圣地 - 有顽皮猕猴的神圣森林"
+      ],
+      "quickFacts": {
+        "bestTime": "四月至十月",
+        "language": "印尼语, 巴厘语",
+        "currency": "印尼盾 (IDR)",
+        "timezone": "印尼中部时间 (WITA)"
+      },
+      "weather": {
+        "condition": "晴"
+      },
+      "activities": [
+        {
+          "name": "巴杜尔山日出徒步",
+          "duration": "5小时",
+          "description": "徒步至山顶，欣赏壮丽的火山日出景色"
+        },
+        {
+          "name": "文化体验之旅",
+          "duration": "4小时",
+          "description": "参观传统村庄，了解巴厘文化"
+        },
+        {
+          "name": "冲浪课程",
+          "duration": "3小时",
+          "description": "在水明漾海滩接受专业冲浪指导"
+        },
+        {
+          "name": "水疗静修",
+          "duration": "2小时",
+          "description": "传统巴厘式按摩和健康护理"
+        }
+      ]
+    },
+    "swissAlps": {
+      "name": "瑞士阿尔卑斯山, 瑞士",
+      "country": "瑞士",
+      "description": "瑞士阿尔卑斯山等待着您，这里有令人叹为观止的山景和世界级的滑雪探险。体验原始的高山景观、迷人的山村和全年的户外活动。",
+      "highlights": [
+        "马特洪峰 - 标志性的金字塔形山峰",
+        "少女峰 - 拥有冰川和雪的欧洲之巅",
+        "日内瓦湖 - 拥有葡萄园的美丽高山湖泊",
+        "采尔马特村 - 无车山地度假村",
+        "莱茵瀑布 - 欧洲最强大的瀑布"
+      ],
+      "quickFacts": {
+        "bestTime": "十二月至三月 (滑雪), 六月至九月 (徒步)",
+        "language": "德语, 法语, 意大利语",
+        "currency": "瑞士法郎 (CHF)",
+        "timezone": "中欧时间 (CET)"
+      },
+      "weather": {
+        "condition": "雪"
+      },
+      "activities": [
+        {
+          "name": "少女峰冰川之旅",
+          "duration": "8小时",
+          "description": "乘火车前往欧洲最高的火车站"
+        },
+        {
+          "name": "滑雪探险",
+          "duration": "6小时",
+          "description": "专业滑雪课程和山地滑雪"
+        },
+        {
+          "name": "高山徒步之旅",
+          "duration": "5小时",
+          "description": "穿越瑞士山间小径的风景徒步"
+        },
+        {
+          "name": "巧克力制作课程",
+          "duration": "3小时",
+          "description": "在传统工厂学习制作瑞士巧克力"
+        }
+      ]
+    },
+    "tuscany": {
+      "name": "托斯卡纳, 意大利",
+      "country": "意大利",
+      "description": "连绵起伏的丘陵、葡萄园和正宗的意大利美食定义了这个迷人的地区。托斯卡纳提供文艺复兴时期的艺术、中世纪城镇、世界闻名的葡萄酒和世界上最美丽的乡村之一。",
+      "highlights": [
+        "佛罗伦萨大教堂 - 令人惊叹的文艺复兴建筑",
+        "基安蒂葡萄酒产区 - 世界著名的葡萄园和品酒会",
+        "比萨斜塔 - 标志性的倾斜钟楼",
+        "锡耶纳历史中心 - 具有哥特式建筑的中世纪城市",
+        "瓦尔道尔契亚 - 联合国教科文组织世界遗产景观"
+      ],
+      "quickFacts": {
+        "bestTime": "四月至六月, 九月至十月",
+        "language": "意大利语",
+        "currency": "欧元 (EUR)",
+        "timezone": "中欧时间 (CET)"
+      },
+      "weather": {
+        "condition": "晴"
+      },
+      "activities": [
+        {
+          "name": "基安蒂葡萄酒之旅",
+          "duration": "8小时",
+          "description": "参观传统酿酒厂，品尝世界一流的基安蒂葡萄酒"
+        },
+        {
+          "name": "烹饪课程",
+          "duration": "4小时",
+          "description": "跟当地厨师学习烹饪正宗的托斯卡纳菜肴"
+        },
+        {
+          "name": "佛罗伦萨艺术之旅",
+          "duration": "3小时",
+          "description": "在乌菲兹美术馆探索文艺复兴时期的杰作"
+        },
+        {
+          "name": "乡村自行车之旅",
+          "duration": "5小时",
+          "description": "骑行穿过风景如画的托斯卡纳山丘和村庄"
+        }
+      ]
+    },
+    "london": {
+      "name": "伦敦, 英国",
+      "country": "英国",
+      "description": "伦敦，一座历史与现代交融的城市，提供了皇家遗产、世界级博物馆、多元文化和创新建筑的独特融合。体验这座泰晤士河畔全球大都市的魅力。",
+      "highlights": [
+        "大本钟和国会大厦",
+        "伦敦塔",
+        "白金汉宫",
+        "大英博物馆",
+        "伦敦眼"
+      ],
+      "quickFacts": {
+        "bestTime": "五月至九月",
+        "language": "英语",
+        "currency": "英镑 (£)",
+        "timezone": "GMT/BST"
+      },
+      "weather": {
+        "condition": "多云"
+      },
+      "activities": [
+        {
+          "name": "皇宫之旅",
+          "duration": "3小时",
+          "description": "参观白金汉宫，了解皇家历史"
+        },
+        {
+          "name": "博物馆日票",
+          "duration": "6小时",
+          "description": "进入伦敦主要博物馆和画廊"
+        },
+        {
+          "name": "泰晤士河游船",
+          "duration": "2小时",
+          "description": "沿泰晤士河的风景游船"
+        },
+        {
+          "name": "街头美食市场之旅",
+          "duration": "3小时",
+          "description": "探索伦敦多样化的食品市场和美食"
+        }
+      ]
+    },
+    "costaRica": {
+      "name": "哥斯达黎加",
+      "country": "哥斯达黎加",
+      "description": "丰富的生物多样性和迷人的自然景观使哥斯达黎加成为自然爱好者的天堂。从原始海滩到茂密的热带雨林，这个中美洲的瑰宝提供了令人难以置信的野生动物和冒险活动。",
+      "highlights": [
+        "曼努埃尔安东尼奥国家公园 - 海滩和野生动物",
+        "阿雷纳尔火山 - 带有温泉的活火山",
+        "蒙特维多云雾森林 - 拥有高空滑索的独特生态系统",
+        "托尔图格罗国家公园 - 海龟筑巢地",
+        "塔马林多海滩 - 世界级冲浪胜地"
+      ],
+      "quickFacts": {
+        "bestTime": "十二月至四月",
+        "language": "西班牙语",
+        "currency": "哥斯达黎加科朗 (CRC)",
+        "timezone": "中部标准时间 (CST)"
+      },
+      "weather": {
+        "condition": "热带"
+      },
+      "activities": [
+        {
+          "name": "高空滑索探险",
+          "duration": "3小时",
+          "description": "在惊险的高空滑索课程中飞越树冠"
+        },
+        {
+          "name": "野生动物狩猎",
+          "duration": "6小时",
+          "description": "在自然栖息地中发现树懒、猴子和奇异鸟类"
+        },
+        {
+          "name": "火山徒步",
+          "duration": "4小时",
+          "description": "围绕活火山阿雷纳尔徒步，欣赏壮丽景色"
+        },
+        {
+          "name": "白水漂流",
+          "duration": "5小时",
+          "description": "穿越热带雨林，在刺激的急流中航行"
+        }
+      ]
+    },
+    "santorini": {
+      "name": "圣托里尼, 希腊",
+      "country": "希腊",
+      "description": "标志性的白色建筑和壮观的日落使圣托里尼成为世界上最浪漫的目的地之一。这座火山岛提供了迷人的火山口景色、独特的海滩和卓越的葡萄酒。",
+      "highlights": [
+        "伊亚村 - 以壮观的日落而闻名",
+        "红沙滩 - 独特的红色火山沙滩",
+        "阿克罗蒂里考古遗址 - 古代米诺斯城市",
+        "费拉镇 - 拥有迷人火山口景色的首府",
+        "圣托酒庄 - 火山土壤葡萄酒品尝"
+      ],
+      "quickFacts": {
+        "bestTime": "四月至十月",
+        "language": "希腊语",
+        "currency": "欧元 (EUR)",
+        "timezone": "东欧时间 (EET)"
+      },
+      "weather": {
+        "condition": "晴"
+      },
+      "activities": [
+        {
+          "name": "日落帆船之旅",
+          "duration": "5小时",
+          "description": "环绕火山口航行，享用晚餐并欣赏日落景色"
+        },
+        {
+          "name": "品酒之旅",
+          "duration": "4小时",
+          "description": "在传统酒庄品尝独特的火山葡萄酒"
+        },
+        {
+          "name": "火山远足",
+          "duration": "3小时",
+          "description": "乘船前往火山口内的活火山岛"
+        },
+        {
+          "name": "摄影之旅",
+          "duration": "4小时",
+          "description": "与专业导游一起捕捉最适合Instagram的景点"
+        }
+      ]
+    },
+    "iceland": {
+      "name": "冰岛",
+      "country": "冰岛",
+      "description": "拥有迷人瀑布、间歇泉和北极光的火与冰之地。冰岛提供了戏剧性的景观，从冰川泻湖到火山地，使其成为摄影师的天堂和自然爱好者的梦想目的地。",
+      "highlights": [
+        "蓝湖 - 拥有乳白色蓝水的地热温泉",
+        "黄金圈 - 间歇泉、黄金瀑布和辛格维利尔国家公园",
+        "北极光 - 九月至三月可观赏北极光",
+        "杰古沙龙冰河湖 - 冰山漂浮在冰川湖中",
+        "雷尼斯黑沙滩 - 拥有玄武岩柱的戏剧性火山海滩"
+      ],
+      "quickFacts": {
+        "bestTime": "六月至八月 (夏季), 九月至三月 (北极光)",
+        "language": "冰岛语",
+        "currency": "冰岛克朗 (ISK)",
+        "timezone": "格林威治标准时间 (GMT)"
+      },
+      "weather": {
+        "condition": "局部多云"
+      },
+      "activities": [
+        {
+          "name": "北极光之旅",
+          "duration": "4小时",
+          "description": "与专家导游一起追寻神奇的北极光"
+        },
+        {
+          "name": "黄金圈之旅",
+          "duration": "8小时",
+          "description": "一天内参观冰岛最著名的自然景点"
+        },
+        {
+          "name": "蓝湖体验",
+          "duration": "3小时",
+          "description": "在著名的地热温泉中放松，使用硅泥面膜"
+        },
+        {
+          "name": "冰川徒步",
+          "duration": "6小时",
+          "description": "使用冰爪和冰镐探索古老的冰川"
+        }
+      ]
+    },
+    "barcelona": {
+      "name": "巴塞罗那, 西班牙",
+      "country": "西班牙",
+      "description": "高迪的建筑杰作、充满活力的文化和地中海海滩使巴塞罗那成为艺术、历史和现代生活的完美融合。从哥特区到奎尔公园，每个角落都讲述着一个故事。",
+      "highlights": [
+        "圣家堂 - 高迪未完成的杰作大教堂",
+        "奎尔公园 - 拥有城市景观的彩色马赛克公园",
+        "兰布拉大道 - 拥有街头艺人的著名步行街",
+        "哥特区 - 中世纪街道和历史建筑",
+        "巴特罗之家 - 具有独特外墙的现代主义建筑"
+      ],
+      "quickFacts": {
+        "bestTime": "五月至六月, 九月至十月",
+        "language": "西班牙语, 加泰罗尼亚语",
+        "currency": "欧元 (EUR)",
+        "timezone": "中欧时间 (CET)"
+      },
+      "weather": {
+        "condition": "晴"
+      },
+      "activities": [
+        {
+          "name": "圣家堂之旅",
+          "duration": "2小时",
+          "description": "免排队参观高迪的建筑杰作"
+        },
+        {
+          "name": "小吃徒步之旅",
+          "duration": "3小时",
+          "description": "在当地社区品尝正宗的西班牙小吃"
+        },
+        {
+          "name": "弗拉明戈表演",
+          "duration": "1.5小时",
+          "description": "体验充满激情的弗拉明戈舞蹈和音乐"
+        },
+        {
+          "name": "哥特区徒步之旅",
+          "duration": "2.5小时",
+          "description": "探索中世纪街道和隐藏的广场"
+        }
+      ]
+    },
+    "dubai": {
+      "name": "迪拜, 阿联酋",
+      "country": "阿拉伯联合酋长国",
+      "description": "中东的豪华购物、超现代建筑和沙漠探险。迪拜提供世界级的景点，从最高的建筑到人工岛屿，将传统与未来创新融为一体。",
+      "highlights": [
+        "哈利法塔 - 拥有观景台的世界最高建筑",
+        "迪拜购物中心 - 拥有水族馆和溜冰场的巨型购物中心",
+        "朱美拉棕榈岛 - 拥有豪华度假村的人工岛",
+        "迪拜码头 - 拥有摩天大楼的迷人海滨",
+        "黄金市场 - 黄金和珠宝的传统市场"
+      ],
+      "quickFacts": {
+        "bestTime": "十一月至三月",
+        "language": "阿拉伯语, 英语",
+        "currency": "阿联酋迪拉姆 (AED)",
+        "timezone": "海湾标准时间 (GST)"
+      },
+      "weather": {
+        "condition": "晴"
+      },
+      "activities": [
+        {
+          "name": "哈利法塔体验",
+          "duration": "2小时",
+          "description": "参观世界最高的建筑和观景台"
+        },
+        {
+          "name": "沙漠冲沙",
+          "duration": "6小时",
+          "description": "沙丘冲浪、骑骆驼和传统贝都因晚餐"
+        },
+        {
+          "name": "迪拜码头游船",
+          "duration": "2小时",
+          "description": "豪华游艇巡游，欣赏迷人的天际线景色"
+        },
+        {
+          "name": "购物之旅",
+          "duration": "4小时",
+          "description": "探索传统市场和现代购物中心"
+        }
+      ]
+    },
+    "goa": {
+      "name": "果阿, 印度",
+      "country": "印度",
+      "description": "印度沿海天堂的美丽海滩、葡萄牙建筑和充满活力的夜生活。果阿提供了印度和葡萄牙文化的独特融合，拥有迷人的海滩和悠闲的氛围。",
+      "highlights": [
+        "巴加海滩 - 拥有水上运动和夜生活的热门海滩",
+        "旧果阿教堂 - 联合国教科文组织世界遗产葡萄牙教堂",
+        "安朱纳跳蚤市场 - 充满活力的市场，出售当地手工艺品和食品",
+        "杜德萨加尔瀑布 - 壮观的四层瀑布",
+        "香料种植园 - 穿过豆蔻和胡椒农场的芳香之旅"
+      ],
+      "quickFacts": {
+        "bestTime": "十一月至二月",
+        "language": "印地语, 英语, 孔卡尼语",
+        "currency": "印度卢比 (INR)",
+        "timezone": "印度标准时间 (IST)"
+      },
+      "weather": {
+        "condition": "晴"
+      },
+      "activities": [
+        {
+          "name": "海滩跳跃之旅",
+          "duration": "8小时",
+          "description": "参观从巴加到帕洛林的多个海滩，含午餐"
+        },
+        {
+          "name": "香料种植园之旅",
+          "duration": "4小时",
+          "description": "了解香料种植，含传统果阿午餐"
+        },
+        {
+          "name": "水上运动套餐",
+          "duration": "3小时",
+          "description": "帆伞、摩托艇和香蕉船"
+        },
+        {
+          "name": "旧果阿遗产之旅",
+          "duration": "3小时",
+          "description": "探索葡萄牙殖民时期的建筑和教堂"
+        }
+      ]
+    },
+    "tokyo": {
+      "name": "东京",
+      "country": "日本",
+      "description": "东京完美融合了超现代科技与传统文化。从古老寺庙到霓虹灯闪烁的街区，这座大都市在保持其丰富遗产的同时展现着未来的面貌。",
+      "highlights": [
+        "涉谷十字路口 - 世界最繁忙的人行横道",
+        "浅草寺 - 东京最古老的佛教寺庙",
+        "东京晴空塔 - 提供壮观景色的日本最高建筑",
+        "筑地市场 - 世界著名的海鲜市场和美食胜地",
+        "原宿 - 青年文化和时尚中心"
+      ],
+      "quickFacts": {
+        "bestTime": "三月至五月，九月至十一月",
+        "language": "日语",
+        "currency": "日元 (¥)",
+        "timezone": "日本标准时间 (JST)"
+      },
+      "weather": {
+        "condition": "晴"
+      },
+      "activities": [
+        {
+          "name": "寿司制作课程",
+          "duration": "3小时",
+          "description": "向专业厨师学习制作正宗的寿司"
+        },
+        {
+          "name": "东京城市之旅",
+          "duration": "8小时",
+          "description": "覆盖主要景点和隐藏瑰宝的全日游"
+        }
+      ]
+      }
+    }
   }
-}

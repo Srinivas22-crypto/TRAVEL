@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,6 +15,7 @@ import {
 } from 'lucide-react';
 
 export const Footer = () => {
+  const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -29,14 +31,18 @@ export const Footer = () => {
               </div>
               <div>
                 <h3 className="text-xl font-bold bg-gradient-hero bg-clip-text text-transparent">
-                  TravelHub
+                  {t('footer.brand', 'TravelHub')}
                 </h3>
-                <p className="text-xs text-muted-foreground">Your Journey Starts Here</p>
+                <p className="text-xs text-muted-foreground">
+                  {t('footer.tagline', 'Your Journey Starts Here')}
+                </p>
               </div>
             </div>
             <p className="text-muted-foreground mb-6">
-              The ultimate travel management platform for modern explorers. 
-              Plan, book, and share your adventures with confidence.
+              {t(
+                'footer.description',
+                'The ultimate travel management platform for modern explorers. Plan, book, and share your adventures with confidence.'
+              )}
             </p>
             <div className="flex space-x-4">
               <Button variant="ghost" size="icon" className="hover:text-primary">
@@ -56,38 +62,38 @@ export const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold mb-4">Explore</h4>
+            <h4 className="font-semibold mb-4">{t('footer.explore', 'Explore')}</h4>
             <ul className="space-y-3">
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Destinations</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Route Planner</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Travel Guide</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Popular Routes</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Local Tips</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">{t('footer.links.destinations', 'Destinations')}</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">{t('footer.links.routePlanner', 'Route Planner')}</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">{t('footer.links.travelGuide', 'Travel Guide')}</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">{t('footer.links.popularRoutes', 'Popular Routes')}</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">{t('footer.links.localTips', 'Local Tips')}</a></li>
             </ul>
           </div>
 
           {/* Services */}
           <div>
-            <h4 className="font-semibold mb-4">Services</h4>
+            <h4 className="font-semibold mb-4">{t('footer.services', 'Services')}</h4>
             <ul className="space-y-3">
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Flight Booking</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Hotel Reservations</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Car Rentals</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Travel Insurance</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">AI Assistant</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">{t('footer.services.flightBooking', 'Flight Booking')}</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">{t('footer.services.hotelReservations', 'Hotel Reservations')}</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">{t('footer.services.carRentals', 'Car Rentals')}</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">{t('footer.services.travelInsurance', 'Travel Insurance')}</a></li>
+              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">{t('footer.services.aiAssistant', 'AI Assistant')}</a></li>
             </ul>
           </div>
 
           {/* Newsletter */}
           <div>
-            <h4 className="font-semibold mb-4">Stay Updated</h4>
+            <h4 className="font-semibold mb-4">{t('footer.newsletter', 'Stay Updated')}</h4>
             <p className="text-muted-foreground mb-4">
-              Get the latest travel deals and destination insights delivered to your inbox.
+              {t('footer.newsletterDescription', 'Get the latest travel deals and destination insights delivered to your inbox.')}
             </p>
             <div className="space-y-3">
-              <Input placeholder="Enter your email" type="email" />
+              <Input placeholder={t('footer.emailPlaceholder', 'Enter your email')} type="email" />
               <Button className="w-full" variant="ocean">
-                Subscribe
+                {t('footer.subscribe', 'Subscribe')}
               </Button>
             </div>
           </div>
@@ -100,21 +106,21 @@ export const Footer = () => {
               <div className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-primary" />
                 <div>
-                  <h5 className="font-medium">Email Support</h5>
+                  <h5 className="font-medium">{t('footer.contact.email', 'Email Support')}</h5>
                   <p className="text-sm text-muted-foreground">support@travelhub.com</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-primary" />
                 <div>
-                  <h5 className="font-medium">24/7 Hotline</h5>
+                  <h5 className="font-medium">{t('footer.contact.hotline', '24/7 Hotline')}</h5>
                   <p className="text-sm text-muted-foreground">+1 (555) 123-4567</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <MapPin className="h-5 w-5 text-primary" />
                 <div>
-                  <h5 className="font-medium">Headquarters</h5>
+                  <h5 className="font-medium">{t('footer.contact.headquarters', 'Headquarters')}</h5>
                   <p className="text-sm text-muted-foreground">San Francisco, CA</p>
                 </div>
               </div>
@@ -126,23 +132,15 @@ export const Footer = () => {
         <div className="border-t border-border pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex flex-wrap gap-6 text-sm">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                Terms of Service
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                Cookie Policy
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                Accessibility
-              </a>
+              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">{t('footer.privacy', 'Privacy Policy')}</a>
+              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">{t('footer.terms', 'Terms of Service')}</a>
+              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">{t('footer.cookies', 'Cookie Policy')}</a>
+              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">{t('footer.accessibility', 'Accessibility')}</a>
             </div>
             <div className="flex items-center gap-1 text-sm text-muted-foreground">
-              <span>© {currentYear} TravelHub. Made with</span>
+              <span>{t('footer.copyright', `© ${currentYear} TravelHub. Made with`)}</span>
               <Heart className="h-4 w-4 text-destructive fill-current" />
-              <span>for travelers worldwide.</span>
+              <span>{t('footer.forTravelers', 'for travelers worldwide.')}</span>
             </div>
           </div>
         </div>

@@ -37,6 +37,7 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 import postService from '@/services/postService';
+import { useTranslation } from 'react-i18next';
 
 interface PostOptionsMenuProps {
   postId: string;
@@ -51,6 +52,7 @@ const PostOptionsMenu: React.FC<PostOptionsMenuProps> = ({
   onNotInterested,
   onReported,
 }) => {
+  const { t } = useTranslation();
   const [showReportDialog, setShowReportDialog] = useState(false);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [confirmAction, setConfirmAction] = useState<'interested' | 'not-interested' | null>(null);
@@ -60,12 +62,12 @@ const PostOptionsMenu: React.FC<PostOptionsMenuProps> = ({
   const { toast } = useToast();
 
   const reportReasons = [
-    'Spam or misleading content',
-    'Inappropriate or offensive content',
-    'Harassment or bullying',
-    'False information',
-    'Copyright violation',
-    'Other',
+    t('postOptions.spam'),
+    t('postOptions.inappropriate'),
+    t('postOptions.harassment'),
+    t('postOptions.falseInfo'),
+    t('postOptions.copyright'),
+    t('postOptions.other'),
   ];
 
   const handleInterested = async () => {
@@ -73,14 +75,14 @@ const PostOptionsMenu: React.FC<PostOptionsMenuProps> = ({
       await postService.markInterested(postId);
       onInterested?.();
       toast({
-        title: "Marked as interested",
-        description: "We'll show you more content like this",
+        title: t('postOptions.markedInterested'),
+        description: t('postOptions.showMore'),
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to mark as interested",
-        variant: "destructive",
+        title: t('postOptions.error'),
+        description: t('postOptions.markInterestedError'),
+        variant: 'destructive',
       });
     }
   };
@@ -90,14 +92,14 @@ const PostOptionsMenu: React.FC<PostOptionsMenuProps> = ({
       await postService.markNotInterested(postId);
       onNotInterested?.();
       toast({
-        title: "Marked as not interested",
-        description: "We'll show you less content like this",
+        title: t('postOptions.markedNotInterested'),
+        description: t('postOptions.showLess'),
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to mark as not interested",
-        variant: "destructive",
+        title: t('postOptions.error'),
+        description: t('postOptions.markNotInterestedError'),
+        variant: 'destructive',
       });
     }
   };
@@ -105,39 +107,39 @@ const PostOptionsMenu: React.FC<PostOptionsMenuProps> = ({
   const handleReport = async () => {
     if (!reportReason) {
       toast({
-        title: "Please select a reason",
-        description: "You must select a reason for reporting this post",
-        variant: "destructive",
+        title: t('postOptions.selectReasonTitle'),
+        description: t('postOptions.selectReasonDesc'),
+        variant: 'destructive',
       });
       return;
     }
 
-    if (reportReason === 'Other' && !customReason.trim()) {
+    if (reportReason === t('postOptions.other') && !customReason.trim()) {
       toast({
-        title: "Please provide details",
-        description: "Please provide details for your report",
-        variant: "destructive",
+        title: t('postOptions.provideDetailsTitle'),
+        description: t('postOptions.provideDetailsDesc'),
+        variant: 'destructive',
       });
       return;
     }
 
     setIsSubmitting(true);
     try {
-      const reason = reportReason === 'Other' ? customReason : reportReason;
+      const reason = reportReason === t('postOptions.other') ? customReason : reportReason;
       await postService.reportPost(postId, reason);
       onReported?.();
       setShowReportDialog(false);
       setReportReason('');
       setCustomReason('');
       toast({
-        title: "Post reported",
-        description: "Thank you for your report. We'll review it shortly.",
+        title: t('postOptions.reportedTitle'),
+        description: t('postOptions.reportedDesc'),
       });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to report post",
-        variant: "destructive",
+        title: t('postOptions.error'),
+        description: t('postOptions.reportError'),
+        variant: 'destructive',
       });
     } finally {
       setIsSubmitting(false);
@@ -145,11 +147,8 @@ const PostOptionsMenu: React.FC<PostOptionsMenuProps> = ({
   };
 
   const handleConfirmAction = () => {
-    if (confirmAction === 'interested') {
-      handleInterested();
-    } else if (confirmAction === 'not-interested') {
-      handleNotInterested();
-    }
+    if (confirmAction === 'interested') handleInterested();
+    else if (confirmAction === 'not-interested') handleNotInterested();
     setShowConfirmDialog(false);
     setConfirmAction(null);
   };
@@ -170,11 +169,11 @@ const PostOptionsMenu: React.FC<PostOptionsMenuProps> = ({
         <DropdownMenuContent align="end" className="w-48">
           <DropdownMenuItem onClick={() => openConfirmDialog('interested')}>
             <ThumbsUp className="h-4 w-4 mr-2" />
-            Interested
+            {t('postOptions.interested')}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => openConfirmDialog('not-interested')}>
             <ThumbsDown className="h-4 w-4 mr-2" />
-            Not Interested
+            {t('postOptions.notInterested')}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem 
@@ -182,7 +181,7 @@ const PostOptionsMenu: React.FC<PostOptionsMenuProps> = ({
             className="text-red-600 focus:text-red-600"
           >
             <Flag className="h-4 w-4 mr-2" />
-            Report
+            {t('postOptions.report')}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -192,19 +191,20 @@ const PostOptionsMenu: React.FC<PostOptionsMenuProps> = ({
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              {confirmAction === 'interested' ? 'Mark as Interested' : 'Mark as Not Interested'}
+              {confirmAction === 'interested' 
+                ? t('postOptions.markInterested') 
+                : t('postOptions.markNotInterested')}
             </AlertDialogTitle>
             <AlertDialogDescription>
               {confirmAction === 'interested' 
-                ? "We'll use this to show you more similar content in your feed."
-                : "We'll use this to show you less similar content in your feed."
-              }
+                ? t('postOptions.markInterestedDesc') 
+                : t('postOptions.markNotInterestedDesc')}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t('postOptions.cancel')}</AlertDialogCancel>
             <AlertDialogAction onClick={handleConfirmAction}>
-              Confirm
+              {t('postOptions.confirm')}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -216,22 +216,22 @@ const PostOptionsMenu: React.FC<PostOptionsMenuProps> = ({
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <AlertTriangle className="h-5 w-5 text-red-500" />
-              Report Post
+              {t('postOptions.reportPost')}
             </DialogTitle>
             <DialogDescription>
-              Help us understand what's wrong with this post. Your report is anonymous.
+              {t('postOptions.reportDescription')}
             </DialogDescription>
           </DialogHeader>
           
           <div className="space-y-4">
             <div>
-              <Label htmlFor="reason">Reason for reporting</Label>
+              <Label htmlFor="reason">{t('postOptions.reason')}</Label>
               <RadioGroup
                 value={reportReason}
                 onValueChange={setReportReason}
                 className="mt-2"
               >
-                {reportReasons.map((reason) => (
+                {reportReasons.map(reason => (
                   <div key={reason} className="flex items-center space-x-2">
                     <RadioGroupItem value={reason} id={reason} />
                     <Label htmlFor={reason} className="text-sm font-normal">
@@ -242,14 +242,14 @@ const PostOptionsMenu: React.FC<PostOptionsMenuProps> = ({
               </RadioGroup>
             </div>
 
-            {reportReason === 'Other' && (
+            {reportReason === t('postOptions.other') && (
               <div>
-                <Label htmlFor="custom-reason">Please provide details</Label>
+                <Label htmlFor="custom-reason">{t('postOptions.customDetails')}</Label>
                 <Textarea
                   id="custom-reason"
                   value={customReason}
                   onChange={(e) => setCustomReason(e.target.value)}
-                  placeholder="Describe the issue..."
+                  placeholder={t('postOptions.describeIssue')}
                   className="mt-1"
                   rows={3}
                 />
@@ -266,14 +266,14 @@ const PostOptionsMenu: React.FC<PostOptionsMenuProps> = ({
                 setCustomReason('');
               }}
             >
-              Cancel
+              {t('postOptions.cancel')}
             </Button>
             <Button
               onClick={handleReport}
               disabled={isSubmitting || !reportReason}
               className="bg-red-600 hover:bg-red-700"
             >
-              {isSubmitting ? 'Reporting...' : 'Report Post'}
+              {isSubmitting ? t('postOptions.reporting') : t('postOptions.reportPost')}
             </Button>
           </DialogFooter>
         </DialogContent>

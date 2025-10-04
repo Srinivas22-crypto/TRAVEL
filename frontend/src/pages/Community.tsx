@@ -21,7 +21,6 @@ const Community = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   
-  // Load posts on component mount
   useEffect(() => {
     loadPosts();
   }, []);
@@ -33,7 +32,6 @@ const Community = () => {
       setPosts(response.posts);
     } catch (error) {
       console.error('Failed to load posts:', error);
-      // Fall back to mock data
       setPosts(mockPosts);
     } finally {
       setIsLoading(false);
@@ -43,12 +41,12 @@ const Community = () => {
   const handlePostCreated = (newPost: Post) => {
     setPosts(prevPosts => [newPost, ...prevPosts]);
     toast({
-      title: "Post created!",
-      description: "Your travel experience has been shared with the community.",
+      title: t("post.createdTitle"),
+      description: t("post.createdDescription"),
     });
   };
 
-  // Mock data for fallback
+  // Mock fallback posts (static text, could also be translated if needed)
   const mockPosts: Post[] = [
     {
       _id: '1',
@@ -144,7 +142,6 @@ const Community = () => {
     }
   ];
 
-  
   const trendingTopics = [
     { name: "#SustainableTravel", posts: 2340 },
     { name: "#HiddenGems", posts: 1890 },
@@ -161,17 +158,17 @@ const Community = () => {
         {/* Hero Section */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4 bg-gradient-hero bg-clip-text text-transparent">
-            Travel Community
+            {t("community.title")}
           </h1>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Connect with fellow travelers, share your experiences, and discover amazing destinations together
+            {t("community.subtitle")}
           </p>
           
           <div className="flex gap-4 justify-center">
             <CreatePostModal onPostCreated={handlePostCreated}>
               <Button className="bg-gradient-hero hover:opacity-90">
                 <Plus className="h-4 w-4 mr-2" />
-                Create Post
+                {t("community.createPost")}
               </Button>
             </CreatePostModal>
           </div>
@@ -194,7 +191,7 @@ const Community = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <TrendingUp className="h-5 w-5" />
-                  Trending Topics
+                  {t("community.trendingTopics")}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -216,21 +213,21 @@ const Community = () => {
             {/* Quick Stats */}
             <Card>
               <CardHeader>
-                <CardTitle>Community Stats</CardTitle>
+                <CardTitle>{t("community.statsTitle")}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   <div className="text-center">
                     <p className="text-2xl font-bold text-primary">50,000+</p>
-                    <p className="text-sm text-muted-foreground">Active Travelers</p>
+                    <p className="text-sm text-muted-foreground">{t("community.activeTravelers")}</p>
                   </div>
                   <div className="text-center">
                     <p className="text-2xl font-bold text-secondary">120,000+</p>
-                    <p className="text-sm text-muted-foreground">Shared Experiences</p>
+                    <p className="text-sm text-muted-foreground">{t("community.sharedExperiences")}</p>
                   </div>
                   <div className="text-center">
                     <p className="text-2xl font-bold text-accent">180+</p>
-                    <p className="text-sm text-muted-foreground">Countries Visited</p>
+                    <p className="text-sm text-muted-foreground">{t("community.countriesVisited")}</p>
                   </div>
                 </div>
               </CardContent>
@@ -239,18 +236,18 @@ const Community = () => {
             {/* Quick Actions */}
             <Card>
               <CardHeader>
-                <CardTitle>Quick Actions</CardTitle>
+                <CardTitle>{t("community.quickActions")}</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
                 <CreatePostModal onPostCreated={handlePostCreated}>
                   <Button variant="outline" className="w-full justify-start">
                     <Plus className="h-4 w-4 mr-2" />
-                    Share Experience
+                    {t("community.shareExperience")}
                   </Button>
                 </CreatePostModal>
                 <Button variant="outline" className="w-full justify-start">
                   <TrendingUp className="h-4 w-4 mr-2" />
-                  Trending Posts
+                  {t("community.trendingPosts")}
                 </Button>
               </CardContent>
             </Card>

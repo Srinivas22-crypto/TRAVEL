@@ -35,7 +35,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const token = authService.getStoredToken();
         const storedUser = authService.getStoredUser();
 
-        if (token && storedUser) {
+        if (token) {
           // Verify token is still valid by fetching current user
           try {
             const currentUser = await authService.getCurrentUser();
@@ -45,6 +45,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             authService.clearUserData();
             setUser(null);
           }
+        } else if (storedUser) {
+          // Fallback: set user from storage if available
+          setUser(storedUser);
         }
       } catch (error) {
         console.error('Auth initialization error:', error);
@@ -103,13 +106,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       setIsLoading(true);
       await authService.logout();
-      setUser(null);
     } catch (error) {
       // Even if logout fails on server, clear local state
       console.error('Logout error:', error);
-      setUser(null);
-      authService.clearUserData();
     } finally {
+      authService.clearUserData();
+      setUser(null);
       setIsLoading(false);
     }
   };
@@ -191,5 +193,3 @@ export const useAuth = (): AuthContextType => {
   }
   return context;
 };
-
-export default AuthContext;

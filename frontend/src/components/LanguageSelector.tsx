@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Languages, Globe } from 'lucide-react';
@@ -17,6 +18,8 @@ const languages = [
 
 export const LanguageSelector = () => {
   const { i18n } = useTranslation();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [currentLanguage, setCurrentLanguage] = useState('en');
 
   useEffect(() => {
@@ -30,23 +33,33 @@ export const LanguageSelector = () => {
     setCurrentLanguage(languageCode);
     localStorage.setItem('travel-app-language', languageCode);
     i18n.changeLanguage(languageCode);
+
+    // If on a destination page, redirect to localized URL
+    const pathParts = location.pathname.split('/');
+    if (pathParts[1] === 'destination' || (pathParts[1] && (pathParts[2] === 'destinations' || pathParts[2] === 'destinos'))) {
+      const destinationId = pathParts[1] === 'destination' ? pathParts[2] : pathParts[3];
+      if (destinationId) {
+        const routeSegment = i18n.t('routes.destinations', { lng: languageCode });
+        navigate(`/${languageCode}/${routeSegment}/${destinationId}`);
+      }
+    }
   };
 
   const currentLang = languages.find(lang => lang.code === currentLanguage);
 
   return (
     <Select value={currentLanguage} onValueChange={handleLanguageChange}>
-      <SelectTrigger className="w-[140px] bg-card border-border">
-        <div className="flex items-center gap-2">
-          <Globe className="h-4 w-4" />
-          <span>{currentLang?.flag}</span>
+      <SelectTrigger className="w-24 sm:w-[140px] h-8 sm:h-9 px-2 sm:px-3 text-xs sm:text-sm bg-card border-border">
+        <div className="flex items-center gap-1 sm:gap-2">
+          <Globe className="h-3 w-3 sm:h-4 sm:w-4" />
+          <span className="text-xs sm:text-sm">{currentLang?.flag}</span>
           <SelectValue />
         </div>
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="text-xs sm:text-sm">
         {languages.map((language) => (
-          <SelectItem key={language.code} value={language.code}>
-            <div className="flex items-center gap-2">
+          <SelectItem key={language.code} value={language.code} className="text-xs sm:text-sm">
+            <div className="flex items-center gap-1 sm:gap-2">
               <span>{language.flag}</span>
               <span>{language.name}</span>
             </div>
