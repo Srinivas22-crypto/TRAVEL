@@ -26,6 +26,7 @@ import {
   Plane,
   Check
 } from 'lucide-react';
+import { get } from 'node:http';
 
 interface DestinationData {
   id: number;
@@ -88,15 +89,15 @@ const DestinationDetail = () => {
     'paris-france': {
       id: 1,
       name: getTranslation('destinations.paris.name', 'Paris'),
-      englishName: 'Paris, France',
+      englishName : 'Paris',
       country: getTranslation('destinations.paris.country', 'France'),
       image: "https://plus.unsplash.com/premium_photo-1661919210043-fd847a58522d?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       rating: 4.8,
       reviews: 1250,
       description: getTranslation('destinations.paris.description', 'Paris, the City of Light, captivates visitors with its iconic architecture, world-class cuisine, and unparalleled art scene.'),
-      category: "culture",
+      category: getTranslation('destinations.paris.category', 'city'),
       price: 1200,
-      slug: 'paris-france',
+      slug: getTranslation('destinations.paris.slug', 'paris-france'),
       highlights: [
         getTranslation('destinations.paris.highlights.0', 'Eiffel Tower'),
         getTranslation('destinations.paris.highlights.1', 'Louvre Museum'),
@@ -112,7 +113,7 @@ const DestinationDetail = () => {
       },
       weather: {
         temperature: "18°C",
-        condition: "Partly Cloudy",
+        condition: getTranslation('destinations.paris.weather.condition', 'Sunny'),
         humidity: "65%"
       },
       activities: [
@@ -154,9 +155,9 @@ const DestinationDetail = () => {
       rating: 4.9,
       reviews: 980,
       description: getTranslation('destinations.tokyo.description', 'Tokyo seamlessly blends ultramodern technology with traditional culture. From ancient temples to neon-lit districts, this metropolis offers a unique glimpse into the future while preserving its rich heritage.'),
-      category: "city",
+      category: getTranslation('destinations.tokyo.category', 'city'),
       price: 1800,
-      slug: 'tokyo-japan',
+      slug: getTranslation('destinations.tokyo.slug', 'tokyo-japan'),
       highlights: [
         getTranslation('destinations.tokyo.highlights.0', 'Shibuya Crossing'),
         getTranslation('destinations.tokyo.highlights.1', 'Sensoji Temple'),
@@ -172,7 +173,7 @@ const DestinationDetail = () => {
       },
       weather: {
         temperature: "22°C",
-        condition: "Clear",
+        condition: getTranslation('destinations.tokyo.weather.condition', 'Sunny'),
         humidity: "58%"
       },
       activities: [
@@ -214,9 +215,9 @@ const DestinationDetail = () => {
       rating: 4.7,
       reviews: 2100,
       description: getTranslation('destinations.newYork.description', 'New York City, the city that never sleeps, is a global hub of art, culture, fashion, and finance. From iconic skyscrapers to diverse neighborhoods, it offers an unmatched urban experience with endless possibilities.'),
-      category: "city",
+      category: getTranslation('destinations.newYork.category', 'city'),
       price: 1500,
-      slug: 'new-york',
+      slug: getTranslation('destinations.newYork.slug', 'new-york-usa'),
       highlights: [
         getTranslation('destinations.newYork.highlights.0', 'Statue of Liberty'),
         getTranslation('destinations.newYork.highlights.1', 'Times Square'),
@@ -232,7 +233,7 @@ const DestinationDetail = () => {
       },
       weather: {
         temperature: "16°C",
-        condition: "Sunny",
+        condition: getTranslation('destinations.newYork.weather.condition', 'Cloudy'),
         humidity: "72%"
       },
       activities: [
@@ -274,9 +275,9 @@ const DestinationDetail = () => {
       rating: 4.6,
       reviews: 840,
       description: getTranslation('destinations.bali.description', 'Tropical paradise with stunning beaches, lush rice terraces, ancient temples, and rich cultural heritage. Bali offers the perfect blend of relaxation and adventure, from world-class surfing to spiritual retreats.'),
-      category: "beach",
+      category: getTranslation('destinations.bali.category', 'adventure'),
       price: 900,
-      slug: 'bali-indonesia',
+      slug: getTranslation('destinations.bali.slug', 'bali-indonesia'),
       highlights: [
         getTranslation('destinations.bali.highlights.0', 'Tanah Lot Temple - Iconic sea temple on a rock formation'),
         getTranslation('destinations.bali.highlights.1', 'Ubud Rice Terraces - UNESCO World Heritage rice paddies'),
@@ -292,7 +293,7 @@ const DestinationDetail = () => {
       },
       weather: {
         temperature: "28°C",
-        condition: "Sunny",
+        condition: getTranslation('destinations.bali.weather.condition', 'Sunny'),
         humidity: "78%"
       },
       activities: [
@@ -334,7 +335,7 @@ const DestinationDetail = () => {
       rating: 4.9,
       reviews: 567,
       description: getTranslation('destinations.swissAlps.description', 'Breathtaking mountain views and world-class skiing adventures await in the Swiss Alps. Experience pristine alpine landscapes, charming mountain villages, and outdoor activities year-round.'),
-      category: "adventure",
+      category: getTranslation('destinations.swissAlps.category', 'adventure'),
       price: 2200,
       highlights: [
         getTranslation('destinations.swissAlps.highlights.0', 'Matterhorn - Iconic pyramid-shaped mountain peak'),
@@ -393,7 +394,7 @@ const DestinationDetail = () => {
       rating: 4.8,
       reviews: 3200,
       description: getTranslation('destinations.london.description', 'London, a city where history meets modernity, offers a unique blend of royal heritage, world-class museums, diverse culture, and innovative architecture. Experience the charm of this global metropolis along the River Thames.'),
-      category: "city",
+      category: getTranslation('destinations.london.category', 'city'),
       price: 1800,
       highlights: [
         getTranslation('destinations.london.highlights.0', 'Big Ben & Houses of Parliament'),
@@ -410,7 +411,7 @@ const DestinationDetail = () => {
       },
       weather: {
         temperature: "18°C",
-        condition: "Cloudy",
+        condition: getTranslation('destinations.london.weather.condition', 'Cloudy'),
         humidity: "75%"
       },
       activities: [
@@ -452,7 +453,7 @@ const DestinationDetail = () => {
       rating: 4.8,
       reviews: 734,
       description: getTranslation('destinations.tuscany.description', 'Rolling hills, vineyards, and authentic Italian cuisine define this enchanting region. Tuscany offers Renaissance art, medieval towns, world-renowned wines, and some of the most beautiful countryside in the world.'),
-      category: "food",
+      category: getTranslation('destinations.tuscany.category', 'city'),
       price: 1300,
       highlights: [
         getTranslation('destinations.tuscany.highlights.0', 'Florence Cathedral - Stunning Renaissance architecture'),
@@ -469,7 +470,7 @@ const DestinationDetail = () => {
       },
       weather: {
         temperature: "24°C",
-        condition: t('destinations.tuscany.weather.condition'),
+        condition: t('destinations.tuscany.weather.condition', 'Sunny'),
         humidity: "60%"
       },
       activities: [
@@ -984,7 +985,9 @@ const handleBookNow = () => {
 
   return (
     <div className="min-h-screen bg-background pb-[72px] md:pb-0">
-      <Header />
+      <div className="sticky top-0 z-50">
+        <Header />
+      </div>
 
       {/* Fixed Mobile Bottom Bar */}
       <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-md border-t border-border z-50 md:hidden">
@@ -1005,7 +1008,7 @@ const handleBookNow = () => {
         </div>
       </div>
       
-      <main className="container mx-auto px-4 py-8 pb-24 md:pb-8">
+      <main className="container mx-auto px-4 py-8 pb-24 md:pb-8 pt-16">
         {/* Back Button */}
         <Button 
           variant="ghost" 

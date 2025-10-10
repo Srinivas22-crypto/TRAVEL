@@ -25,7 +25,7 @@ const Explore = () => {
       rating: 4.8,
       reviews: 1250,
       description: t('explore.destinationsData.paris.description'),
-      category: "culture",
+      category: t('explore.destinationsData.paris.category'),
       price: 1200
     },
     {
@@ -35,7 +35,7 @@ const Explore = () => {
       rating: 4.9,
       reviews: 980,
       description: t('explore.destinationsData.tokyo.description'),
-      category: "city",
+      category: t('explore.destinationsData.tokyo.category'),
       price: 1800
     },
     {
@@ -45,7 +45,7 @@ const Explore = () => {
       rating: 4.7,
       reviews: 2100,
       description: t('explore.destinationsData.newYork.description'),
-      category: "city",
+      category: t('explore.destinationsData.newYork.category'),
       price: 1500
     },
     {
@@ -55,7 +55,7 @@ const Explore = () => {
       rating: 4.6,
       reviews: 840,
       description: t('explore.destinationsData.bali.description'),
-      category: "beach",
+      category: t('explore.destinationsData.bali.category'),
       price: 900
     },
     {
@@ -65,7 +65,7 @@ const Explore = () => {
       rating: 4.9,
       reviews: 567,
       description: t('explore.destinationsData.swissAlps.description'),
-      category: "adventure",
+      category: t('explore.destinationsData.swissAlps.category'),
       price: 2200
     },
     {
@@ -75,7 +75,7 @@ const Explore = () => {
       rating: 4.8,
       reviews: 734,
       description: t('explore.destinationsData.tuscany.description'),
-      category: "food",
+      category: t('explore.destinationsData.tuscany.category'),
       price: 1300
     },
     {
@@ -85,7 +85,7 @@ const Explore = () => {
       rating: 4.7,
       reviews: 423,
       description: t('explore.destinationsData.costaRica.description'),
-      category: "nature",
+      category: t('explore.destinationsData.costaRica.category'),
       price: 1100
     },
     {
@@ -95,7 +95,7 @@ const Explore = () => {
       rating: 4.8,
       reviews: 1156,
       description: t('explore.destinationsData.santorini.description'),
-      category: "beach",
+      category: t('explore.destinationsData.santorini.category'),
       price: 1400
     },
     {
@@ -105,7 +105,7 @@ const Explore = () => {
       rating: 4.5,
       reviews: 892,
       description: t('explore.destinationsData.goa.description'),
-      category: "beach",
+      category: t('explore.destinationsData.goa.category'),
       price: 600
     },
     {
@@ -115,7 +115,7 @@ const Explore = () => {
       rating: 4.6,
       reviews: 1340,
       description: t('explore.destinationsData.dubai.description'),
-      category: "city",
+      category: t('explore.destinationsData.dubai.category'),
       price: 1600
     },
     {
@@ -125,7 +125,7 @@ const Explore = () => {
       rating: 4.8,
       reviews: 654,
       description: t('explore.destinationsData.iceland.description'),
-      category: "nature",
+      category: t('explore.destinationsData.iceland.category'),
       price: 1900
     },
     {
@@ -135,19 +135,19 @@ const Explore = () => {
       rating: 4.7,
       reviews: 1567,
       description: t('explore.destinationsData.barcelona.description'),
-      category: "culture",
+      category: t('explore.destinationsData.barcelona.category'),
       price: 1100
     }
   ];
 
   const categories = [
     { name: t('explore.categories.all'), id: "all", icon: "", count: popularDestinations.length },
-    { name: t('explore.categories.adventure'), id: "adventure", icon: "", count: popularDestinations.filter(d => d.category === 'adventure').length },
-    { name: t('explore.categories.beach'), id: "beach", icon: "", count: popularDestinations.filter(d => d.category === 'beach').length },
-    { name: t('explore.categories.culture'), id: "culture", icon: "", count: popularDestinations.filter(d => d.category === 'culture').length },
-    { name: t('explore.categories.food'), id: "food", icon: "", count: popularDestinations.filter(d => d.category === 'food').length },
-    { name: t('explore.categories.nature'), id: "nature", icon: "", count: popularDestinations.filter(d => d.category === 'nature').length },
-    { name: t('explore.categories.city'), id: "city", icon: "", count: popularDestinations.filter(d => d.category === 'city').length }
+    { name: t('explore.categories.adventure'), id: "adventure", icon: "", count: popularDestinations.filter(d => d.category === t('explore.categories.adventure')).length },
+    { name: t('explore.categories.beach'), id: "beach", icon: "", count: popularDestinations.filter(d => d.category === t('explore.categories.beach')).length },
+    { name: t('explore.categories.culture'), id: "culture", icon: "", count: popularDestinations.filter(d => d.category === t('explore.categories.culture')).length },
+    { name: t('explore.categories.food'), id: "food", icon: "", count: popularDestinations.filter(d => d.category === t('explore.categories.food')).length },
+    { name: t('explore.categories.nature'), id: "nature", icon: "", count: popularDestinations.filter(d => d.category === t('explore.categories.nature')).length },
+    { name: t('explore.categories.city'), id: "city", icon: "", count: popularDestinations.filter(d => d.category === t('explore.categories.city')).length }
   ];
 
   // Enhanced search function with better matching
@@ -180,7 +180,8 @@ const Explore = () => {
     
     // Then apply category filter
     if (selectedCategory !== 'all') {
-      filtered = filtered.filter(destination => destination.category === selectedCategory);
+      const selectedLabel = t(`explore.categories.${selectedCategory}`);
+      filtered = filtered.filter(destination => destination.category === selectedLabel);
     }
 
     // Sort destinations
@@ -211,7 +212,7 @@ const Explore = () => {
       ...category,
       count: category.id === 'all' 
         ? searchResults.length 
-        : searchResults.filter(d => d.category === category.id).length
+        : searchResults.filter(d => d.category === t(`explore.categories.${category.id}`)).length
     }));
   }, [searchTerm, categories, searchDestinations]);
 
@@ -272,9 +273,11 @@ const Explore = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <div className="sticky top-0 z-50">
+        <Header />
+      </div>
       
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8 pt-16">
         {/* Hero Section */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4 bg-gradient-hero bg-clip-text text-transparent">

@@ -23,22 +23,22 @@ const Index = () => {
   const quickActions = [
     {
       icon: <Plane className="h-8 w-8" />,
-      title: t('book.flights'),
-      description: "Find the best deals on flights worldwide",
+      title: t('home.Cards.FlightDetails'),
+      description: t('home.Cards.FlightDescription'),
       action: () => navigate('/book'),
       color: "bg-blue-50 text-blue-600"
     },
     {
       icon: <MapPin className="h-8 w-8" />,
-      title: t('nav.explore'), 
-      description: "Discover amazing places to visit",
+      title: t('home.Cards.ExploreDetails'), 
+      description: t('home.Cards.ExploreDescription'),
       action: () => navigate('/explore'),
       color: "bg-green-50 text-green-600"
     },
     {
       icon: <Users className="h-8 w-8" />,
-      title: t('nav.community'),
-      description: "Connect with fellow travelers",
+      title: t('home.Cards.CommunityDetails'),
+      description: t('home.Cards.CommunityDescription'),
       action: () => navigate('/community'),
       color: "bg-purple-50 text-purple-600"
     }
@@ -46,19 +46,19 @@ const Index = () => {
 
   const featuredDestinations = [
     {
-      name: "Paris, France",
+      name: t('destinations.paris.name'),
       image: "https://plus.unsplash.com/premium_photo-1661919210043-fd847a58522d?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       rating: 4.9,
       highlights: ["Eiffel Tower", "Louvre Museum", "Notre Dame"]
     },
     {
-      name: "Tokyo, Japan", 
+      name: t('destinations.tokyo.name'),
       image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf",
       rating: 4.8,
       highlights: ["Shibuya Crossing", "Mount Fuji", "Cherry Blossoms"]
     },
     {
-      name: "Bali, Indonesia",
+      name: t('destinations.newYork.name'),
       image: "https://images.unsplash.com/photo-1537953773345-d172ccf13cf1", 
       rating: 4.7,
       highlights: ["Rice Terraces", "Temples", "Beaches"]
@@ -78,10 +78,12 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <div className="sticky top-0 z-50">
+        <Header />
+      </div>
       
       {/* Hero Section */}
-      <section className="py-20 px-4">
+      <main className="pt-16">
         <div className="container mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-hero bg-clip-text text-transparent">
             {t('home.title')}
@@ -108,10 +110,10 @@ const Index = () => {
             </Button>
           </div>
         </div>
-      </section>
+      </main>
 
       {/* Quick Actions */}
-      <section className="py-16 px-4 bg-muted/30">
+      <section className="py-16 px-4 bg-muted/30 mt-16">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold text-center mb-12">{t('home.quickActions')}</h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -139,7 +141,7 @@ const Index = () => {
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">{t('home.featured')}</h2>
-            <p className="text-muted-foreground text-lg">Discover the world's most amazing places</p>
+            <p className="text-muted-foreground text-lg">{t('home.featuredDestinations')}</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
@@ -182,7 +184,7 @@ const Index = () => {
               size="lg"
               onClick={() => navigate('/explore')}
             >
-              View All Destinations
+              {t('home.ViewDes')}
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
@@ -219,7 +221,7 @@ const Index = () => {
                 <Heart className="h-8 w-8 text-red-500" />
               </div>
               <p className="text-3xl font-bold text-red-500 mb-1">1M+</p>
-              <p className="text-muted-foreground">Memories Created</p>
+              <p className="text-muted-foreground">{t('home.stats.memories')}</p>
             </div>
           </div>
         </div>
@@ -228,16 +230,18 @@ const Index = () => {
       {/* CTA Section */}
       <section className="py-20 px-4">
         <div className="container mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-4">Ready to Start Your Adventure?</h2>
+          <h2 className="text-4xl font-bold mb-4">
+            {t('features.ctaTitle')}
+          </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join thousands of travelers who have discovered their perfect destinations through TravelHub.
+            {t('home.description')}
           </p>
           <Button 
             size="lg" 
             className="bg-gradient-hero hover:opacity-90 text-lg px-12"
             onClick={() => navigate('/register')}
           >
-            Get Started Today
+            {t('home.button')}
           </Button>
         </div>
       </section>

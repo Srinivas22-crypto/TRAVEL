@@ -1,6 +1,6 @@
 {
   "chatbot": {
-   "title": "Travel Assistant",
+    "title": "Travel Assistant",
     "welcome": "Hello! I'm your travel assistant. How can I help you plan your trip today?",
     "placeholder": "Type your message...",
     "send": "Send",
@@ -31,11 +31,24 @@
     "subtitle": "Explore amazing destinations, book incredible experiences, and connect with fellow travelers around the world.",
     "cta": "Start Your Journey",
     "quickActions": "Quick Actions",
+    "ViewDes": "View All Destinations",
+    "Cards":{
+      "FlightDetails": "Flights",
+      "FlightDescription": "Find the best deals on flights worldwide",
+      "ExploreDetails": "Explore",
+      "ExploreDescription": "Discover amazing places to visit",
+      "CommunityDetails": "Community",
+      "CommunityDescription": "Connect with fellow travellers and share experiences"
+    },
+    "description" : "Join thousands of travelers who have discovered their perfect destinations through TravelHub.",
     "featured": "Featured Destinations",
+    "featuredDestinations":"Discover the world's most amazing places",
+    "button" : "Get Started Today",
     "stats": {
       "destinations": "Destinations",
       "travelers": "Happy Travelers",
-      "reviews": "5-Star Reviews"
+      "reviews": "5-Star Reviews",
+      "memories" : "Memories Created"
     }
   },
   "explore": {
@@ -43,6 +56,7 @@
     "subtitle": "Discover amazing places around the world",
     "searchPlaceholder": "Search destinations...",
     "searchPlaceholderEnhanced": "Search destinations (e.g., Tokyo, Paris, Beach, Culture...)",
+    "Search": "Search",
     "filters": "Filters",
     "sortBy": "Sort by",
     "searchingFor": "Searching for:",
@@ -84,62 +98,75 @@
     "destinationsData": {
       "paris": {
         "name": "Paris, France",
-        "description": "The City of Light awaits with its iconic landmarks and romantic atmosphere."
+        "description": "The City of Light awaits with its iconic landmarks and romantic atmosphere.",
+        "category":"Culture"
       },
       "tokyo": {
         "name": "Tokyo, Japan",
-        "description": "Experience the perfect blend of traditional culture and modern innovation."
+        "description": "Experience the perfect blend of traditional culture and modern innovation.",
+        "category":"City"
       },
       "newYork": {
         "name": "New York, USA",
-        "description": "The city that never sleeps offers endless possibilities and experiences."
+        "description": "The city that never sleeps offers endless possibilities and experiences.",
+        "category":"City"
       },
       "bali": {
         "name": "Bali, Indonesia",
-        "description": "Tropical paradise with stunning beaches and rich cultural heritage."
+        "description": "Tropical paradise with stunning beaches and rich cultural heritage.",
+        "category":"Beach"
       },
       "swissAlps": {
         "name": "Swiss Alps, Switzerland",
-        "description": "Breathtaking mountain views and world-class skiing adventures."
+        "description": "Breathtaking mountain views and world-class skiing adventures.",
+        "category":"Adventure"
       },
       "tuscany": {
         "name": "Tuscany, Italy",
-        "description": "Rolling hills, vineyards, and authentic Italian cuisine."
+        "description": "Rolling hills, vineyards, and authentic Italian cuisine.",
+        "category":"Food"
       },
       "costaRica": {
         "name": "Costa Rica",
-        "description": "Rich biodiversity and stunning natural landscapes."
+        "description": "Rich biodiversity and stunning natural landscapes.",
+        "category":"Nature"
       },
       "santorini": {
         "name": "Santorini, Greece",
-        "description": "Iconic white buildings and spectacular sunsets."
+        "description": "Iconic white buildings and spectacular sunsets.",
+        "category":"Beach"
       },
       "goa": {
         "name": "Goa, India",
-        "description": "Beautiful beaches, Portuguese architecture, and vibrant nightlife in India's coastal paradise."
+        "description": "Beautiful beaches, Portuguese architecture, and vibrant nightlife in India's coastal paradise.",
+        "category":"Beach"
       },
       "dubai": {
         "name": "Dubai, UAE",
-        "description": "Luxury shopping, ultramodern architecture, and desert adventures in the Middle East."
+        "description": "Luxury shopping, ultramodern architecture, and desert adventures in the Middle East.",
+        "category":"City"
       },
       "iceland": {
         "name": "Iceland",
-        "description": "Land of fire and ice with stunning waterfalls, geysers, and northern lights."
+        "description": "Land of fire and ice with stunning waterfalls, geysers, and northern lights.",
+        "category":"Nature"
+
       },
       "barcelona": {
         "name": "Barcelona, Spain",
-        "description": "Gaudi's architectural masterpieces, vibrant culture, and Mediterranean beaches."
+        "description": "Gaudi's architectural masterpieces, vibrant culture, and Mediterranean beaches.",
+        "category":"Culture"
       }
     },
     "tools": {
       "routePlanner": {
         "title": "Route Planner",
-        "description": "Plan your perfect journey with our intelligent route planner",
+        "description": "Plan your perfect journey",
         "cta": "Start Planning"
       },
       "destinationFinder": {
-        "title": "Destination Finder",
-        "description": "Discover hidden gems and popular attractions worldwide",
+        "title": "Destinations",
+        "description": "Discover amazing places",
         "cta": "Explore Now"
       }
     }
@@ -765,11 +792,12 @@
     "pickupLocation": "Pick-up Location",
     "pickupDate": "Pick-up Date",
     "dropoffDate": "Drop-off Date",
-    "searchFlights": "Search Flights",
-    "searchHotels": "Search Hotels",
+    "searchFlights": "Search for a flight",
+    "searchHotels": "Search to stay",
     "searchCars": "Search Cars",
     "placeholders": {
       "departureCit": "Departure city",
+      "departureCity": "Departure city",
       "destinationCity": "Destination city",
       "pickADate": "Pick a date",
       "selectAdults": "1 Adult",
@@ -1167,7 +1195,13 @@
     "twitter": "Share on Twitter",
     "instagram": "Share on Instagram",
     "instagramNotSupported": "Sharing on Instagram is not supported via web.",
-    "openInNewTab": "Open in New Tab"
+    "openInNewTab": "Open in New Tab",
+    "linkCopiedTitle": "🔗 Link copied!",
+    "linkCopiedDescription": "The link has been copied to your clipboard",
+    "instagramTitle": "Instagram Sharing",
+    "instagramDescription": "Link copied! You can paste it in your Instagram story or bio",
+    "sharedTitle": "Shared!",
+    "sharedDescription": "Shared to {{platform}}"
   },
   "createPost": {
     "title": "Share Your Travel Experience",
@@ -1214,20 +1248,6 @@
     "addedDescription": "Saved to your bookmarks",
     "removedTitle": "Bookmark Removed",
     "removedDescription": "Removed from your bookmarks"
-  },
-  "share": {
-    "shareButton": "Share",
-    "copyLink": "Copy Link",
-    "facebook": "Share on Facebook",
-    "twitter": "Share on Twitter",
-    "instagram": "Share on Instagram",
-    "openInNewTab": "Open in New Tab",
-    "linkCopiedTitle": "🔗 Link copied!",
-    "linkCopiedDescription": "The link has been copied to your clipboard",
-    "instagramTitle": "Instagram Sharing",
-    "instagramDescription": "Link copied! You can paste it in your Instagram story or bio",
-    "sharedTitle": "Shared!",
-    "sharedDescription": "Shared to {{platform}}"
   },
   "userMenu": {
     "user": "User",
@@ -1294,58 +1314,6 @@
     },
     "postImageAlt": "Post image {{index}}"
   },
-  "error": "Error",
-  "failed_update_like": "Failed to update like status",
-  "reply_added": "Reply added",
-  "reply_success": "Your reply has been posted successfully",
-  "failed_add_reply": "Failed to add reply",
-  "comment_updated": "Comment updated",
-  "comment_update_success": "Your comment has been updated successfully",
-  "failed_update_comment": "Failed to update comment",
-  "comment_deleted": "Comment deleted",
-  "comment_delete_success": "Your comment has been deleted successfully",
-  "failed_delete_comment": "Failed to delete comment",
-  "edit": "Edit",
-  "delete": "Delete",
-  "edit_comment": "Edit your comment...",
-  "update": "Update",
-  "cancel": "Cancel",
-  "updating": "Updating...",
-  "reply": "Reply",
-  "write_reply": "Write a reply...",
-  "delete_comment": "Delete Comment",
-  "delete_comment_confirmation": "Are you sure you want to delete this comment? This action cannot be undone.",
-  "comment_added": "Comment added",
-  "comment_post_success": "Your comment has been posted successfully",
-  "failed_add_comment": "Failed to add comment",
-  "comments_count": "{{count}} Comments",
-  "write_comment": "Write a comment...",
-  "posting": "Posting...",
-  "post_comment": "Post Comment",
-  "no_comments": "No comments yet. Be the first to comment!",
-  "my_comments": "My Comments",
-  "no_comments_yet": "You haven't made any comments yet.",
-  "start_engaging": "Start engaging with posts to see your comments here!",
-  "error": "Error",
-  "failed_load_comments": "Failed to load your comments",
-  "comment_updated": "Comment updated",
-  "comment_update_success": "Your comment has been updated successfully",
-  "failed_update_comment": "Failed to update comment",
-  "comment_deleted": "Comment deleted",
-  "comment_delete_success": "Your comment has been deleted successfully",
-  "failed_delete_comment": "Failed to delete comment",
-  "just_now": "Just now",
-  "hours_ago": "{{count}}h ago",
-  "days_ago": "{{count}}d ago",
-  "reply_to_comment": "Reply to comment",
-  "comment_on_post": "Comment on post",
-  "saving": "Saving...",
-  "save": "Save",
-  "cancel": "Cancel",
-  "edited": "edited",
-  "delete_comment": "Delete Comment",
-  "delete_comment_confirmation": "Are you sure you want to delete this comment? This action cannot be undone.",
-  "delete": "Delete",
   "authRedirectUpdate": {
     "title": "🏠 Authentication Redirect Update",
     "description": "Users now redirect to home page after successful sign in/registration",
@@ -1362,23 +1330,23 @@
     "readyForTesting": "Ready for Testing!",
     "readyDescription": "The authentication flow now provides a seamless user experience with consistent navigation to the home page after successful sign in or registration.",
     "testSignIn": "Test Sign In Flow",
-    "testRegister": "Test Registration Flow"
-  },
-  "community": {
-    "title": "Travel Community",
-    "subtitle": "Connect with fellow travelers, share your experiences, and discover amazing destinations together",
-    "createPost": "Create Post",
-    "trendingTopics": "Trending Topics",
-    "statsTitle": "Community Stats",
-    "activeTravelers": "Active Travelers",
-    "sharedExperiences": "Shared Experiences",
-    "countriesVisited": "Countries Visited",
-    "quickActions": "Quick Actions",
-    "shareExperience": "Share Experience",
-    "trendingPosts": "Trending Posts"
-  },
-  "post": {
-    "createdTitle": "Post created!",
-    "createdDescription": "Your travel experience has been shared with the community."
+    "testRegister": "Test Registration Flow",
+    "changesMade": "Changes Made",
+    "signInPage": "Sign In Page",
+    "before": "Before",
+    "after": "After",
+    "signInBeforeDesc": "Previously, after a successful sign in, users were redirected to the root page.",
+    "signInAfterDesc": "Now, after a successful sign in, users are redirected to the home page.",
+    "registerPage": "Register Page",
+    "registerBeforeDesc": "Previously, after account creation, users were taken to the root page.",
+    "registerAfterDesc": "Now, after account creation and auto sign in, users are redirected to the home page.",
+    "benefits": "Benefits",
+    "benefitsList": {
+      "0": "Consistent navigation after authentication",
+      "1": "Improved user experience",
+      "2": "Clearer flow for both sign in and registration",
+      "3": "Easier testing of authentication flows",
+      "4": "Better alignment with app's primary entry point"
+    }
   }
 }

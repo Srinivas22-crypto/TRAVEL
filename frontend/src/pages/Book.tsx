@@ -64,25 +64,25 @@ const Book = () => {
     const newErrors: {[key: string]: string} = {};
 
     if (!flightSearch.from.trim()) {
-      newErrors.from = 'Departure city is required';
+      newErrors.from = t('book.errors.departureCityRequired');
     }
 
     if (!flightSearch.to.trim()) {
-      newErrors.to = 'Destination city is required';
+      newErrors.to = t('book.errors.destinationCityRequired');
     }
 
     if (flightSearch.from.trim() === flightSearch.to.trim()) {
-      newErrors.to = 'Destination must be different from departure city';
+      newErrors.to = t('book.errors.destinationDifferent');
     }
 
     if (!flightSearch.departureDate) {
-      newErrors.departureDate = 'Departure date is required';
+      newErrors.departureDate = t('book.errors.departureDateRequired');
     } else if (flightSearch.departureDate < new Date()) {
-      newErrors.departureDate = 'Departure date cannot be in the past';
+      newErrors.departureDate = t('book.errors.departureDatePast');
     }
 
     if (flightSearch.returnDate && flightSearch.departureDate && flightSearch.returnDate <= flightSearch.departureDate) {
-      newErrors.returnDate = 'Return date must be after departure date';
+      newErrors.returnDate = t('book.errors.returnDateAfterDeparture');
     }
 
     setErrors(newErrors);
@@ -93,19 +93,19 @@ const Book = () => {
     const newErrors: {[key: string]: string} = {};
 
     if (!hotelSearch.destination.trim()) {
-      newErrors.destination = 'Destination is required';
+      newErrors.destination = t('book.errors.destinationRequired');
     }
 
     if (!hotelSearch.checkInDate) {
-      newErrors.checkInDate = 'Check-in date is required';
+      newErrors.checkInDate = t('book.errors.checkInDateRequired');
     } else if (hotelSearch.checkInDate < new Date()) {
-      newErrors.checkInDate = 'Check-in date cannot be in the past';
+      newErrors.checkInDate = t('book.errors.checkInDatePast');
     }
 
     if (!hotelSearch.checkOutDate) {
-      newErrors.checkOutDate = 'Check-out date is required';
+      newErrors.checkOutDate = t('book.errors.checkOutDateRequired');
     } else if (hotelSearch.checkInDate && hotelSearch.checkOutDate <= hotelSearch.checkInDate) {
-      newErrors.checkOutDate = 'Check-out date must be after check-in date';
+      newErrors.checkOutDate = t('book.errors.checkOutDateAfterCheckIn');
     }
 
     setErrors(newErrors);
@@ -116,19 +116,19 @@ const Book = () => {
     const newErrors: {[key: string]: string} = {};
 
     if (!carSearch.location.trim()) {
-      newErrors.location = 'Pickup location is required';
+      newErrors.location = t('book.errors.pickupLocationRequired');
     }
 
     if (!carSearch.pickupDate) {
-      newErrors.pickupDate = 'Pickup date is required';
+      newErrors.pickupDate = t('book.errors.pickupDateRequired');
     } else if (carSearch.pickupDate < new Date()) {
-      newErrors.pickupDate = 'Pickup date cannot be in the past';
+      newErrors.pickupDate = t('book.errors.pickupDatePast');
     }
 
     if (!carSearch.returnDate) {
-      newErrors.returnDate = 'Return date is required';
+      newErrors.returnDate = t('book.errors.returnDateRequired');
     } else if (carSearch.pickupDate && carSearch.returnDate <= carSearch.pickupDate) {
-      newErrors.returnDate = 'Return date must be after pickup date';
+      newErrors.returnDate = t('book.errors.returnDateAfterPickup');
     }
 
     setErrors(newErrors);
@@ -158,15 +158,15 @@ const Book = () => {
       setSearchResults(prev => ({ ...prev, flights: results.outboundFlights }));
 
       toast({
-        title: "Search Complete",
-        description: `Found ${results.outboundFlights.length} flights`,
+        title: t('book.searchComplete'),
+        description: t('book.foundFlights', { count: results.outboundFlights.length }),
       });
     } catch (error: any) {
       console.error('Flight search failed:', error);
       toast({
-        title: "Search Failed",
-        description: error.message || "Failed to search flights. Please try again.",
-        variant: "destructive"
+        title: t('book.errors.searchFailed'),
+        description: error.message || t('book.errors.flightsError'),
+        variant: 'destructive'
       });
     } finally {
       setIsSearching(false);
@@ -194,15 +194,15 @@ const Book = () => {
       setSearchResults(prev => ({ ...prev, hotels: results.hotels }));
 
       toast({
-        title: "Search Complete",
-        description: `Found ${results.hotels.length} hotels`,
+        title: t('book.searchComplete'),
+        description: t('book.foundHotels', { count: results.hotels.length }),
       });
     } catch (error: any) {
       console.error('Hotel search failed:', error);
       toast({
-        title: "Search Failed",
-        description: error.message || "Failed to search hotels. Please try again.",
-        variant: "destructive"
+        title: t('book.errors.searchFailed'),
+        description: error.message || t('book.errors.hotelsError'),
+        variant: 'destructive'
       });
     } finally {
       setIsSearching(false);
@@ -229,15 +229,15 @@ const Book = () => {
       setSearchResults(prev => ({ ...prev, cars: results.cars }));
 
       toast({
-        title: "Search Complete",
-        description: `Found ${results.cars.length} cars`,
+        title: t('book.searchComplete'),
+        description: t('book.foundCars', { count: results.cars.length }),
       });
     } catch (error: any) {
       console.error('Car search failed:', error);
       toast({
-        title: "Search Failed",
-        description: error.message || "Failed to search cars. Please try again.",
-        variant: "destructive"
+        title: t('book.errors.searchFailed'),
+        description: error.message || t('book.errors.carsError'),
+        variant: 'destructive'
       });
     } finally {
       setIsSearching(false);
@@ -247,29 +247,29 @@ const Book = () => {
   const flightDeals = [
     {
       id: 1,
-      from: "New York",
-      to: "Paris",
+      from: 'New York',
+      to: 'Paris',
       price: 589,
-      airline: "Air France",
-      duration: "7h 30m",
+      airline: 'Air France',
+      duration: '7h 30m',
       rating: 4.5
     },
     {
       id: 2,
-      from: "London",
-      to: "Tokyo",
+      from: 'London',
+      to: 'Tokyo',
       price: 645,
-      airline: "British Airways", 
-      duration: "11h 45m",
+      airline: 'British Airways', 
+      duration: '11h 45m',
       rating: 4.7
     },
     {
       id: 3,
-      from: "Los Angeles",
-      to: "Sydney",
+      from: 'Los Angeles',
+      to: 'Sydney',
       price: 725,
-      airline: "Qantas",
-      duration: "15h 20m",
+      airline: 'Qantas',
+      duration: '15h 20m',
       rating: 4.6
     }
   ];
@@ -277,30 +277,30 @@ const Book = () => {
   const hotelDeals = [
     {
       id: 1,
-      name: "Grand Palace Hotel",
-      location: "Paris, France",
+      name: 'Grand Palace Hotel',
+      location: 'Paris, France',
       price: 180,
       rating: 4.8,
-      amenities: ["Wifi", "Pool", "Restaurant", "Spa"],
-      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945"
+      amenities: ['Wifi', 'Pool', 'Restaurant', 'Spa'],
+      image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945'
     },
     {
       id: 2,
-      name: "Tokyo Bay Resort",
-      location: "Tokyo, Japan",
+      name: 'Tokyo Bay Resort',
+      location: 'Tokyo, Japan',
       price: 145,
       rating: 4.6,
-      amenities: ["Wifi", "Gym", "Restaurant", "Bar"],
-      image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4"
+      amenities: ['Wifi', 'Gym', 'Restaurant', 'Bar'],
+      image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4'
     },
     {
       id: 3,
-      name: "Harbor View Inn",
-      location: "Sydney, Australia",
+      name: 'Harbor View Inn',
+      location: 'Sydney, Australia',
       price: 125,
       rating: 4.4,
-      amenities: ["Wifi", "Pool", "Restaurant"],
-      image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d"
+      amenities: ['Wifi', 'Pool', 'Restaurant'],
+      image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d'
     }
   ];
 
@@ -332,7 +332,7 @@ const Book = () => {
             </TabsTrigger>
             <TabsTrigger value="cars" className="flex items-center gap-2">
               <Car className="h-4 w-4" />
-              Cars
+              {t('book.cars')}
             </TabsTrigger>
           </TabsList>
 
@@ -342,20 +342,20 @@ const Book = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Plane className="h-5 w-5 text-primary" />
-                  Search Flights
+                  {t('book.searchFlightsTitle')}
                 </CardTitle>
-                <CardDescription>Find the best flight deals for your destination</CardDescription>
+                <CardDescription>{t('book.searchFlightsDescription')}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="from">From</Label>
+                    <Label htmlFor="from">{t('book.from')}</Label>
                     <div className="relative">
                       <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                       <Input
                         id="from"
-                        placeholder="Departure city"
-                        className={`pl-10 ${errors.from ? "border-red-500" : ""}`}
+                        placeholder={t('book.placeholders.departureCity')}
+                        className={`pl-10 ${errors.from ? 'border-red-500' : ''}`}
                         value={flightSearch.from}
                         onChange={(e) => setFlightSearch(prev => ({ ...prev, from: e.target.value }))}
                       />
@@ -363,13 +363,13 @@ const Book = () => {
                     {errors.from && <p className="text-sm text-red-500">{errors.from}</p>}
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="to">To</Label>
+                    <Label htmlFor="to">{t('book.to')}</Label>
                     <div className="relative">
                       <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                       <Input
                         id="to"
-                        placeholder="Destination city"
-                        className={`pl-10 ${errors.to ? "border-red-500" : ""}`}
+                        placeholder={t('book.placeholders.destinationCity')}
+                        className={`pl-10 ${errors.to ? 'border-red-500' : ''}`}
                         value={flightSearch.to}
                         onChange={(e) => setFlightSearch(prev => ({ ...prev, to: e.target.value }))}
                       />
@@ -380,12 +380,12 @@ const Book = () => {
                 
                 <div className="grid md:grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <Label>Departure Date</Label>
+                    <Label>{t('book.departureDate')}</Label>
                     <Popover>
                       <PopoverTrigger asChild>
-                        <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !flightSearch.departureDate && "text-muted-foreground", errors.departureDate && "border-red-500")}>
+                        <Button variant="outline" className={cn('w-full justify-start text-left font-normal', !flightSearch.departureDate && 'text-muted-foreground', errors.departureDate && 'border-red-500')}>
                           <CalendarIcon className="mr-2 h-4 w-4" />
-                          {flightSearch.departureDate ? format(flightSearch.departureDate, "PPP") : "Pick a date"}
+                          {flightSearch.departureDate ? format(flightSearch.departureDate, 'PPP') : t('book.placeholders.pickADate')}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0">
@@ -401,12 +401,12 @@ const Book = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label>Return Date</Label>
+                    <Label>{t('book.returnDate')}</Label>
                     <Popover>
                       <PopoverTrigger asChild>
-                        <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !flightSearch.returnDate && "text-muted-foreground", errors.returnDate && "border-red-500")}>
+                        <Button variant="outline" className={cn('w-full justify-start text-left font-normal', !flightSearch.returnDate && 'text-muted-foreground', errors.returnDate && 'border-red-500')}>
                           <CalendarIcon className="mr-2 h-4 w-4" />
-                          {flightSearch.returnDate ? format(flightSearch.returnDate, "PPP") : "Pick a date"}
+                          {flightSearch.returnDate ? format(flightSearch.returnDate, 'PPP') : t('book.placeholders.pickADate')}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0">
@@ -422,16 +422,16 @@ const Book = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label>Passengers</Label>
+                    <Label>{t('book.passengers')}</Label>
                     <Select value={flightSearch.passengers} onValueChange={(value) => setFlightSearch(prev => ({ ...prev, passengers: value }))}>
                       <SelectTrigger>
-                        <SelectValue placeholder="1 Adult" />
+                        <SelectValue placeholder={t('book.placeholders.selectAdults')} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="1">1 Adult</SelectItem>
-                        <SelectItem value="2">2 Adults</SelectItem>
-                        <SelectItem value="3">3 Adults</SelectItem>
-                        <SelectItem value="4">4+ Adults</SelectItem>
+                        <SelectItem value="1">{t('book.adults.one')}</SelectItem>
+                        <SelectItem value="2">{t('book.adults.two')}</SelectItem>
+                        <SelectItem value="3">{t('book.adults.three')}</SelectItem>
+                        <SelectItem value="4">{t('book.adults.fourPlus')}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -443,13 +443,13 @@ const Book = () => {
                   disabled={isSearching}
                 >
                   <Plane className="h-4 w-4 mr-2" />
-                  {isSearching ? "Searching..." : "Search Flights"}
+                  {isSearching ? t('book.searching') : t('book.searchFlightsButton')}
                 </Button>
 
                 {/* Flight Search Results */}
                 {searchResults.flights && searchResults.flights.length > 0 && (
                   <div className="mt-6 space-y-4">
-                    <h3 className="text-lg font-semibold">Flight Results ({searchResults.flights.length})</h3>
+                    <h3 className="text-lg font-semibold">{t('book.flightResults', { count: searchResults.flights.length })}</h3>
                     <div className="grid gap-4">
                       {searchResults.flights.map((flight: any) => (
                         <Card key={flight.id} className="hover:shadow-md transition-shadow">
@@ -464,7 +464,7 @@ const Book = () => {
                                       <span className="text-sm">{flight.rating}</span>
                                     </div>
                                   )}
-                                  <Badge variant="outline">{flight.class || 'Economy'}</Badge>
+                                  <Badge variant="outline">{flight.class || t('book.class.economy')}</Badge>
                                 </div>
                                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
                                   <div className="flex items-center gap-1">
@@ -485,7 +485,7 @@ const Book = () => {
                                   className="mt-2"
                                   onClick={() => navigate('/payment')}
                                 >
-                                  Book Flight
+                                  {t('book.bookFlight')}
                                 </Button>
                               </div>
                             </div>
@@ -505,19 +505,19 @@ const Book = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Hotel className="h-5 w-5 text-primary" />
-                  Search Hotels
+                  {t('book.searchHotelsTitle')}
                 </CardTitle>
-                <CardDescription>Find comfortable accommodations for your stay</CardDescription>
+                <CardDescription>{t('book.searchHotelsDescription')}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="destination">Destination</Label>
+                  <Label htmlFor="destination">{t('book.destination')}</Label>
                   <div className="relative">
                     <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="destination"
-                      placeholder="Where are you going?"
-                      className={`pl-10 ${errors.destination ? "border-red-500" : ""}`}
+                      placeholder={t('book.placeholders.whereGoing')}
+                      className={`pl-10 ${errors.destination ? 'border-red-500' : ''}`}
                       value={hotelSearch.destination}
                       onChange={(e) => setHotelSearch(prev => ({ ...prev, destination: e.target.value }))}
                     />
@@ -527,12 +527,12 @@ const Book = () => {
 
                 <div className="grid md:grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <Label>Check-in Date</Label>
+                    <Label>{t('book.checkIn')}</Label>
                     <Popover>
                       <PopoverTrigger asChild>
-                        <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !hotelSearch.checkInDate && "text-muted-foreground", errors.checkInDate && "border-red-500")}>
+                        <Button variant="outline" className={cn('w-full justify-start text-left font-normal', !hotelSearch.checkInDate && 'text-muted-foreground', errors.checkInDate && 'border-red-500')}>
                           <CalendarIcon className="mr-2 h-4 w-4" />
-                          {hotelSearch.checkInDate ? format(hotelSearch.checkInDate, "PPP") : "Pick a date"}
+                          {hotelSearch.checkInDate ? format(hotelSearch.checkInDate, 'PPP') : t('book.placeholders.pickADate')}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0">
@@ -548,12 +548,12 @@ const Book = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label>Check-out Date</Label>
+                    <Label>{t('book.checkOut')}</Label>
                     <Popover>
                       <PopoverTrigger asChild>
-                        <Button variant="outline" className={cn("w-full justify-start text-left font-normal", !hotelSearch.checkOutDate && "text-muted-foreground", errors.checkOutDate && "border-red-500")}>
+                        <Button variant="outline" className={cn('w-full justify-start text-left font-normal', !hotelSearch.checkOutDate && 'text-muted-foreground', errors.checkOutDate && 'border-red-500')}>
                           <CalendarIcon className="mr-2 h-4 w-4" />
-                          {hotelSearch.checkOutDate ? format(hotelSearch.checkOutDate, "PPP") : "Pick a date"}
+                          {hotelSearch.checkOutDate ? format(hotelSearch.checkOutDate, 'PPP') : t('book.placeholders.pickADate')}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0">
@@ -569,24 +569,24 @@ const Book = () => {
                   </div>
                   
                   <div className="space-y-2">
-                    <Label>Guests & Rooms</Label>
+                    <Label>{t('book.guestsRoomsLabel')}</Label>
                     <Select>
                       <SelectTrigger>
-                        <SelectValue placeholder="2 guests, 1 room" />
+                        <SelectValue placeholder={t('book.placeholders.guestsRooms')} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="1">1 guest, 1 room</SelectItem>
-                        <SelectItem value="2">2 guests, 1 room</SelectItem>
-                        <SelectItem value="3">3 guests, 1 room</SelectItem>
-                        <SelectItem value="4">4+ guests, 2 rooms</SelectItem>
+                        <SelectItem value="1">{t('book.guestsRoomsOptions.oneOne')}</SelectItem>
+                        <SelectItem value="2">{t('book.guestsRoomsOptions.twoOne')}</SelectItem>
+                        <SelectItem value="3">{t('book.guestsRoomsOptions.threeOne')}</SelectItem>
+                        <SelectItem value="4">{t('book.guestsRoomsOptions.fourPlusTwo')}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                 </div>
                 
-                <Button className="w-full bg-gradient-hero hover:opacity-90">
+                <Button className="w-full bg-gradient-hero hover:opacity-90" onClick={handleHotelSearch} disabled={isSearching}>
                   <Hotel className="h-4 w-4 mr-2" />
-                  Search Hotels
+                  {t('book.searchHotelsButton')}
                 </Button>
               </CardContent>
             </Card>
@@ -598,16 +598,16 @@ const Book = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Car className="h-5 w-5 text-primary" />
-                  Rent a Car
+                  {t('book.rentACarTitle')}
                 </CardTitle>
-                <CardDescription>Find the perfect vehicle for your journey</CardDescription>
+                <CardDescription>{t('book.rentACarDescription')}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="pickup">Pick-up Location</Label>
+                  <Label htmlFor="pickup">{t('book.pickupLocation')}</Label>
                   <div className="relative">
                     <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input id="pickup" placeholder="Pick-up location" className="pl-10" />
+                    <Input id="pickup" placeholder={t('book.placeholders.pickupLocation')} className="pl-10" />
                   </div>
                 </div>
                 
@@ -643,9 +643,9 @@ const Book = () => {
                   </div>
                 </div> */}
                 
-                <Button className="w-full bg-gradient-hero hover:opacity-90">
+                <Button className="w-full bg-gradient-hero hover:opacity-90" onClick={handleCarSearch} disabled={isSearching}>
                   <Car className="h-4 w-4 mr-2" />
-                  Search Cars
+                  {t('book.searchCars')}
                 </Button>
               </CardContent>
             </Card>
@@ -654,7 +654,7 @@ const Book = () => {
 
         {/* Flight Deals */}
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-6">Today's Flight Deals</h2>
+          <h2 className="text-2xl font-semibold mb-6">{t('book.todaysFlightDeals')}</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {flightDeals.map((flight) => (
               <Card key={flight.id} className="hover:shadow-md transition-shadow">
@@ -673,7 +673,7 @@ const Book = () => {
                     <p className="text-sm text-muted-foreground">{flight.duration}</p>
                     <p className="text-2xl font-bold text-primary">${flight.price}</p>
                   </div>
-                  <Button className="w-full" variant="outline" onClick={() => navigate('/payment')}>Book Now</Button>
+                  <Button className="w-full" variant="outline" onClick={() => navigate('/payment')}>{t('common.bookNow')}</Button>
                 </CardContent>
               </Card>
             ))}
@@ -682,7 +682,7 @@ const Book = () => {
 
         {/* Hotel Deals */}
         <section>
-          <h2 className="text-2xl font-semibold mb-6">Featured Hotels</h2>
+          <h2 className="text-2xl font-semibold mb-6">{t('book.featuredHotels')}</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {hotelDeals.map((hotel) => (
               <Card key={hotel.id} className="overflow-hidden hover:shadow-lg transition-shadow">
@@ -707,13 +707,13 @@ const Book = () => {
                   <div className="flex flex-wrap gap-1 mb-3">
                     {hotel.amenities.slice(0, 3).map((amenity) => (
                       <Badge key={amenity} variant="outline" className="text-xs">
-                        {amenity}
+                        {t(`book.amenities.${amenity.toLowerCase()}`)}
                       </Badge>
                     ))}
                   </div>
                   <div className="flex justify-between items-center">
-                    <p className="text-xl font-bold text-primary">${hotel.price}/night</p>
-                    <Button variant="outline" size="sm" onClick={() => navigate('/payment')}>Book</Button>
+                    <p className="text-xl font-bold text-primary">${hotel.price}{t('book.perNightSuffix')}</p>
+                    <Button variant="outline" size="sm" onClick={() => navigate('/payment')}>{t('book.book')}</Button>
                   </div>
                 </CardContent>
               </Card>

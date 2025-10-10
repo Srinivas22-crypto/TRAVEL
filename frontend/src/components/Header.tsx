@@ -89,8 +89,8 @@ export const Header = ({ className }: HeaderProps) => {
                       >
                         <Route className="h-4 w-4 text-primary group-hover:scale-110 transition-transform" />
                         <div className="flex flex-col gap-0.5">
-                          <p className="font-medium">{t('nav.routePlanner')}</p>
-                          <p className="text-sm text-muted-foreground">{t('nav.routePlannerDesc')}</p>
+                          <p className="font-medium">{t('explore.tools.routePlanner.title')}</p>
+                          <p className="text-sm text-muted-foreground">{t('explore.tools.routePlanner.description')}</p>
                         </div>
                       </NavigationMenuLink>
                       <NavigationMenuLink 
@@ -100,8 +100,8 @@ export const Header = ({ className }: HeaderProps) => {
                       >
                         <Search className="h-4 w-4 text-secondary group-hover:scale-110 transition-transform" />
                         <div className="flex flex-col gap-0.5">
-                          <p className="font-medium">{t('nav.destinations')}</p>
-                          <p className="text-sm text-muted-foreground">{t('nav.destinationsDesc')}</p>
+                          <p className="font-medium">{t('explore.tools.destinationFinder.title')}</p>
+                          <p className="text-sm text-muted-foreground">{t('explore.tools.destinationFinder.description')}</p>
                         </div>
                       </NavigationMenuLink>
                     </div>
@@ -126,7 +126,7 @@ export const Header = ({ className }: HeaderProps) => {
                         <Plane className="h-4 w-4 text-primary group-hover:scale-110 transition-transform" />
                         <div className="flex flex-col gap-0.5">
                           <p className="font-medium">{t('book.flights')}</p>
-                          <p className="text-sm text-muted-foreground">{t('book.flightsDesc')}</p>
+                          <p className="text-sm text-muted-foreground">{t('book.searchFlights')}</p>
                         </div>
                       </NavigationMenuLink>
                       <NavigationMenuLink 
@@ -137,7 +137,7 @@ export const Header = ({ className }: HeaderProps) => {
                         <Calendar className="h-4 w-4 text-secondary group-hover:scale-110 transition-transform" />
                         <div className="flex flex-col gap-0.5">
                           <p className="font-medium">{t('book.hotels')}</p>
-                          <p className="text-sm text-muted-foreground">{t('book.hotelsDesc')}</p>
+                          <p className="text-sm text-muted-foreground">{t('book.searchHotels')}</p>
                         </div>
                       </NavigationMenuLink>
                     </div>

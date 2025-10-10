@@ -23,6 +23,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
   autoFocus = false,
   initialValue = ""
 }) => {
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState(initialValue);
 
   // Real-time search as user types
@@ -85,7 +86,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           className="bg-gradient-hero hover:opacity-90 flex-shrink-0"
         >
           <Search className="h-4 w-4 mr-2" />
-          t("Search")
+          {t('nav.search')}
         </Button>
       )}
     </form>
