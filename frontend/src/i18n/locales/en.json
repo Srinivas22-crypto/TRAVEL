@@ -21,7 +21,10 @@
     "book": "Book",
     "community": "Community",
     "search": "Search",
-    "payment": "Payment"
+    "payment": "Payment",
+    "routePlanner": "Route Planner",
+    "destinations": "Destinations",
+    "profile": "Profile"
   },
   "header": {
     "tagline": "Your Journey Starts Here"
