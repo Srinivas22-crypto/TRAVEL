@@ -36,6 +36,34 @@ const PORT = process.env.PORT || 5000;
 // Connect to MongoDB
 connectDB();
 
+// CORS configuration (must be before security, logging, routes, and rate limiting)
+const normalizeOrigin = (o) => (typeof o === 'string' ? o.replace(/\/$/, '') : o);
+const allowedOrigins = [
+  normalizeOrigin(process.env.FRONTEND_URL),
+  'https://travel-sigma-rosy.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:3000',
+].filter(Boolean);
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Allow non-browser requests (like curl/postman) where origin may be undefined
+    if (!origin) return callback(null, true);
+    const normalized = normalizeOrigin(origin);
+    if (allowedOrigins.includes(normalized)) {
+      return callback(null, true);
+    }
+    return callback(new Error(`Not allowed by CORS: ${normalized}`));
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
 // Security middleware
 app.use(helmet());
 app.use(compression());
@@ -65,12 +93,6 @@ const authLimiter = rateLimit({
 });
 
 app.use('/api/', generalLimiter);
-
-// CORS configuration
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  credentials: true,
-}));
 
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
