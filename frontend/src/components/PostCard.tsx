@@ -182,25 +182,31 @@ const PostCard: React.FC<PostCardProps> = ({
           <div className="flex items-center gap-3">
             <Avatar className="cursor-pointer">
               <AvatarImage
-                src={post.author.profileImage}
-                alt={`${post.author.firstName || t('post.unknown')} ${post.author.lastName || t('post.user')}`}
+                src={post.author?.profileImage}
+                alt={post.author?.firstName && post.author?.lastName 
+                  ? `${post.author.firstName} ${post.author.lastName}`
+                  : 'Unknown User'
+                }
               />
               <AvatarFallback>
-                {post.author.firstName?.[0] || 'U'}
-                {post.author.lastName?.[0] || 'N'}
+                {post.author?.firstName?.[0] || 'U'}
+                {post.author?.lastName?.[0] || 'N'}
               </AvatarFallback>
             </Avatar>
             <div className="flex-1">
               <div className="flex items-center gap-2">
                 <h3 className="font-semibold hover:underline cursor-pointer">
-                  {post.author.firstName || t('post.unknown')} {post.author.lastName || t('post.user')}
+                  {post.author?.firstName && post.author?.lastName 
+                    ? `${post.author.firstName} ${post.author.lastName}`
+                    : 'Unknown User'
+                  }
                 </h3>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                {post.location && (
+                {post.author?.location && (
                   <>
                     <MapPin className="h-3 w-3" />
-                    {post.location}
+                    {post.author.location}
                     <span>•</span>
                   </>
                 )}

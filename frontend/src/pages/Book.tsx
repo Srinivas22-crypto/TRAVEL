@@ -342,7 +342,7 @@ const Book = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Plane className="h-5 w-5 text-primary" />
-                  {t('book.searchFlightsTitle')}
+                  {t('book.searchFlights')}
                 </CardTitle>
                 <CardDescription>{t('book.searchFlightsDescription')}</CardDescription>
               </CardHeader>
@@ -505,7 +505,7 @@ const Book = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Hotel className="h-5 w-5 text-primary" />
-                  {t('book.searchHotelsTitle')}
+                  {t('book.searchHotels')}
                 </CardTitle>
                 <CardDescription>{t('book.searchHotelsDescription')}</CardDescription>
               </CardHeader>
@@ -598,9 +598,9 @@ const Book = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Car className="h-5 w-5 text-primary" />
-                  {t('book.rentACarTitle')}
+                  {t('book.searchCars')}
                 </CardTitle>
-                <CardDescription>{t('book.rentACarDescription')}</CardDescription>
+                <CardDescription>{t('book.searchCarsDescription')}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-2">

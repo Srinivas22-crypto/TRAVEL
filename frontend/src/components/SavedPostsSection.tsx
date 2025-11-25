@@ -49,7 +49,7 @@ const SavedPostsSection: React.FC = () => {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>t("Saved Posts")</CardTitle>
+          <CardTitle>Saved Posts</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           {[...Array(3)].map((_, i) => (
@@ -68,7 +68,7 @@ const SavedPostsSection: React.FC = () => {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
-          t("Saved Posts")
+          Saved Posts
           <Badge variant="secondary">{savedPosts.length}</Badge>
         </CardTitle>
       </CardHeader>
@@ -76,8 +76,8 @@ const SavedPostsSection: React.FC = () => {
         {savedPosts.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             <Bookmark className="h-12 w-12 mx-auto mb-4 opacity-50" />
-            <p>t("You haven't saved any posts yet.")</p>
-            <p className="text-sm">t("Save posts you want to read later by clicking the bookmark icon!")</p>
+            <p>You haven't saved any posts yet.</p>
+            <p className="text-sm">Save posts you want to read later by clicking the bookmark icon!</p>
           </div>
         ) : (
           <div className="space-y-4">

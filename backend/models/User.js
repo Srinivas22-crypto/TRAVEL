@@ -94,6 +94,11 @@ const userSchema = new mongoose.Schema({
     maxlength: [500, 'Bio cannot be more than 500 characters'],
     default: '',
   },
+  location: {
+    type: String,
+    maxlength: [100, 'Location cannot be more than 100 characters'],
+    default: '',
+  },
   profileImage: {
     type: String,
     default: '',

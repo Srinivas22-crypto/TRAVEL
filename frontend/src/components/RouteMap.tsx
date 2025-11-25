@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useTransition } from 'react';
+import { useTransition } from 'react';  
+import { useTranslation } from "react-i18next"; // ✅ added import
 
 // Fix for default markers in React Leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -69,7 +70,6 @@ const FitBounds: React.FC<{ locations: RouteLocation[] }> = ({ locations }) => {
 
 // Mock geocoding function (in a real app, you'd use a proper geocoding service)
 const mockGeocode = async (locationName: string): Promise<[number, number] | null> => {
-  // Mock coordinates for popular destinations
   const mockCoordinates: { [key: string]: [number, number] } = {
     'new york': [40.7128, -74.0060],
     'los angeles': [34.0522, -118.2437],
@@ -95,19 +95,16 @@ const mockGeocode = async (locationName: string): Promise<[number, number] | nul
 
   const normalizedName = locationName.toLowerCase().trim();
   
-  // Try exact match first
   if (mockCoordinates[normalizedName]) {
     return mockCoordinates[normalizedName];
   }
 
-  // Try partial match
   for (const [key, coords] of Object.entries(mockCoordinates)) {
     if (key.includes(normalizedName) || normalizedName.includes(key)) {
       return coords;
     }
   }
 
-  // If no match found, return a default location (center of US)
   return [39.8283, -98.5795];
 };
 
@@ -115,9 +112,10 @@ const RouteMap: React.FC<RouteMapProps> = ({ locations, className = '' }) => {
   const [routeCoordinates, setRouteCoordinates] = useState<[number, number][]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const { t } = useTranslation(); // ✅ added here (inside component, before use)
+
   useEffect(() => {
     if (locations.length > 1) {
-      // Create route coordinates by connecting all locations in order
       const coords = locations.map(loc => loc.coordinates);
       setRouteCoordinates(coords);
     } else {
@@ -130,7 +128,7 @@ const RouteMap: React.FC<RouteMapProps> = ({ locations, className = '' }) => {
       <div className={`w-full h-full flex items-center justify-center bg-accent/30 rounded-lg ${className}`}>
         <div className="text-center text-muted-foreground">
           <div className="text-4xl mb-2">🗺️</div>
-          <p>t("Enter locations to see the route map")</p>
+          <p>{t('routePlanner.planRouteToSeeMap')}</p>
         </div>
       </div>
     );
@@ -144,14 +142,12 @@ const RouteMap: React.FC<RouteMapProps> = ({ locations, className = '' }) => {
         style={{ height: '100%', width: '100%' }}
         className="rounded-lg"
       >
-        {/* Dark theme tile layer */}
         <TileLayer
           url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
           subdomains="abcd"
         />
         
-        {/* Markers for each location */}
         {locations.map((location, index) => (
           <Marker
             key={index}
@@ -172,7 +168,6 @@ const RouteMap: React.FC<RouteMapProps> = ({ locations, className = '' }) => {
           </Marker>
         ))}
 
-        {/* Route polyline */}
         {routeCoordinates.length > 1 && (
           <Polyline
             positions={routeCoordinates}
@@ -183,7 +178,6 @@ const RouteMap: React.FC<RouteMapProps> = ({ locations, className = '' }) => {
           />
         )}
 
-        {/* Fit bounds to show all locations */}
         <FitBounds locations={locations} />
       </MapContainer>
     </div>

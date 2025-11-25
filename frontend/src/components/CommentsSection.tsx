@@ -35,16 +35,19 @@ const ReplyItem: React.FC<ReplyItemProps> = ({ reply, currentUserId }) => {
   return (
     <div className="flex gap-3 mt-3 ml-8">
       <Avatar className="h-6 w-6">
-        <AvatarImage src={reply.user.profileImage} alt={reply.user.firstName} />
+        <AvatarImage src={reply.user?.profileImage} alt={reply.user?.firstName} />
         <AvatarFallback className="text-xs">
-          {reply.user.firstName[0]}{reply.user.lastName[0]}
+          {reply.user?.firstName?.[0]}{reply.user?.lastName?.[0]}
         </AvatarFallback>
       </Avatar>
       <div className="flex-1">
         <div className="bg-muted rounded-lg p-3">
           <div className="flex items-center gap-2 mb-1">
             <span className="font-medium text-sm">
-              {reply.user.firstName} {reply.user.lastName}
+              {reply.user?.firstName && reply.user?.lastName 
+                ? `${reply.user.firstName} ${reply.user.lastName}`
+                : 'Unknown User'
+              }
             </span>
             <span className="text-xs text-muted-foreground">
               {new Date(reply.createdAt).toLocaleDateString()}
@@ -178,9 +181,9 @@ const CommentItem: React.FC<CommentItemProps> = ({
     <div className="space-y-3">
       <div className="flex gap-3">
         <Avatar>
-          <AvatarImage src={comment.user.profileImage} alt={comment.user.firstName} />
+          <AvatarImage src={comment.user?.profileImage} alt={comment.user?.firstName} />
           <AvatarFallback>
-            {comment.user.firstName[0]}{comment.user.lastName[0]}
+            {comment.user?.firstName?.[0]}{comment.user?.lastName?.[0]}
           </AvatarFallback>
         </Avatar>
         <div className="flex-1">
@@ -188,7 +191,10 @@ const CommentItem: React.FC<CommentItemProps> = ({
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
                 <span className="font-medium">
-                  {comment.user.firstName} {comment.user.lastName}
+                  {comment.user?.firstName && comment.user?.lastName 
+                    ? `${comment.user.firstName} ${comment.user.lastName}`
+                    : 'Unknown User'
+                  }
                 </span>
                 <span className="text-sm text-muted-foreground">
                   {new Date(comment.createdAt).toLocaleDateString()}

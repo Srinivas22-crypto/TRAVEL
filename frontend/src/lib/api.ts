@@ -312,6 +312,8 @@ export interface Post {
     firstName: string;
     lastName: string;
     profileImage?: string;
+    bio?: string;
+    location?: string;
   };
   content: string;
   images: string[];

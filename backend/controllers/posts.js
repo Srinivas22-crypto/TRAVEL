@@ -41,7 +41,7 @@ export const getPosts = async (req, res, next) => {
 
     const total = await Post.countDocuments(query);
     const posts = await Post.find(query)
-      .populate('author', 'firstName lastName profileImage')
+      .populate('author', 'firstName lastName profileImage bio location')
       .populate('comments.user', 'firstName lastName profileImage')
       .sort(sort)
       .limit(limit)
@@ -73,7 +73,7 @@ export const getPosts = async (req, res, next) => {
 export const getPost = async (req, res, next) => {
   try {
     const post = await Post.findById(req.params.id)
-      .populate('author', 'firstName lastName profileImage bio')
+      .populate('author', 'firstName lastName profileImage bio location')
       .populate('comments.user', 'firstName lastName profileImage')
       .populate('comments.replies.user', 'firstName lastName profileImage');
 
@@ -102,7 +102,7 @@ export const createPost = async (req, res, next) => {
 
     const post = await Post.create(req.body);
     
-    await post.populate('author', 'firstName lastName profileImage');
+    await post.populate('author', 'firstName lastName profileImage bio location');
 
     res.status(201).json({
       success: true,
@@ -147,7 +147,7 @@ export const updatePost = async (req, res, next) => {
     post = await Post.findByIdAndUpdate(req.params.id, updateData, {
       new: true,
       runValidators: true,
-    }).populate('author', 'firstName lastName profileImage');
+    }).populate('author', 'firstName lastName profileImage bio location');
 
     res.status(200).json({
       success: true,
@@ -367,7 +367,7 @@ export const getPostsByTag = async (req, res, next) => {
 
     const total = await Post.countDocuments(query);
     const posts = await Post.find(query)
-      .populate('author', 'firstName lastName profileImage')
+      .populate('author', 'firstName lastName profileImage bio location')
       .sort({ createdAt: -1 })
       .limit(limit)
       .skip(startIndex);
@@ -678,7 +678,7 @@ export const getUserPosts = async (req, res, next) => {
 
     const total = await Post.countDocuments(query);
     const posts = await Post.find(query)
-      .populate('author', 'firstName lastName profileImage')
+      .populate('author', 'firstName lastName profileImage bio location')
       .sort({ createdAt: -1 })
       .limit(limit)
       .skip(startIndex);

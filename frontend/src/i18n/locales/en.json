@@ -778,7 +778,29 @@
     "title": "Book Your Journey",
     "subtitle": "Find and book flights, hotels, and experiences",
     "flights": "Flights",
+    "book":"Book Now",
+    "perNightSuffix": " per night",
+    "searchFlightsDescription": "Find the best fight deals for your destination",
+    "searchFlightsButton": "Search flights",
+    "adults":{
+      "one": "1 adult",
+      "two": "2 adults",
+      "three": "3 adults",
+      "fourPlus": "4+ adults"
+    },
     "hotels": "Hotels",
+    "searchHotelsDescription": "Find the best hotel deals for your destination",
+    "searchHotelsButton": "Search hotels",
+    "guestsRoomsLabel": "Guests and rooms",
+    "guestsRoomsOptions": {
+      "oneOne": "1 guest, 1 room",
+      "twoOne": "2 guests, 1 room",
+      "threeOne": "3 guests, 1 room",
+      "fourPlusTwo": "4+ guests, 2+ rooms"
+    },
+    "cars": "Cars",
+    "searchCarsButton": "Search cars",
+    "searchCarsDescription": "Find the best car deals for your journey",
     "experiences": "Experiences",
     "from": "From",
     "to": "To",
@@ -792,8 +814,10 @@
     "pickupLocation": "Pick-up Location",
     "pickupDate": "Pick-up Date",
     "dropoffDate": "Drop-off Date",
-    "searchFlights": "Search for a flight",
-    "searchHotels": "Search to stay",
+    "searchFlights": "Search flights",
+    "todaysFlightDeals":"Today's flight deals",
+    "searchHotels": "Search hotels",
+    "featuredHotels":"Featured hotels",
     "searchCars": "Search Cars",
     "placeholders": {
       "departureCit": "Departure city",
@@ -810,13 +834,33 @@
       "flightsError": "Failed to search flights. Please try again.",
       "hotelsError": "Failed to search hotels. Please try again.",
       "carsError": "Failed to search cars. Please try again."
+    },
+    "amenities": {
+      "wifi": "Wifi",
+      "pool": "Pool",
+      "restaurant": "Restaurant",
+      "spa": "Spa",
+      "gym": "Gym",
+      "bar": "Bar",
+      "roomService": "Room service",
+      "breakfast": "Breakfast",
+      "lunch": "Lunch"
     }
   },
   "community": {
     "title": "Traveler Community",
     "subtitle": "Connect with other travelers and share your experiences",
     "shareStory": "Share Your Story",
-    "recentPosts": "Recent Posts"
+    "recentPosts": "Recent Posts",
+    "createPost": "Create Post",
+    "trendingTopics": "Trending Topics",
+    "statsTitle": "Community Stats",
+    "activeTravelers": "Active Travelers",
+    "sharedExperiences": "Shared Experiences",
+    "countriesVisited": "Countries Visited",
+    "quickActions": "Quick Actions",
+    "shareExperience": "Share Experience",
+    "trendingPosts": "Trending Posts"
   },
   "auth": {
     "signIn": "Sign In",

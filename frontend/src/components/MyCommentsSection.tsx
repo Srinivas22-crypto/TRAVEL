@@ -179,13 +179,16 @@ const MyCommentsSection: React.FC = () => {
                       <div className="bg-muted rounded p-2 mb-2">
                         <div className="flex items-center gap-2 mb-1">
                           <Avatar className="h-5 w-5">
-                            <AvatarImage src={comment.post.author.profileImage} />
+                            <AvatarImage src={comment.post.author?.profileImage} />
                             <AvatarFallback className="text-xs">
-                              {comment.post.author.firstName[0]}{comment.post.author.lastName[0]}
+                              {comment.post.author?.firstName?.[0]}{comment.post.author?.lastName?.[0]}
                             </AvatarFallback>
                           </Avatar>
                           <span className="text-xs font-medium">
-                            {comment.post.author.firstName} {comment.post.author.lastName}
+                            {comment.post.author?.firstName && comment.post.author?.lastName 
+                              ? `${comment.post.author.firstName} ${comment.post.author.lastName}`
+                              : 'Unknown User'
+                            }
                           </span>
                         </div>
                         <p className="text-xs text-muted-foreground line-clamp-2">
@@ -197,13 +200,16 @@ const MyCommentsSection: React.FC = () => {
                         <div className="bg-blue-50 border-l-2 border-blue-200 pl-3 py-2 mb-2">
                           <div className="flex items-center gap-2 mb-1">
                             <Avatar className="h-4 w-4">
-                              <AvatarImage src={comment.parentComment.user.profileImage} />
+                              <AvatarImage src={comment.parentComment.user?.profileImage} />
                               <AvatarFallback className="text-xs">
-                                {comment.parentComment.user.firstName[0]}{comment.parentComment.user.lastName[0]}
+                                {comment.parentComment.user?.firstName?.[0]}{comment.parentComment.user?.lastName?.[0]}
                               </AvatarFallback>
                             </Avatar>
                             <span className="text-xs font-medium">
-                              {comment.parentComment.user.firstName} {comment.parentComment.user.lastName}
+                              {comment.parentComment.user?.firstName && comment.parentComment.user?.lastName 
+                                ? `${comment.parentComment.user.firstName} ${comment.parentComment.user.lastName}`
+                                : 'Unknown User'
+                              }
                             </span>
                           </div>
                           <p className="text-xs text-muted-foreground">
